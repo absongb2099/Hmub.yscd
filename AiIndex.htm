@@ -1,0 +1,3014 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hmub有声词典</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+        }
+        
+        header {
+            background-color: #03a9f4;
+            color: white;
+            padding: 10px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .back-btn {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+        
+        .back-btn i {
+            margin-right: 5px;
+        }
+        
+        .title {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        
+        .more-btn {
+            font-size: 14px;
+            cursor: pointer;
+        }
+        
+        .search-container {
+            padding: 15px;
+            background-color: white;
+            display: flex;
+        }
+        
+        .search-input {
+            flex: 1;
+            padding: 10px 15px;
+            border: 1px solid #00c853;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        
+        .search-btn {
+            background-color: #00c853;
+            color: white;
+            border: none;
+            padding: 0 20px;
+            border-radius: 4px;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+        
+        .result-list {
+            background-color: white;
+        }
+        
+        .result-item {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .苗语 {
+            font-size: 16px;
+            color: #333;
+        }
+        
+        .中文 {
+            font-size: 16px;
+            color: #00c853;
+        }
+        
+        .audio-btn {
+            background: none;
+            border: none;
+            color: #03a9f4;
+            cursor: pointer;
+            font-size: 16px;
+            margin-left: 10px;
+        }
+        
+        .arrow {
+            color: #ccc;
+        }
+        
+        .no-results {
+            padding: 15px;
+            color: #666;
+            text-align: center;
+        }
+        
+        .about-page {
+            display: none;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .about-page .logo {
+            width: 80px;
+            height: 80px;
+            margin: 20px auto;
+            background-color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+        }
+        
+        .about-page .logo img {
+            width: 50px;
+            height: 50px;
+        }
+        
+        .about-page h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        
+        .about-page .version {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 40px;
+        }
+        
+        .about-page .info-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            text-align: left;
+            cursor: pointer;
+        }
+        
+        .about-page .footer {
+            margin-top: 60px;
+            color: #999;
+            font-size: 14px;
+        }
+        
+        .feature-page {
+            display: none;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .feature-page h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        
+        .feature-page .content {
+            text-align: left;
+            line-height: 1.6;
+        }
+        
+        .feature-page .section {
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .feature-page .section h2 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .feature-page .section p {
+            font-size: 16px;
+            color: #333;
+        }
+        
+        .feature-page .footer {
+            margin-top: 40px;
+            color: #999;
+            font-size: 14px;
+        }
+        
+        .update-log-page {
+            display: none;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .update-log-page h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        
+        .update-log-page .content {
+            text-align: left;
+            line-height: 1.6;
+        }
+        
+        .update-log-page .log-entry {
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .update-log-page .log-entry h2 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: #03a9f4;
+        }
+        
+        .update-log-page .log-entry p {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .update-log-page .footer {
+            margin-top: 40px;
+            color: #999;
+            font-size: 14px;
+        }
+        
+        .app-team-page {
+            display: none;
+            padding: 20px;
+            text-align: center;
+            background-color: #fff8e1;
+        }
+        
+        .app-team-page h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #8d6e63;
+        }
+        
+        .app-team-page .app-info {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+        
+        .app-team-page .app-logo {
+            width: 80px;
+            height: 80px;
+            background-color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 20px;
+        }
+        
+        .app-team-page .app-logo img {
+            width: 50px;
+            height: 50px;
+        }
+        
+        .app-team-page .app-details h2 {
+            font-size: 20px;
+            margin-bottom: 5px;
+            color: #8d6e63;
+        }
+        
+        .app-team-page .app-details p {
+            font-size: 16px;
+            color: #8d6e63;
+        }
+        
+        .app-team-page .team-members {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .app-team-page .team-members h2 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: #8d6e63;
+        }
+        
+        .app-team-page .member-cards {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .app-team-page .member-card {
+            width: 200px;
+            margin: 10px;
+            padding: 20px;
+            background-color: #f5f5f5;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .app-team-page .member-card .name {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+        
+        .app-team-page .member-card .role {
+            font-size: 16px;
+            color: #666;
+        }
+        
+        .app-team-page .contact-section {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .app-team-page .contact-section p {
+            font-size: 16px;
+            color: #8d6e63;
+            margin-bottom: 20px;
+        }
+        
+        .app-team-page .contact-btn {
+            background-color: #ffab91;
+            color: white;
+            border: none;
+            padding: 10px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+        
+        .app-team-page .copyright {
+            font-size: 14px;
+            color: #8d6e63;
+            margin-top: 40px;
+        }
+        
+        .privacy-policy-page {
+            display: none;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .privacy-policy-page h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        
+        .privacy-policy-page .content {
+            text-align: left;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .privacy-policy-page .section {
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .privacy-policy-page .section h2 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .privacy-policy-page .section p {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .privacy-policy-page .footer {
+            margin-top: 40px;
+            color: #999;
+            font-size: 14px;
+        }
+        
+        .phonetics-page {
+            display: none;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .phonetics-page h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        
+        .phonetics-section {
+            margin-bottom: 30px;
+        }
+        
+        .phonetics-section h2 {
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .cards-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .phonetics-card {
+            width: calc(33.33% - 20px);
+            max-height: 50vh;
+            margin: 10px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .phonetics-card .title {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        
+        .phonetics-card .audio-btn {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            color: #03a9f4;
+            cursor: pointer;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="back-btn" id="backBtn">
+            <i></i> 返回
+        </div>
+        <div class="title">Hmub有声词典</div>
+        <div class="more-btn" id="moreBtn">更多</div>
+    </header>
+    
+    <div class="search-container" id="searchContainer">
+        <input type="text" class="search-input" placeholder="查询苗语" id="searchInput">
+        <button class="search-btn" id="searchBtn">
+            <i>🔍</i>
+        </button>
+    </div>
+    
+    <div class="result-list" id="resultList">
+        <!-- 结果将通过JavaScript动态生成 -->
+    </div>
+    
+    <div class="about-page" id="aboutPage">
+        <h1>关于平台</h1>
+        <div class="logo">
+            <img src="images/logo.png" alt="Logo">
+        </div>
+        <h1>苗语中部方言有声词典</h1>
+        <div class="version">Version 1.0</div>
+        
+        <div class="info-item" id="phoneticsBtn">
+            <div>声韵调</div>
+            <div></div>
+        </div>
+        
+        <div class="info-item" id="featureBtn">
+            <div>功能介绍</div>
+            <div></div>
+        </div>
+        
+        <div class="info-item" id="qqGroupBtn">
+            <div>交流Q群</div>
+            <div></div>
+        </div>
+        
+        <div class="info-item" id="updateLogBtn">
+            <div>更新日志</div>
+            <div></div>
+        </div>
+        
+        <div class="info-item" id="appTeamBtn">
+            <div>APP团队</div>
+            <div></div>
+        </div>
+        
+        <div class="info-item" id="privacyPolicyBtn">
+            <div>隐私政策与用户协议</div>
+            <div></div>
+        </div>
+        
+        <div class="footer">
+            安全体验 © 2025-04-16 宣
+        </div>
+    </div>
+    
+    <div class="feature-page" id="featurePage">
+        <h1>功能介绍</h1>
+        <div class="content">
+            <div class="section">
+                <h2>平台描述</h2>
+                <p>苗语中部方言有声词典由重庆彭水@苗族阿松所开发的Android应用程序，里面包含了声韵调、字词翻译、点读、词条速览等一系列围绕为主题的苗文掌上学习软件。音频素材和配音作者已在APP团队界面标注说明目前，APP依然在持续优化中，不断完善交互设计，敬请关注！</p>
+            </div>
+            
+            <div class="section">
+                <h2>分享初衷</h2>
+                <p>有声词典作为启蒙教育的出发点，一方面在于丰富日常交流的词汇表达，另一方面，还能将口语发音规范化！此时此刻，希望苗族同胞及苗文爱好者都能够从中获取经验、启发思路，提升自己的苗语表达能力。敬爱的同胞们，行动起来吧，让苗语在世界上熠熠生辉~</p>
+            </div>
+            
+            <div class="section">
+                <h2>资源声明</h2>
+                <p>1.任何单位和个人未经作者许可，不得擅自传播或用于商业用途。如有违反，将依法追究其法律责任。</p>
+                <p>2.明确注明来源的同时，我们将该资源照搬，未做任何修改或加工，以保持苗文字词的完整性和准确性。</p>
+                <p>3.希望广大读者能够尊重原作者的版权和创作设计意图，共同维护良好的网络环境，打造一个有氛围有爱心的学习圈子。如有任何疑问或建议，请随时联系我们。</p>
+            </div>
+        </div>
+        
+        <div class="footer">
+            安全体验 © 2025-04-16 宣
+        </div>
+    </div>
+    
+    <div class="update-log-page" id="updateLogPage">
+        <h1>更新日志</h1>
+        <div class="content">
+            <div class="log-entry">
+                <h2>Version 1.0 (2025-04-16)</h2>
+                <p>初始版本发布，包含以下功能：</p>
+                <ul>
+                    <li>苗语中部方言有声词典网页端和手机端今后实现同步更新和上线</li>
+                    <li>支持苗语和中文的双向查询</li>
+                    <li>每个词条配有音频发音</li>
+                    <li>支持点读功能</li>
+                    <li>包含常用词汇和短语</li>
+                </ul>
+            </div>
+            
+            <div class="log-entry">
+                <h2>Version 1.1 (计划中)</h2>
+                <p>即将推出的新功能：</p>
+                <ul>
+                    <li>增加更多词汇和短语</li>
+                    <li>持续完善词汇、短语与点读配对</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer">
+            安全体验 © 2025-04-16 宣
+        </div>
+    </div>
+    
+    <div class="app-team-page" id="appTeamPage">
+        <h1>APP团队</h1>
+        <div class="app-info">
+            <div class="app-logo">
+                <img src="images/logo.png" alt="App Logo">
+            </div>
+            <div class="app-details">
+                <h2>苗语中部方言有声词典</h2>
+                <p>使用有效期：长期且免费</p>
+            </div>
+        </div>
+        
+        <div class="team-members">
+            <h2>项目成员</h2>
+            <div class="member-cards">
+                <div class="member-card">
+                    <div class="name">苗族阿松（彭水）</div>
+                    <div class="role">代码开发、页面设计</div>
+                </div>
+                <div class="member-card">
+                    <div class="name">杨文斌（苗族）</div>
+                    <div class="role">词条发音人</div>
+                </div>
+                <div class="member-card">
+                    <div class="name">耕夫（苗族）</div>
+                    <div class="role">APP项目发起人</div>
+                </div>
+                <div class="member-card">
+                    <div class="name">吴小花（苗族）</div>
+                    <div class="role">声韵调发音人</div>
+                </div>
+                <div class="member-card">
+                    <div class="name">叠贵（苗族）</div>
+                    <div class="role">头衔待定</div>
+                </div>
+                <div class="member-card">
+                    <div class="name">坐席客服</div>
+                    <div class="role">24小时在线</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="contact-section">
+            <p>遇到困难了，需要帮助？联系客服</p>
+            <button class="contact-btn">+微信号：absongb2099</button>
+            <p>无关要是，勿扰谢谢！</p>
+        </div>
+        
+        <div class="copyright">
+            <h3>版权声明©</h3>
+            <p>1.所有词库&音频数据未经原著许可，严禁盗用二次利用，经查获，必将追究其法律责任；</p>
+            <p>2.严禁通过任何方式&渠道,以此来贩卖和破解APP,经查获,必将追究刑事责任。</p>
+        </div>
+    </div>
+    
+    <div class="privacy-policy-page" id="privacyPolicyPage">
+        <h1>隐私政策与用户协议</h1>
+        <div class="content">
+            <div class="section">
+                <h2>隐私政策</h2>
+                <p>我们尊重并保护所有使用本平台的用户的个人隐私。本隐私政策解释了我们如何收集、使用和保护您的个人信息。</p>
+                <p>1. **网络判断**：当用户在网页端或者手机客户端上体验时，我们可能会判断您在使用平台时加载的宽带、wifi和数据流量等网络是否正常，以免体验时因为网络错误或者卡顿为你带来困扰！</p>
+                <p>2. **信息使用**：我们承诺不会将您的个人信息用于任何未经您同意的用途。</p>
+                <p>3. **信息保护**：我们采取合理的安全措施来保护您的个人信息不被未经授权的访问、披露、更改或销毁。</p>
+            </div>
+            
+            <div class="section">
+                <h2>用户协议</h2>
+                <p>使用本平台即表示您同意以下条款：</p>
+                <p>1. **合法使用**：您不得将本平台用于任何非法或未经授权的用途。</p>
+                <p>2. **知识产权**：平台上的所有内容，包括但不限于文字、音频、图像等，均受到版权保护。</p>
+                <p>3. **责任限制**：我们不对因使用本平台而可能造成的任何直接或间接损失承担责任。</p>
+            </div>
+        </div>
+        
+        <div class="footer">
+            安全体验 © 2025-04-16 宣
+        </div>
+    </div>
+    
+    <div class="phonetics-page" id="phoneticsPage">
+        <h1>声韵调</h1>
+        
+        <div class="phonetics-section">
+            <h2>声母 (32)</h2>
+            <div class="cards-container">
+                <div class="phonetics-card">
+                    <div class="title">b</div>
+                    <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/smb.mp3')">🔊</button>
+                </div>
+                <div class="phonetics-card">
+                    <div class="title">p</div>
+                    <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/smp.mp3')">🔊</button>
+                </div>
+                <div class="phonetics-card">
+                    <div class="title">m</div>
+                    <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/smm.mp3')">🔊</button>
+                </div>
+                <div class="phonetics-card">
+                    <div class="title">hm</div>
+                    <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/smhm.mp3')">🔊</button>
+                </div>
+                <div class="phonetics-card">
+                    <div class="title">f</div>
+                    <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/smf.mp3')">🔊</button>
+                </div>
+                <div class="phonetics-card">
+                    <div class="title">hf</div>
+                    <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/smhf.mp3')">🔊</button>
+                </div>
+                <div class="phonetics-card">
+                    <div class="title">w</div>
+                    <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/smw.mp3')">🔊</button>
+                </div>
+                <div class="phonetics-card">
+                    <div class="title">d</div>
+                    <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/smd.mp3')">🔊</button>
+                </div>
+                <div class="phonetics-card">
+                    <div class="title">t</div>
+                    <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/smt.mp3')">🔊</button>
+                </div>
+                <div class="phonetics-card">
+                    <div class="title">n</div>
+                    <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/smn.mp3')">🔊</button>
+                </div>
+                <div class="phonetics-card">
+                    <div class="title">hn</div>
+                    <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/smhn.mp3')">🔊</button>
+                </div>
+                <div class="phonetics-card">
+                    <div class="title">dl</div>
+                    <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/smdl.mp3')">🔊</button>
+                </div>
+                <div class="phonetics-card">
+                    <div class="title">hl</div>
+                    <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/smhl.mp3')">🔊</button>
+                </div>
+                <div class="phonetics-card">
+                    <div class="title">l</div>
+                    <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/sml.mp3')">🔊</button>
+                </div>
+                <div class="phonetics-card">
+                    <div class="title">z</div>
+                    <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/smz.mp3')">🔊</button>
+                </div>
+                <div class="phonetics-card">
+                    <div class="title">c</div>
+                    <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/smc.mp3')">🔊</button>
+                </div>
+                <div class="phonetics-card">
+                    <div class="title">s</div>
+                    <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/sms.mp3')">🔊</button>
+                </div>
+                <div class="phonetics-card">
+                    <div class="title">hs</div>
+                    <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/smhs.mp3')">🔊</button>
+                </div>
+                <div class="phonetics-card">
+                    <div class="title">hx</div>
+                    <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/smhx.mp3')">🔊</button>
+                </div>
+                <div class="phonetics-card">
+                    <div class="title">r</div>
+                    <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/smr.mp3')">🔊</button>
+                </div>
+                <div class="phonetics-card">
+                    <div class="title">j</div>
+                    <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/smj.mp3')">🔊</button>
+                </div>
+                <div class="phonetics-card">
+                    <div class="title">q</div>
+                    <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/smq.mp3')">🔊</button>
+                </div>
+                <div class="phonetics-card">
+                    <div class="title">g</div>
+                    <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/smg.mp3')">🔊</button>
+                </div>
+                <div class="phonetics-card">
+                    <div class="title">x</div>
+                    <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/smx.mp3')">🔊</button>
+                </div>
+                <div class="phonetics-card">
+                    <div class="title">y</div>
+                    <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/smy.mp3')">🔊</button>
+                </div>
+                <div class="phonetics-card">
+                    <div class="title">k</div>
+                    <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/smk.mp3')">🔊</button>
+                </div>
+                <div class="phonetics-card">
+                    <div class="title">ng</div>
+                    <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/smng.mp3')">🔊</button>
+                </div>
+                <div class="phonetics-card">
+                    <div class="title">v</div>
+                    <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/smv.mp3')">🔊</button>
+                </div>
+                <div class="phonetics-card">
+                    <div class="title">hv</div>
+                    <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/smhv.mp3')">🔊</button>
+                </div>
+                <div class="phonetics-card">
+                    <div class="title">gh</div>
+                    <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/smgh.mp3')">🔊</button>
+                </div>
+                <div class="phonetics-card">
+                    <div class="title">kh</div>
+                    <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/smkh.mp3')">🔊</button>
+                </div>
+                <div class="phonetics-card">
+                    <div class="title">h</div>
+                    <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/smh.mp3')">🔊</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="phonetics-section">
+            <h2>韵母 (26)</h2>
+            <div class="cards-container">
+                <div class="phonetics-card">
+                    <div class="title">i</div>
+                    <button class="audio-btn" onclick="playAudio('audio/phonetics/finals/ymi.mp3')">🔊</button>
+                </div>
+                <div class="phonetics-card">
+                    <div class="title">e</div>
+                    <button class="audio-btn" onclick="playAudio('audio/phonetics/finals/yme.mp3')">🔊</button>
+                </div>
+                <div class="phonetics-card">
+                    <div class="title">a</div>
+                    <button class="audio-btn" onclick="playAudio('audio/phonetics/finals/yma.mp3')">🔊</button>
+                </div>
+                <div class="phonetics-card">
+                    <div class="title">o</div>
+                    <button class="audio-btn" onclick="playAudio('audio/phonetics/finals/ymo.mp3')">🔊</button>
+                </div>
+                <div class="phonetics-card">
+                    <div class="title">u</div>
+                    <button class="audio-btn" onclick="playAudio('audio/phonetics/finals/ymu.mp3')">🔊</button>
+                </div>
+                <div class="phonetics-card">
+                    <div class="title">ai</div>
+                    <button class="audio-btn" onclick="playAudio('audio/phonetics/finals/ymai.mp3')">🔊</button>
+                </div>
+                <div class="phonetics-card">
+                    <div class="title">ei</div>
+                    <button class="audio-btn" onclick="playAudio('audio/phonetics/finals/ymei.mp3')">🔊</button>
+                </div>
+                <div class="phonetics-card">
+                    <div class="title">ia</div>
+                    <button class="audio-btn" onclick="playAudio('audio/phonetics/finals/ymia.mp3')">🔊</button>
+                </div>
+                <div class="phonetics-card">
+                    <div class="title">io</div>
+                    <button class="audio-btn" onclick="playAudio('audio/phonetics/finals/ymio.mp3')">🔊</button>
+                </div>
+                <div class="phonetics-card">
+                    <div class="title">ie</div>
+                    <button class="audio-btn" onclick="playAudio('audio/phonetics/finals/ymie.mp3')">🔊</button>
+                </div>
+                <div class="phonetics-card">
+                    <div class="title">iu</div>
+                    <button class="audio-btn" onclick="playAudio('audio/phonetics/finals/ymiu.mp3')">🔊</button>
+                </div>
+                <div class="phonetics-card">
+                    <div class="title">ang</div>
+                    <button class="audio-btn" onclick="playAudio('audio/phonetics/finals/ymang.mp3')">🔊</button>
+                </div>
+                <div class="phonetics-card">
+                    <div class="title">en</div>
+                    <button class="audio-btn" onclick="playAudio('audio/phonetics/finals/ymen.mp3')">🔊</button>
+                </div>
+                <div class="phonetics-card">
+                    <div class="title">ong</div>
+                    <button class="audio-btn" onclick="playAudio('audio/phonetics/finals/ymong.mp3')">🔊</button>
+                </div>
+                <div class="phonetics-card">
+                    <div class="title">in</div>
+                    <button class="audio-btn" onclick="playAudio('audio/phonetics/finals/ymin.mp3')">🔊</button>
+                </div>
+                <div class="phonetics-card">
+                    <div class="title">iang</div>
+                    <button class="audio-btn" onclick="playAudio('audio/phonetics/finals/ymiang.mp3')">🔊</button>
+                </div>
+                <div class="phonetics-card">
+                    <div class="title">iong</div>
+                    <button class="audio-btn" onclick="playAudio('audio/phonetics/finals/ymiong.mp3')">🔊</button>
+                </div>
+                <div class="phonetics-card">
+                    <div class="title">ee</div>
+                    <button class="audio-btn" onclick="playAudio('audio/phonetics/finals/ymee.mp3')">🔊</button>
+                </div>
+                <div class="phonetics-card">
+                    <div class="title">ao</div>
+                    <button class="audio-btn" onclick="playAudio('audio/phonetics/finals/ymao.mp3')">🔊</button>
+                </div>
+                <div class="phonetics-card">
+                    <div class="title">iee</div>
+                    <button class="audio-btn" onclick="playAudio('audio/phonetics/finals/ymiee.mp3')">🔊</button>
+                </div>
+                <div class="phonetics-card">
+                    <div class="title">iao</div>
+                    <button class="audio-btn" onclick="playAudio('audio/phonetics/finals/ymiao.mp3')">🔊</button>
+                </div>
+                <div class="phonetics-card">
+                    <div class="title">ui</div>
+                    <button class="audio-btn" onclick="playAudio('audio/phonetics/finals/ymui.mp3')">🔊</button>
+                </div>
+                <div class="phonetics-card">
+                    <div class="title">ua</div>
+                    <button class="audio-btn" onclick="playAudio('audio/phonetics/finals/ymua.mp3')">🔊</button>
+                </div>
+                <div class="phonetics-card">
+                    <div class="title">uai</div>
+                    <button class="audio-btn" onclick="playAudio('audio/phonetics/finals/ymuai.mp3')">🔊</button>
+                </div>
+                <div class="phonetics-card">
+                    <div class="title">uang</div>
+                    <button class="audio-btn" onclick="playAudio('audio/phonetics/finals/ymuang.mp3')">🔊</button>
+                </div>
+                <div class="phonetics-card">
+                    <div class="title">un</div>
+                    <button class="audio-btn" onclick="playAudio('audio/phonetics/finals/ymun.mp3')">🔊</button>
+                </div>
+        
+        <div class="phonetics-section">
+            <h2>声调 (8)</h2>
+            <div class="cards-container">
+                <div class="phonetics-card">
+                    <div class="title">b (33)</div>
+                    <button class="audio-btn" onclick="playAudio('audio/phonetics/tones/sdb.mp3')">🔊</button>
+                </div>
+                <div class="phonetics-card">
+                    <div class="title">x (55)</div>
+                    <button class="audio-btn" onclick="playAudio('audio/phonetics/tones/sdx.mp3')">🔊</button>
+                </div>
+                <div class="phonetics-card">
+                    <div class="title">d (35)</div>
+                    <button class="audio-btn" onclick="playAudio('audio/phonetics/tones/sdd.mp3')">🔊</button>
+                </div>
+                <div class="phonetics-card">
+                    <div class="title">l (22)</div>
+                    <button class="audio-btn" onclick="playAudio('audio/phonetics/tones/sdl.mp3')">🔊</button>
+                </div>
+                <div class="phonetics-card">
+                    <div class="title">t (44)</div>
+                    <button class="audio-btn" onclick="playAudio('audio/phonetics/tones/sdt.mp3')">🔊</button>
+                </div>
+                <div class="phonetics-card">
+                    <div class="title">s (13)</div>
+                    <button class="audio-btn" onclick="playAudio('audio/phonetics/tones/sds.mp3')">🔊</button>
+                </div>
+                <div class="phonetics-card">
+                    <div class="title">k (53)</div>
+                    <button class="audio-btn" onclick="playAudio('audio/phonetics/tones/sdk.mp3')">🔊</button>
+                </div>
+                <div class="phonetics-card">
+                    <div class="title">f (31)</div>
+                    <button class="audio-btn" onclick="playAudio('audio/phonetics/tones/sdf.mp3')">🔊</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 模拟词典数据
+        const dictionary = [
+        
+//词条ab开头
+
+{ 苗语: "ab", 中文: "1.阿(词头)2.偏,倾斜|输,屈(理)", 音频: "audio/ab.mp3" },
+
+            { 苗语: "ab bad", 中文: "阿爸,爸爸", 音频: "audio/ab bad.mp3" },
+
+            { 苗语: "ab bax ab dil", 中文: "偏偏倒倒,东倒西歪", 音频: "audio/ab bax ab dil.mp3" },
+
+            { 苗语: "ab bax ab jil", 中文: "偏偏倒倒,东倒西歪", 音频: "audio/ab bax ab jil.mp3" },
+
+            { 苗语: "ab bax ab yud", 中文: "又偏又斜,偏偏倒倒,东倒西歪", 音频: "audio/ab bax ab yud.mp3" },
+
+            { 苗语: "ab ceik", 中文: "阿嚏(打喷嚏的声音)", 音频: "audio/ab ceik.mp3" },
+
+            { 苗语: "ab deik", 中文: "阿姑,姑姑", 音频: "audio/ab deik.mp3" },
+
+{ 苗语: "ab dial", 中文: "阿哥,哥哥", 音频: "audio/.mp3" },
+
+            { 苗语: "ab diax ab dil", 中文: "偏偏倒倒,东倒西歪", 音频: "audio/ab diax ab dil.mp3" },
+
+            { 苗语: "ab diax ab jil", 中文: "偏偏倒倒,东倒西歪", 音频: "audio/ab diax ab jil.mp3" },
+
+            { 苗语: "ab diax ab yud", 中文: "又偏又斜,偏偏倒倒,东倒西歪", 音频: "audio/ab diax ab yud.mp3" },
+
+            { 苗语: "ab dod", 中文: "妹妹(亲昵)", 音频: "audio/ab dod.mp3" },
+
+            { 苗语: "ab ghet", 中文: "阿公,爷爷(亲昵)", 音频: "audio/ab ghet.mp3" },
+
+            { 苗语: "ab hlangb", 中文: "阿孙,孙子(亲昵)", 音频: "audio/ab hlangb.mp3" },
+
+            { 苗语: "Ab Hob", 中文: "阿蒿(雷神)", 音频: "audio/Ab Hob.mp3" },
+
+            { 苗语: "ab jax gos lil", 中文: "理屈词穷", 音频: "audio/ab jax gos lil.mp3" },
+
+            { 苗语: "ab jid", 中文: "阿婿,女婿(亲昵)", 音频: "audio/ab jid.mp3" },
+
+            { 苗语: "ab jil ab diax", 中文: "偏偏倒倒,东倒西歪", 音频: "audio/ab jil ab diax.mp3" },
+
+            { 苗语: "Ab Job", 中文: "阿姣(人名)", 音频: "audio/Ab Job.mp3" },
+
+            { 苗语: "ab khab", 中文: "阿哥", 音频: "audio/ab khab.mp3" },
+
+            { 苗语: "ab khab ab xenb", 中文: "阿哥和阿妹", 音频: "audio/ab khab ab xenb.mp3" },
+
+            { 苗语: "ab lil gos diangs", 中文: "输理败诉", 音频: "audio/ab lil gos diangs.mp3" },
+
+            { 苗语: "ab lil gos set", 中文: "输理败诉", 音频: "audio/ab lil gos set.mp3" },
+
+            { 苗语: "ab lob ab bil", 中文: "肢歪体斜", 音频: "audio/ab lob ab bil.mp3" },
+
+            { 苗语: "ab mais", 中文: "阿妈,妈妈(亲昵)", 音频: "audio/ab mais.mp3" },
+
+            { 苗语: "ab nenl", 中文: "舅舅(亲昵)", 音频: "audio/ab nenl.mp3" },
+
+            { 苗语: "ab nal", 中文: "阿妈", 音频: "audio/ab nal.mp3" },
+
+{ 苗语: "ab niak", 中文: "阿甥,外甥", 音频: "audio/ab niak.mp3" },
+
+            { 苗语: "ab niangb", 中文: "阿嫂,嫂嫂", 音频: "audio/ab niangb.mp3" },
+
+            { 苗语: "", 中文: "", 音频: "audio/.mp3" },
+
+            { 苗语: "ab nil", 中文: "阿妹(亲昵)", 音频: "audio/ab nil.mp3" },
+
+            { 苗语: "ab niux", 中文: "阿妹(爱慕)", 音频: "audio/ab niux.mp3" },
+
+            { 苗语: "ab niux ab nios", 中文: "阿哥阿妹(爱慕)", 音频: "audio/ab niux ab nios.mp3" },
+
+{ 苗语: "ab ot", 中文: "歪", 音频: "audio/ab ot.mp3" },
+
+            { 苗语: "ab ot ab ghaik", 中文: "东倒西歪", 音频: "audio/ab ot ab ghaik.mp3" },
+
+            { 苗语: "ab ot ab les", 中文: "东倒西歪", 音频: "audio/ab ot ab les.mp3" },
+
+            { 苗语: "Ab Pud xet hot Ab Nil", 中文: "阿普别说阿妮(彼此彼此)", 音频: "audio/Ab Pud xet hot Ab Nil.mp3" },
+
+            { 苗语: "Ab Vangb", 中文: "阿央(人名)", 音频: "audio/Ab Vangb.mp3" },
+
+            { 苗语: "Ab Vob", 中文: "阿娥(人名)", 音频: "audio/Ab Vob.mp3" },
+
+{ 苗语: "ab wid", 中文: "妻子(亲昵)", 音频: "audio/ab wid.mp3" },
+
+            { 苗语: "ab wix", 中文: "歪斜", 音频: "audio/ab wix.mp3" },
+
+            { 苗语: "ab wuk", 中文: "阿奶,奶奶", 音频: "audio/ab wuk.mp3" },
+
+            { 苗语: "", 中文: "", 音频: "audio/.mp3" },
+
+            { 苗语: "ab xenb", 中文: "阿妹", 音频: "audio/ab xenb.mp3" },
+
+           //词条ab结束
+           
+           //词库ad开头
+
+{ 苗语: "ad", 中文: "1.女人|女孩|姐姐|姨表姐|姐,妹|舅表姐,姑表姐2.啊(句首,表惊讶）", 音频: "audio/ad.mp3" },
+
+{ 苗语: "ad ad dial dial", 中文: "男男女女|男孩女孩", 音频: "audio/ad ad dial dial.mp3" },
+
+{ 苗语: "ad del", 中文: "姑娘,闺女", 音频: "audio/ad del.mp3" },
+
+{ 苗语: "ad dlol", 中文: "女子,姑娘,阿妹,姐姐,妹妹", 音频: "audio/ad dlol.mp3" },
+
+{ 苗语: "ad dod", 中文: "姊妹|妹妹", 音频: "audio/ad dod.mp3" },
+
+{ 苗语: "ad dod daib niux", 中文: "家族姊妹|姑娘,女子", 音频: "audio/ad dod daib niux.mp3" },
+
+{ 苗语: "ad dod daib pik", 中文: "家族姊妹", 音频: "audio/ad dod daib pik.mp3" },
+
+{ 苗语: "ad dod deik lief", 中文: "诸姑姐妹", 音频: "audio/ad dod deik lief.mp3" },
+
+{ 苗语: "ad dod deik niangb", 中文: "姑嫂姐妹", 音频: "audio/ad dod deik niangb.mp3" },
+
+{ 苗语: "ad ghab but", 中文: "堂姐", 音频: "audio/ad ghab but.mp3" },
+
+{ 苗语: "ad ghangb vil", 中文: "幺姐", 音频: "audio/ad ghangb vil.mp3" },
+
+{ 苗语: "ad ghangb vil", 中文: "幺女儿,幺姑娘", 音频: "audio/ad ghangb vil.mp3" },
+
+{ 苗语: "ad gif", 中文: "姑娘", 音频: "audio/ad gif.mp3" },
+
+{ 苗语: "ad hlieb", 中文: "大姐|大女儿", 音频: "audio/ad hlieb.mp3" },
+
+{ 苗语: "ad nes", 中文: "小妹,妹妹,阿妹", 音频: "audio/ad nes.mp3" },
+
+{ 苗语: "ad nes daib niux", 中文: "姑娘,小妹", 音频: "audio/ad nes daib niux.mp3" },
+
+{ 苗语: "ad niul", 中文: "中青年妇女", 音频: "audio/ad niul.mp3" },
+
+{ 苗语: "ad yut", 中文: "小妹,妹妹|排行最小的姐姐|小女儿", 音频: "audio/ad yut.mp3" },
+
+//词库ad结束
+
+//词库aib,aid,ait开头
+
+{ 苗语: "aib", 中文: "1.那(最远指)2.推卸,推诿", 音频: "audio/aib.mp3" },
+
+{ 苗语: "aib lail", 中文: "虽然,也罢,倒是", 音频: "audio/aib lail.mp3" },
+
+{ 苗语: "aib yab", 中文: "哎呀", 音频: "audio/aib yab.mp3" },
+
+{ 苗语: "aib yob", 中文: "哎哟(惊讶,痛苦)", 音频: "audio/aib yob.mp3" },
+
+{ 苗语: "aid", 中文: "1.嗳(不同意,悔恨,惊讶)|唉(伤感,惋惜)2.吗3.…的话(表示假设)", 音频: "audio/aid.mp3" },
+
+{ 苗语: "aid haid", 中文: "唉嗨(惋惜、遗憾)", 音频: "audio/aid haid.mp3" },
+
+{ 苗语: "aid ud", 中文: "秘密事", 音频: "audio/aid ud.mp3" },
+
+{ 苗语: "aid yel was", 中文: "嗳哟哇(吃惊)", 音频: "audio/aid yel was.mp3" },
+
+{ 苗语: "ait", 中文: "干,做|敬祭|起(动念头)|树立|玩,做|创造,制造|结交|当,担任|种(田、地)|开(亲)|砍(柴),打(柴草)|织(布)绣", 音频: "audio/ait.mp3" },
+
+{ 苗语: "ait ax leit", 中文: "做不到,无能为力", 音频: "audio/ait ax leit.mp3" },
+
+{ 苗语: "ait ax lol lob bil", 中文: "应接不暇,迫不得已,无可奈何", 音频: "audio/ait ax lol lob bil.mp3" },
+
+{ 苗语: "ait ax nongx", 中文: "干不了", 音频: "audio/ait ax nongx.mp3" },
+
+{ 苗语: "ait baif vof", 中文: "称霸", 音频: "audio/ait baif vof.mp3" },
+
+{ 苗语: "ait bad ait mais", 中文: "作为父母|当爹当妈", 音频: "audio/ait bad ait mais.mp3" },
+
+{ 苗语: "ait bil seil", 中文: "下毒手", 音频: "audio/ait bil seil.mp3" },
+
+{ 苗语: "ait bul", 中文: "交友|玩,玩耍", 音频: "audio/ait bul.mp3" },
+
+{ 苗语: "ait ceib", 中文: "打喷嚏", 音频: "audio/ait ceib.mp3" },
+
+{ 苗语: "ait daib gheb", 中文: "当长工", 音频: "audio/ait daib gheb.mp3" },
+
+{ 苗语: "ait dal", 中文: "丢失,遗失|虐待", 音频: "audio/ait dal.mp3" },
+
+{ 苗语: "ait dangk", 中文: "立长凳", 音频: "audio/ait dangk.mp3" },
+
+{ 苗语: "ait deis", 中文: "怎么|怎么样,怎样|无论如何|", 音频: "audio/ait deis.mp3" },
+
+{ 苗语: "ait deix", 中文: "动真格|正直,诚实", 音频: "audio/ait deix.mp3" },
+
+{ 苗语: "ait deix ait dins", 中文: "诚实稳当", 音频: "audio/ait deix ait dins.mp3" },
+
+{ 苗语: "ait deix niangb lul,ait dins dad fangb", 中文: "正直者长寿,稳健者治世", 音频: "audio/ait deix niangb lul,ait dins dad fangb.mp3" },
+
+{ 苗语: "ait deix niangb lul,ait dins dot dlas", 中文: "正直者长寿,稳当者致富", 音频: "audio/ait deix niangb lul,ait dins dot dlas.mp3" },
+
+{ 苗语: "ait dend", 中文: "预祭", 音频: "audio/ait dend.mp3" },
+
+{ 苗语: "ait det xab vangl,ait lul xab fangb", 中文: "做树木遮掩村寨,当长老保护地方", 音频: "audio/ait det xab vangl,ait lul xab fangb.mp3" },
+
+{ 苗语: "ait det xab vangl,ait lul xab naix", 中文: "做树木遮掩村寨,当长老保护民众", 音频: "audio/ait det xab vangl,ait lul xab naix.mp3" },
+
+{ 苗语: "ait diangs", 中文: "打仗,发生战争|打官司,诉讼", 音频: "audio/ait diangs.mp3" },
+
+{ 苗语: "ait diangs ed lil,ait gheb ed ves", 中文: "诉讼凭道理,干活靠力", 音频: "audio/ait diangs ed lil,ait gheb ed ves.mp3" },
+
+{ 苗语: "ait died ait ngit", 中文: "装聋作哑", 音频: "audio/ait died ait ngit.mp3" },
+
+{ 苗语: "ait diel ait jens", 中文: "制作各种器皿", 音频: "audio/ait diel ait jens.mp3" },
+
+{ 苗语: "ait diob ait liak", 中文: "偷奸耍滑", 音频: "audio/ait diob ait liak.mp3" },
+
+{ 苗语: "ait diongx", 中文: "吹芦笙", 音频: "audio/ait diongx.mp3" },
+
+{ 苗语: "ait diongx niel", 中文: "举办笙鼓活动", 音频: "audio/ait diongx niel.mp3" },
+
+{ 苗语: "ait diongx ait niel", 中文: "举办笙鼓活动", 音频: "audio/ait diongx ait niel.mp3" },
+
+{ 苗语: "ait dlad ait bat", 中文: "当狗当猪(搞不正当性关系)", 音频: "audio/ait dlad ait bat.mp3" },
+
+{ 苗语: "ait dlangd ait ak", 中文: "做老鹰做乌鸦(比喻四处游荡)", 音频: "audio/ait dlangd ait ak.mp3" },
+
+{ 苗语: "ait dlas ait xangf", 中文: "人财两旺", 音频: "audio/ait dlas ait xangf.mp3" },
+
+{ 苗语: "ait dlas ghax fal sod,hxet ves ghax jel khed", 中文: "致富要趁早,休闲就受穷", 音频: "audio/ait dlas ghax fal sod,hxet ves ghax jel khed.mp3" },
+
+{ 苗语: "ait dliangb", 中文: "祭祀鬼神|搞阴谋诡计,搞鬼", 音频: "audio/ait dliangb.mp3" },
+
+{ 苗语: "ait dliangb ait dlit", 中文: "装神弄鬼", 音频: "audio/ait dliangb ait dlit.mp3" },
+
+{ 苗语: "ait dliangb ait zangs", 中文: "装神弄鬼|搞阴谋诡计,搞鬼", 音频: "audio/ait dliangb ait zangs.mp3" },
+
+{ 苗语: "ait dliangl ax dax", 中文: "迫不得已,无可奈何", 音频: "audio/ait dliangl ax dax.mp3" },
+
+{ 苗语: "ait dlongd", 中文: "敬鬼神,敬祭", 音频: "audio/ait dlongd.mp3" },
+
+{ 苗语: "ait dok", 中文: "织布", 音频: "audio/ait dok.mp3" },
+
+{ 苗语: "ait dot", 中文: "能干|干得,行得通", 音频: "audio/ait dot.mp3" },
+
+{ 苗语: "ait gad bul", 中文: "朋友聚餐,朋友会餐", 音频: "audio/ait gad bul.mp3" },
+
+{ 苗语: "ait gad deik", 中文: "过家家", 音频: "audio/ait gad deik.mp3" },
+
+{ 苗语: "ait gad ghab bul", 中文: "朋友聚餐", 音频: "audio/ait gad ghab bul.mp3" },
+
+{ 苗语: "ait gad liangl", 中文: "办姊妹饭", 音频: "audio/ait gad liangl.mp3" },
+
+{ 苗语: "ait gad wangl", 中文: "会餐,聚餐", 音频: "audio/ait gad wangl.mp3" },
+
+{ 苗语: "ait gangb hnongb dad dul,ait gangb vas dad hxangb", 中文: "做萤火虫发光,做蜘蛛虫结网", 音频: "audio/ait gangb hnongb dad dul,ait gangb vas dad hxangb.mp3" },
+
+{ 苗语: "ait gangx ait gul", 中文: "重重叠叠", 音频: "audio/ait gangx ait gul.mp3" },
+
+{ 苗语: "ait gek", 中文: "逞强,逞能", 音频: "audio/ait gek.mp3" },
+
+{ 苗语: "ait ghab bul", 中文: "交朋友", 音频: "audio/ait ghab bul.mp3" },
+
+{ 苗语: "ait ghab jit", 中文: "设计|设圈套,算计|假装", 音频: "audio/ait ghab jit.mp3" },
+
+{ 苗语: "ait ghab lil", 中文: "客气,讲礼貌", 音频: "audio/ait ghab lil.mp3" },
+
+{ 苗语: "ait ghab liol", 中文: "设圈套", 音频: "audio/ait ghab liol.mp3" },
+
+{ 苗语: "ait ghab mais", 中文: "客气,讲礼貌", 音频: "audio/ait ghab mais.mp3" },
+
+{ 苗语: "ait ghab nangl", 中文: "设圈套,施诡计,捣鬼", 音频: "audio/ait ghab nangl.mp3" },
+
+{ 苗语: "ait ghad ait jut", 中文: "(小孩)拉屎拉尿", 音频: "audio/ait ghad ait jut.mp3" },
+
+{ 苗语: "ait ghad ghad", 中文: "性交(诙谐说法)", 音频: "audio/ait ghad ghad.mp3" },
+
+{ 苗语: "ait ghaib", 中文: "做主|做东", 音频: "audio/ait ghaib.mp3" },
+
+{ 苗语: "ait ghangf", 中文: "狂妄", 音频: "audio/ait ghangf.mp3" },
+
+{ 苗语: "ait ghangf ait cend", 中文: "狂妄自大", 音频: "audio/ait ghangf ait cend.mp3" },
+
+{ 苗语: "ait ghangf ait dat", 中文: "狂妄自大", 音频: "audio/ait ghangf ait dat.mp3" },
+
+{ 苗语: "ait ghangf ait waid", 中文: "狂妄自大", 音频: "audio/ait ghangf ait waid.mp3" },
+
+{ 苗语: "ait ghat", 中文: "定价,讲价,作价", 音频: "audio/ait ghat.mp3" },
+
+{ 苗语: "ait gheb", 中文: "1.干活,做工2.患天花、麻疹、疟疾之类疾病的总称", 音频: "audio/ait gheb.mp3" },
+
+{ 苗语: "ait gheb ait gid", 中文: "做家务,做事情", 音频: "audio/ait gheb ait gid.mp3" },
+
+{ 苗语: "ait gheb ait khad", 中文: "当雇工干活", 音频: "audio/ait gheb ait khad.mp3" },
+
+{ 苗语: "ait gheb ait sos waix,bangb naix bangb sos dab", 中文: "干活干到头,帮人帮到底", 音频: "audio/ait gheb ait sos waix,bangb naix bangb sos dab.mp3" },
+
+{ 苗语: "ait gheb ax hxib kib,dlenl vud ax hxib xad", 中文: "干活不怕天热,进山不怕荆棘", 音频: "audio/ait gheb ax hxib kib,dlenl vud ax hxib xad.mp3" },
+
+{ 苗语: "ait gheb ed mux,vud hseid ed lil", 中文: "干活需肥料,说话靠道理", 音频: "audio/ait gheb ed mux,vud hseid ed lil.mp3" },
+
+{ 苗语: "ait gheb ed ninx liod,ait set ed jax lil", 中文: "干活靠耕牛,诉讼凭道理", 音频: "audio/ait gheb ed ninx liod,ait set ed jax lil.mp3" },
+
+{ 苗语: "ait gheb hlieb", 中文: "出天花", 音频: "audio/ait gheb hlieb.mp3" },
+
+{ 苗语: "ait gheb hsat", 中文: "出麻疹", 音频: "audio/ait gheb hsat.mp3" },
+
+{ 苗语: "ait gheb jas dongd,dib hlet jas kib", 中文: "干活趁季节,打铁趁热量", 音频: "audio/ait gheb jas dongd,dib hlet jas kib.mp3" },
+
+{ 苗语: "ait gheb jef dot nongx,hxib dul jef dot diod", 中文: "干活才有吃,拾柴方得烧", 音频: "audio/ait gheb jef dot nongx,hxib dul jef dot diod.mp3" },
+
+{ 苗语: "ait gheb jef nongx,bangt hmub jef nangl nox", 中文: "干活才有饭吃,绣花才穿得好", 音频: "audio/ait gheb jef nongx,bangt hmub jef nangl nox.mp3" },
+
+{ 苗语: "ait gheb nongx dad,ait niangs nongx laid", 中文: "干活吃饭日子长,做贼过活日子短", 音频: "audio/ait gheb nongx dad,ait niangs nongx laid.mp3" },
+
+{ 苗语: "ait gheb nongx gek,hxet ves nongx hlik", 中文: "干活有干饭吃,休闲得稀粥喝", 音频: "audio/ait gheb nongx gek,hxet ves nongx hlik.mp3" },
+
+{ 苗语: "ait gheb nongx gid dul diod", 中文: "干活谋生", 音频: "audio/ait gheb nongx gid dul diod.mp3" },
+
+{ 苗语: "ait gheb nongx ob liangl,hxet ves nongx jangb dangl", 中文: "干活人吃二两,休闲者吃一斤半", 音频: "audio/ait gheb nongx ob liangl,hxet ves nongx jangb dangl.mp3" },
+
+{ 苗语: "ait gheb seil", 中文: "打摆子,患疟疾", 音频: "audio/ait gheb seil.mp3" },
+
+{ 苗语: "ait gheb wangx dongd seil,yis daib wangx khangd lul", 中文: "干活冬天有衣食,养儿老来有依靠", 音频: "audio/ait gheb wangx dongd seil,yis daib wangx khangd lul.mp3" },
+
+{ 苗语: "ait gheb yut", 中文: "出麻疹", 音频: "audio/ait gheb yut.mp3" },
+
+{ 苗语: "ait ghed dongf", 中文: "当作谈资", 音频: "audio/ait ghed dongf.mp3" },
+
+{ 苗语: "ait gheib bes git", 中文: "玩母鸡抱蛋(儿童游戏)", 音频: "audio/ait gheib bes git.mp3" },
+
+{ 苗语: "ait gheib dad vil,ait yof dad fangb", 中文: "做鸡护窠巢,为鹞保地方", 音频: "audio/ait gheib dad vil,ait yof dad fangb.mp3" },
+
+{ 苗语: "ait gheix xid", 中文: "做什么,干什么|为什么", 音频: "audio/ait gheix xid.mp3" },
+
+{ 苗语: "ait ghob ait nes", 中文: "做鸽做鸟(有去无回)", 音频: "audio/ait ghob ait nes.mp3" },
+
+{ 苗语: "ait ghongd jib daib", 中文: "不失童真", 音频: "audio/ait ghongd jib daib.mp3" },
+
+{ 苗语: "ait ghongd vangt", 中文: "呈年轻状态", 音频: "audio/ait ghongd vangt.mp3" },
+
+{ 苗语: "ait ghot", 中文: "做媒,当中间人", 音频: "audio/ait ghot.mp3" },
+
+{ 苗语: "ait ghuk", 中文: "打嗝儿", 音频: "audio/ait ghuk.mp3" },
+
+{ 苗语: "ait gid died", 中文: "干傻事,蛮干", 音频: "audio/ait gid died.mp3" },
+
+{ 苗语: "ait gid fangx", 中文: "公开做", 音频: "audio/ait gid fangx.mp3" },
+
+{ 苗语: "ait gid hlieb", 中文: "公开做", 音频: "audio/ait gid hlieb.mp3" },
+
+{ 苗语: "ait gid liuf", 中文: "私下做", 音频: "audio/ait gid liuf.mp3" },
+
+{ 苗语: "ait gid niad", 中文: "干傻事,蛮干", 音频: "audio/ait gid niad.mp3" },
+
+{ 苗语: "ait gid zek", 中文: "阴损", 音频: "audio/ait gid zek.mp3" },
+
+{ 苗语: "ait gix ait niel", 中文: "举办笙鼓活动", 音频: "audio/ait gix ait niel.mp3" },
+
+{ 苗语: "ait gul niul", 中文: "1.朦朦胧胧,灰蒙蒙2.笨拙迟缓的样子", 音频: "audio/ait gul niul.mp3" },
+
+{ 苗语: "ait hab", 中文: "打哈欠", 音频: "audio/ait hab.mp3" },
+
+{ 苗语: "ait hat", 中文: "危害,损害,陷害|可怜", 音频: "audio/ait hat.mp3" },
+
+{ 苗语: "ait hfangb gheix xid", 中文: "什么原因", 音频: "audio/ait hfangb gheix xid.mp3" },
+
+{ 苗语: "ait hfed ait fat", 中文: "太过分,过分之极", 音频: "audio/ait hfed ait fat.mp3" },
+
+{ 苗语: "ait hfed senx", 中文: "过分", 音频: "audio/ait hfed senx.mp3" },
+
+{ 苗语: "ait hfed set", 中文: "过分", 音频: "audio/ait hfed set.mp3" },
+
+{ 苗语: "ait hfib ait dlas", 中文: "发财致富", 音频: "audio/ait hfib ait dlas.mp3" },
+
+{ 苗语: "ait hfud dlox", 中文: "一副猫头鹰模样(没有主见)", 音频: "audio/ait hfud dlox.mp3" },
+
+{ 苗语: "ait hfud niangs", 中文: "一副强盗模样", 音频: "audio/ait hfud niangs.mp3" },
+
+{ 苗语: "ait hfud xid", 中文: "一副说不清的模样(没出息,没本事)", 音频: "audio/ait hfud xid.mp3" },
+
+{ 苗语: "ait hfud seil", 中文: "打摆子,患疟疾", 音频: "audio/ait hfud seil.mp3" },
+
+{ 苗语: "ait hlieb", 中文: "傲慢,骄傲,自大,自满", 音频: "audio/ait hlieb.mp3" },
+
+{ 苗语: "ait hlieb ait cend", 中文: "骄傲自大,骄傲自满", 音频: "audio/ait hlieb ait cend.mp3" },
+
+{ 苗语: "ait hlieb ait dat", 中文: "骄傲自大,骄傲自满", 音频: "audio/ait hlieb ait dat.mp3" },
+
+{ 苗语: "ait hlieb ait liad", 中文: "骄傲自大,骄傲自满", 音频: "audio/ait hlieb ait liad.mp3" },
+
+{ 苗语: "ait hliod", 中文: "求学,求知识,学本领", 音频: "audio/ait hliod.mp3" },
+
+{ 苗语: "ait hliod ait vas", 中文: "求知识,学本领", 音频: "audio/ait hliod ait vas.mp3" },
+
+{ 苗语: "ait hliod ait vof", 中文: "求知识学本领|逞能,逞强", 音频: "audio/ait hliod ait vof.mp3" },
+
+{ 苗语: "ait hlob", 中文: "瘫痪", 音频: "audio/ait hlob.mp3" },
+
+{ 苗语: "ait hmub", 中文: "绣花", 音频: "audio/ait hmub.mp3" },
+
+{ 苗语: "ait hnib", 中文: "娇气,撒娇", 音频: "audio/ait hnib.mp3" },
+
+{ 苗语: "ait hnid", 中文: "存心,蓄意", 音频: "audio/ait hnid.mp3" },
+
+{ 苗语: "ait hniongb ait dal", 中文: "丢三落四", 音频: "audio/ait hniongb ait dal.mp3" },
+
+{ 苗语: "ait hniub", 中文: "做种,留种", 音频: "audio/ait hniub.mp3" },
+
+{ 苗语: "ait hniub ait xongd", 中文: "留种,做种", 音频: "audio/ait hniub ait xongd.mp3" },
+
+{ 苗语: "ait hseib", 中文: "行窃,偷盗,盗窃", 音频: "audio/ait hseib.mp3" },
+
+{ 苗语: "ait hseib ait niangs", 中文: "为匪做贼,为盗行窃,偷盗", 音频: "audio/ait hseib ait niangs.mp3" },
+
+{ 苗语: "ait hveb", 中文: "述说,游说", 音频: "audio/ait hveb.mp3" },
+
+{ 苗语: "ait hveb hmat", 中文: "当作谈资,当做话柄", 音频: "audio/ait hveb hmat.mp3" },
+
+{ 苗语: "ait hvib", 中文: "存心,安心|有意,诚心诚意", 音频: "audio/ait hvib.mp3" },
+
+{ 苗语: "ait hvib ax lal,ait hnid ax vut", 中文: "起心不良,蓄意不善", 音频: "audio/ait hvib ax lal,ait hnid ax vut.mp3" },
+
+{ 苗语: "ait hvit", 中文: "打老庚(结拜为兄弟)", 音频: "audio/ait hvit.mp3" },
+
+{ 苗语: "ait hxed ait vut", 中文: "行善,办好事|办喜事", 音频: "audio/ait hxed ait vut.mp3" },
+
+{ 苗语: "ait hxub ait khat", 中文: "缔结婚姻,开亲结戚,男婚女嫁", 音频: "audio/ait hxub ait khat.mp3" },
+
+{ 苗语: "ait ib ghongb", 中文: "一连,连续", 音频: "audio/ait ib ghongb.mp3" },
+
+{ 苗语: "ait if if", 中文: "性交(诙谐说法)", 音频: "audio/ait if if.mp3" },
+
+{ 苗语: "ait jangd", 中文: "祭鼓,鼓社祭,吃鼓藏", 音频: "audio/ait jangd.mp3" },
+
+{ 苗语: "ait jangd niel", 中文: "祭鼓,鼓社祭,吃鼓藏", 音频: "audio/ait jangd niel.mp3" },
+
+{ 苗语: "ait jangd niel hek nes", 中文: "祭鼓,鼓社祭,吃鼓藏", 音频: "audio/ait jangd niel hek nes.mp3" },
+
+{ 苗语: "ait jenf", 中文: "忌讳", 音频: "audio/ait jenf.mp3" },
+
+{ 苗语: "ait jid dax", 中文: "认做兄弟", 音频: "audio/ait jid dax.mp3" },
+
+{ 苗语: "ait jif", 中文: "已极,过分,异乎寻常", 音频: "audio/ait jif.mp3" },
+
+{ 苗语: "ait jif das", 中文: "特别过分", 音频: "audio/ait jif das.mp3" },
+
+{ 苗语: "ait jis", 中文: "(事情)办完", 音频: "audio/ait jis.mp3" },
+
+{ 苗语: "ait jit", 中文: "设计|算计,设圈套|假装", 音频: "audio/ait jit.mp3" },
+
+{ 苗语: "ait jox ait lab", 中文: "连续不断,放连珠炮|成群结队", 音频: "audio/ait jox ait lab.mp3" },
+
+{ 苗语: "ait jox hvib dad dad,zait jox eb dad yangd", 中文: "心胸长又长,像江河长流", 音频: "audio/ait jox hvib dad dad,zait jox eb dad yangd.mp3" },
+
+{ 苗语: "ait jud", 中文: "酿酒", 音频: "audio/ait jud.mp3" },
+
+{ 苗语: "ait jus ghongb", 中文: "一连,连续", 音频: "audio/ait jus ghongb.mp3" },
+
+{ 苗语: "ait jus hxangb", 中文: "连续不断,成群结队", 音频: "audio/ait jus hxangb.mp3" },
+
+{ 苗语: "ait khad", 中文: "当佣工", 音频: "audio/ait khad.mp3" },
+
+{ 苗语: "ait khad hxad", 中文: "当佣工", 音频: "audio/ait khad hxad.mp3" },
+
+{ 苗语: "ait khat", 中文: "开亲|做客|客气", 音频: "audio/ait khat.mp3" },
+
+{ 苗语: "ait khat diongb hnaib", 中文: "白天开亲(白天公开新娘接来,举办盛大婚礼)", 音频: "audio/ait khat diongb hnaib.mp3" },
+
+{ 苗语: "ait khat diongb mongl", 中文: "夜晚开亲(夜间悄悄把新娘接来,举办简单婚礼)", 音频: "audio/ait khat diongb mongl.mp3" },
+
+{ 苗语: "ait khat hlieb", 中文: "开大亲(公开把新娘接来,举办盛大婚礼)", 音频: "audio/ait khat hlieb.mp3" },
+
+{ 苗语: "ait khat yut", 中文: "开小亲(悄悄把新娘接来,举办简单婚礼)", 音频: "audio/ait khat yut.mp3" },
+
+{ 苗语: "ait khed ait hxat", 中文: "受苦受难", 音频: "audio/ait khed ait hxat.mp3" },
+
+{ 苗语: "ait khod", 中文: "打官司", 音频: "audio/ait khod.mp3" },
+
+{ 苗语: "ait khod diangs", 中文: "打官司", 音频: "audio/ait khod diangs.mp3" },
+
+{ 苗语: "ait khod ait diangs", 中文: "打官司", 音频: "audio/ait khod ait diangs.mp3" },
+
+{ 苗语: "ait lax ait hangt", 中文: "为非作歹,胡作非为", 音频: "audio/ait lax ait hangt.mp3" },
+
+{ 苗语: "ait leit", 中文: "办得到", 音频: "audio/ait leit.mp3" },
+
+{ 苗语: "ait liab", 中文: "撒娇", 音频: "audio/ait liab.mp3" },
+
+{ 苗语: "ait liak", 中文: "(菜、豆之类)做成干的", 音频: "audio/ait liak.mp3" },
+
+{ 苗语: "ait lias hvib", 中文: "习惯", 音频: "audio/ait lias hvib.mp3" },
+
+{ 苗语: "ait lil", 中文: "客气,讲礼节|当作礼物", 音频: "audio/ait lil.mp3" },
+
+{ 苗语: "ait lis", 中文: "(禾木科植物)打苞", 音频: "audio/ait lis.mp3" },
+
+{ 苗语: "ait lix hlib nail,ait naix hlib bul", 中文: "种田想获鱼儿,做人想交朋友", 音频: "audio/ait lix hlib nail,ait naix hlib bul.mp3" },
+
+{ 苗语: "ait lob bil", 中文: "操办,执事|做手脚", 音频: "audio/ait lob bil.mp3" },
+
+{ 苗语: "ait lob ax lol bil", 中文: "手脚无法并用(指忙得不可开交)", 音频: "audio/ait lob ax lol bil.mp3" },
+
+{ 苗语: "ait lob bil", 中文: "办事|做手脚", 音频: "audio/ait lob bil.mp3" },
+
+{ 苗语: "ait lob bil gangb gux", 中文: "呈蚂蚱腿状态(拈轻怕重)", 音频: "audio/ait lob bil gangb gux.mp3" },
+
+{ 苗语: "ait lob bil gangb vas", 中文: "呈蜘蛛腿状态(根基不稳)", 音频: "audio/ait lob bil gangb vas.mp3" },
+
+{ 苗语: "ait lob ngix", 中文: "呈野兽腿状态(逃跑)", 音频: "audio/ait lob ngix.mp3" },
+
+{ 苗语: "ait lob max lol bil", 中文: "手脚无法并用(指忙得不可开交)", 音频: "audio/ait lob max lol bil.mp3" },
+
+{ 苗语: "ait longs", 中文: "玩耍", 音频: "audio/ait longs.mp3" },
+
+{ 苗语: "ait lot", 中文: "动嘴", 音频: "audio/ait lot.mp3" },
+
+{ 苗语: "ait lot hmat", 中文: "当作谈资,当作话柄", 音频: "audio/ait lot hmat.mp3" },
+
+{ 苗语: "ait lot liok", 中文: "该挨饿", 音频: "audio/ait lot liok.mp3" },
+
+{ 苗语: "ait lot zes", 中文: "挂在嘴上", 音频: "audio/ait lot zes.mp3" },
+
+{ 苗语: "ait mais", 中文: "…一副…眼神", 音频: "audio/ait mais.mp3" },
+
+{ 苗语: "ait mais ait bad", 中文: "为母做父,当家立事", 音频: "audio/ait mais ait bad.mp3" },
+
+{ 苗语: "ait mais das", 中文: "一副死眼神", 音频: "audio/ait mais das.mp3" },
+
+{ 苗语: "ait mais died", 中文: "一副傻眼神", 音频: "audio/ait mais died.mp3" },
+
+{ 苗语: "ait mais gheib", 中文: "夜盲症", 音频: "audio/ait mais gheib.mp3" },
+
+{ 苗语: "ait mais gheib ghob", 中文: "即将入睡的眼神", 音频: "audio/ait mais gheib ghob.mp3" },
+
+{ 苗语: "ait mais hxat", 中文: "一副穷眼神", 音频: "audio/ait mais hxat.mp3" },
+
+{ 苗语: "ait mais khed", 中文: "一副苦眼神", 音频: "audio/ait mais khed.mp3" },
+
+{ 苗语: "ait mais niad", 中文: "一副蠢眼神", 音频: "audio/ait mais niad.mp3" },
+
+{ 苗语: "ait mais niangs", 中文: "一副贼眼神,贼眉贼眼", 音频: "audio/ait mais niangs.mp3" },
+
+{ 苗语: "ait mais yangf", 中文: "一副凶恶眼神", 音频: "audio/ait mais yangf.mp3" },
+
+{ 苗语: "ait mangl", 中文: "一副…相", 音频: "audio/ait mangl.mp3" },
+
+{ 苗语: "ait mangl das", 中文: "一副死相", 音频: "audio/ait mangl das.mp3" },
+
+{ 苗语: "ait mangl died", 中文: "一副傻相", 音频: "audio/ait mangl died.mp3" },
+
+{ 苗语: "ait mangl genx", 中文: "一副哭相", 音频: "audio/ait mangl genx.mp3" },
+
+{ 苗语: "ait mangl hxat", 中文: "一副穷相", 音频: "audio/ait mangl hxat.mp3" },
+
+{ 苗语: "ait mangl khed", 中文: "一副苦相", 音频: "audio/ait mangl khed.mp3" },
+
+{ 苗语: "ait mangl liok", 中文: "一副饿相", 音频: "audio/ait mangl liok.mp3" },
+
+{ 苗语: "ait mangl niad", 中文: "一副蠢相", 音频: "audio/ait mangl niad.mp3" },
+
+{ 苗语: "ait mangl yangf", 中文: "一副凶相", 音频: "audio/ait mangl yangf.mp3" },
+
+{ 苗语: "ait max xit dad,ait qok xit gangf", 中文: "做穿枋相连,做牵杆相牵(互相帮撑)", 音频: "audio/ait max xit dad,ait qok xit gangf.mp3" },
+
+{ 苗语: "ait naf naf nongx gek,ait genf yenf nongx hlik", 中文: "勤劳吃饭,悠闲喝粥", 音频: "audio/ait naf naf nongx gek,ait genf yenf nongx hlik.mp3" },
+
+{ 苗语: "ait nail", 中文: "渔,捕鱼", 音频: "audio/ait nail.mp3" },
+
+{ 苗语: "ait nail bus eb ait ngix bus vud", 中文: "鱼潜水兽钻山(各得其所)", 音频: "audio/ait nail bus eb ait ngix bus vud.mp3" },
+
+{ 苗语: "ait naix", 中文: "为人", 音频: "audio/ait naix.mp3" },
+
+{ 苗语: "ait naix ait bul", 中文: "为人处世", 音频: "audio/ait naix ait bul.mp3" },
+
+{ 苗语: "ait naix ait dail", 中文: "为人处世", 音频: "audio/ait naix ait dail.mp3" },
+
+{ 苗语: "ait naix hlieb", 中文: "当能人,充强人|逞强", 音频: "audio/ait naix hlieb.mp3" },
+
+{ 苗语: "ait nangx fangb", 中文: "扬名,留名于世", 音频: "audio/ait nangx fangb.mp3" },
+
+{ 苗语: "ait nangx hlib", 中文: "做纪念,留念想", 音频: "audio/ait nangx hlib.mp3" },
+
+{ 苗语: "ait nas", 中文: "守寡", 音频: "audio/ait nas.mp3" },
+
+{ 苗语: "ait nend", 中文: "1.那样|那么|那么(表示性质、状态等)|因此,所以,于是2.好(表示允诺)", 音频: "audio/ait nend.mp3" },
+
+{ 苗语: "ait nend dluf ait nend", 中文: "如此这般", 音频: "audio/ait nend dluf ait nend.mp3" },
+
+{ 苗语: "ait nend dluf nend", 中文: "如此这般", 音频: "audio/ait nend dluf nend.mp3" },
+
+{ 苗语: "ait nend hot", 中文: "不过如此而已", 音频: "audio/ait nend hot.mp3" },
+
+{ 苗语: "ait nend hul", 中文: "虽然如此,尽管如此", 音频: "audio/ait nend hul.mp3" },
+
+{ 苗语: "ait ngas ait ax jangx,ait ngil dax gix lix", 中文: "学勤不容易,学懒快得很", 音频: "audio/ait ngas ait ax jangx,ait ngil dax gix lix.mp3" },
+
+{ 苗语: "ait ngex", 中文: "聚餐", 音频: "audio/ait ngex.mp3" },
+
+{ 苗语: "ait ngil", 中文: "偷懒", 音频: "audio/ait ngil.mp3" },
+
+{ 苗语: "ait ngil ait ghek", 中文: "懒惰闲散", 音频: "audio/ait ngil ait ghek.mp3" },
+
+{ 苗语: "ait ngol", 中文: "咳嗽", 音频: "audio/ait ngol.mp3" },
+
+{ 苗语: "ait ngol ait hnek", 中文: "又咳嗽又哮喘", 音频: "audio/ait ngol ait hnek.mp3" },
+
+{ 苗语: "ait niad", 中文: "装傻,装糊涂,示弱", 音频: "audio/ait niad.mp3" },
+
+{ 苗语: "ait niangb ax hxent jid,ait gheb ax hxent ves", 中文: "为媳不怕脏累,干活不惜气力", 音频: "audio/ait niangb ax hxent jid,ait gheb ax hxent ves.mp3" },
+
+{ 苗语: "ait niangl", 中文: "生气", 音频: "audio/ait niangl.mp3" },
+
+{ 苗语: "ait niangl ait dat", 中文: "气鼓鼓的", 音频: "audio/ait niangl ait dat.mp3" },
+
+{ 苗语: "ait niangl ait cend", 中文: "气鼓鼓的", 音频: "audio/ait niangl ait cend.mp3" },
+
+{ 苗语: "ait niangs", 中文: "偷,盗,偷盗,盗窃,行窃|做贼,为匪|暗暗地,悄悄地", 音频: "audio/ait niangs.mp3" },
+
+{ 苗语: "ait niangs ax dlas,hxid khat ax hxat", 中文: "做贼不富,待客不穷", 音频: "audio/ait niangs ax dlas,hxid khat ax hxat.mp3" },
+
+{ 苗语: "ait niangs xongs liangl,ongd songd xongs juf", 中文: "偷摸罚银七两,诬谄罚银七十两", 音频: "audio/ait niangs xongs liangl,ongd songd xongs juf.mp3" },
+
+{ 苗语: "ait niel", 中文: "鼓社祭,祭鼓,吃鼓藏", 音频: "audio/ait niel.mp3" },
+
+{ 苗语: "ait niox ait dal", 中文: "抛弃,遗弃", 音频: "audio/ait niox ait dal.mp3" },
+
+{ 苗语: "ait nint", 中文: "撒娇", 音频: "audio/ait nint.mp3" },
+
+{ 苗语: "ait ninx ait liod", 中文: "当牛做马", 音频: "audio/ait ninx ait liod.mp3" },
+
+{ 苗语: "ait niongx vil bil,ait ghak vil vangx", 中文: "做争坡野鸡,当吵岭锦鸡(争强好胜)", 音频: "audio/ait niongx vil bil,ait ghak vil vangx.mp3" },
+
+{ 苗语: "ait niox", 中文: "抛弃", 音频: "audio/ait niox.mp3" },
+
+{ 苗语: "ait niox ait dal", 中文: "白眼看人", 音频: "audio/ait niox ait dal.mp3" },
+
+{ 苗语: "ait niul", 中文: "认生,疏远", 音频: "audio/ait niul.mp3" },
+
+{ 苗语: "ait niul ait cend", 中文: "特别认生", 音频: "audio/ait niul ait cend.mp3" },
+
+{ 苗语: "ait niul ait les", 中文: "特别认生", 音频: "audio/ait niul ait les.mp3" },
+
+{ 苗语: "ait nongd", 中文: "这样", 音频: "audio/ait nongd.mp3" },
+
+{ 苗语: "ait nongx ait nangl", 中文: "做吃的和穿的,做家务|谋生", 音频: "audio/ait nongx ait nangl.mp3" },
+
+{ 苗语: "ait not lias lob bil", 中文: "熟能生巧", 音频: "audio/ait not lias lob bil.mp3" },
+
+{ 苗语: "ait set", 中文: "1.打官司2.用力,使劲|鼓励,打气3.靠某人或某物之力,以某物或某人为依仗", 音频: "audio/ait set.mp3" },
+
+{ 苗语: "ait set ait diangs", 中文: "打官司", 音频: "audio/ait set ait diangs.mp3" },
+
+{ 苗语: "ait vangt", 中文: "做年轻人的事(特指找对象、游玩对歌等)", 音频: "audio/ait vangt.mp3" },
+
+{ 苗语: "ait ves ax lol", 中文: "迫不得已,无可奈何", 音频: "audio/ait ves ax lol.mp3" },
+
+{ 苗语: "ait ves ax lol,ait dliangl ax dax", 中文: "用力没有力,使劲没有劲", 音频: "audio/ait ves ax lol,ait dliangl ax dax.mp3" },
+
+{ 苗语: "ait ves died", 中文: "使傻劲", 音频: "audio/ait ves died.mp3" },
+
+{ 苗语: "ait ves gek", 中文: "逞能,逞强", 音频: "audio/ait ves gek.mp3" },
+
+{ 苗语: "ait ves hlieb", 中文: "使蛮力", 音频: "audio/ait ves hlieb.mp3" },
+
+{ 苗语: "ait ves jib daib", 中文: "耍小孩子脾气", 音频: "audio/ait ves jib daib.mp3" },
+
+{ 苗语: "ait ves niad", 中文: "使傻劲", 音频: "audio/ait ves niad.mp3" },
+
+{ 苗语: "ait vongb gid", 中文: "做事情|敬鬼神", 音频: "audio/ait vongb gid.mp3" },
+
+{ 苗语: "ait vof", 中文: "作恶|逞强,强势", 音频: "audio/ait vof.mp3" },
+
+{ 苗语: "ait vut", 中文: "使…受益", 音频: "audio/ait vut.mp3" },
+
+{ 苗语: "ait vut dot vut,ait yangf dot yangf", 中文: "善有善报,恶有恶报", 音频: "audio/ait vut dot vut,ait yangf dot yangf.mp3" },
+
+{ 苗语: "ait vut ghak", 中文: "逗乐,取乐,开玩笑", 音频: "audio/ait vut ghak.mp3" },
+
+{ 苗语: "ait vut ghak jangx deix", 中文: "弄假成真", 音频: "audio/ait vut ghak jangx deix.mp3" },
+
+{ 苗语: "ait wab naix", 中文: "幻听(本无声音却听到)", 音频: "audio/ait wab naix.mp3" },
+
+{ 苗语: "ait wangb", 中文: "打扮,妆饰", 音频: "audio/ait wangb.mp3" },
+
+{ 苗语: "ait wangx", 中文: "称王", 音频: "audio/ait wangx.mp3" },
+
+{ 苗语: "ait wangx ait vof", 中文: "称王称霸", 音频: "audio/ait wangx ait vof.mp3" },
+
+{ 苗语: "ait wangx ait ghab lail", 中文: "当官为王,当干部,当领导", 音频: "audio/ait wangx ait ghab lail.mp3" },
+
+{ 苗语: "ait xad ait yangf", 中文: "为非作歹,胡作非为", 音频: "audio/ait xad ait yangf.mp3" },
+
+{ 苗语: "ait xongd", 中文: "留种,做种|做榜样", 音频: "audio/ait xongd.mp3" },
+
+{ 苗语: "ait xongf", 中文: "有本事,能干", 音频: "audio/ait xongf.mp3" },
+
+{ 苗语: "ait yangf", 中文: "作恶,恶搞", 音频: "audio/ait yangf.mp3" },
+
+{ 苗语: "ait yangs", 中文: "做榜样,当模样,做样子|看样子,似乎", 音频: "audio/ait yangs.mp3" },
+
+{ 苗语: "ait yex ait yangd", 中文: "到处游玩", 音频: "audio/ait yex ait yangd.mp3" },
+
+{ 苗语: "ait yib", 中文: "育秧,育苗", 音频: "audio/ait yib.mp3" },
+
+{ 苗语: "ait yil", 中文: "多么", 音频: "audio/ait yil.mp3" },
+
+{ 苗语: "ait zangd", 中文: "玩耍|开心,开玩笑,戏弄", 音频: "audio/ait zangd.mp3" },
+
+{ 苗语: "ait zangd jangx deix", 中文: "弄假成真", 音频: "audio/ait zangd jangx deix.mp3" },
+
+{ 苗语: "ait zangd vut ghak", 中文: "开玩笑,寻开心", 音频: "audio/ait zangd vut ghak.mp3" },
+
+{ 苗语: "ait zangt", 中文: "经商,做生意", 音频: "audio/ait zangt.mp3" },
+
+//词库aib,aid,ait结束
+
+//词库ak, al, angd, angk,angl, angt, at,  ax开头
+
+{ 苗语: "ak", 中文: "1.乌鸦2.背,挎", 音频: "audio/ak.mp3" },
+
+{ 苗语: "ak bit", 中文: "挂名", 音频: "audio/ak bit.mp3" },
+
+{ 苗语: "ak daif", 中文: "背口袋", 音频: "audio/ak daif.mp3" },
+
+{ 苗语: "ak eb", 中文: "背水", 音频: "audio/ak eb.mp3" },
+
+{ 苗语: "ak gad", 中文: "背饭(苗族民间一种葬俗)|背饭(指办丧事,骂人的话)", 音频: "audio/ak gad.mp3" },
+
+{ 苗语: "ak hvangb", 中文: "背债,欠债,负债", 音频: "audio/ak hvangb.mp3" },
+
+{ 苗语: "ak hvangb ak xat", 中文: "背债,负债", 音频: "audio/ak hvangb ak xat.mp3" },
+
+{ 苗语: "ak hsangt zuk nongs", 中文: "背伞逃雨(指愚蠢)", 音频: "audio/ak hsangt zuk nongs.mp3" },
+
+{ 苗语: "ak kab", 中文: "背犁,拉犁(指做苦力)", 音频: "audio/ak kab.mp3" },
+
+{ 苗语: "ak kat", 中文: "喜鹊", 音频: "audio/ak kat.mp3" },
+
+{ 苗语: "ak khat", 中文: "弃婚", 音频: "audio/ak khat.mp3" },
+
+{ 苗语: "ak liol", 中文: "乌鸦", 音频: "audio/ak liol.mp3" },
+
+{ 苗语: "ak nangx ak bit", 中文: "挂名", 音频: "audio/ak nangx ak bit.mp3" },
+
+{ 苗语: "ak niak", 中文: "背崽(比喻玉米结果实)", 音频: "audio/ak niak.mp3" },
+
+{ 苗语: "ak ninx", 中文: "鸲鹆,八哥", 音频: "audio/ak ninx.mp3" },
+
+{ 苗语: "ak ud", 中文: "背衣服(一种婚俗)", 音频: "audio/ak ud.mp3" },
+
+{ 苗语: "ak wol", 中文: "乌鸦", 音频: "audio/ak wol.mp3" },
+
+{ 苗语: "ak wol diek gheib dlaib", 中文: "乌鸦笑鸡黑(无自知之明)", 音频: "audio/ak wol diek gheib dlaib.mp3" },
+
+{ 苗语: "ak xat", 中文: "背债,负债|贷款", 音频: "audio/ak xat.mp3" },
+
+{ 苗语: "al", 中文: "啊(表示惊讶)", 音频: "audio/al.mp3" },
+
+{ 苗语: "al enb al enl", 中文: "啊嗯啊嗯", 音频: "audio/al enb al enl.mp3" },
+
+{ 苗语: "angd", 中文: "1.突出表现于…2.吭(公黄牛叫声)", 音频: "audio/angd.mp3" },
+
+{ 苗语: "angk", 中文: "哞(黄牛叫声)", 音频: "audio/angk.mp3" },
+
+{ 苗语: "angk angd", 中文: "哞吭(黄牛叫声)", 音频: "audio/angk angd.mp3" },
+
+{ 苗语: "angl", 中文: "嗯", 音频: "audio/angl.mp3" },
+
+{ 苗语: "angt", 中文: "肿|鼓,凸起", 音频: "audio/angt.mp3" },
+
+{ 苗语: "angt diub angt jid", 中文: "背肿身胀", 音频: "audio/angt diub angt jid.mp3" },
+
+{ 苗语: "angt dlangb angt jil", 中文: "肩膀肿", 音频: "audio/angt dlangb angt jil.mp3" },
+
+{ 苗语: "angt ghangb", 中文: "后腰肿", 音频: "audio/angt ghangb.mp3" },
+
+{ 苗语: "angt git mais", 中文: "眼袋肿", 音频: "audio/angt git mais.mp3" },
+
+{ 苗语: "angt gul mais", 中文: "面颊肿", 音频: "audio/angt gul mais.mp3" },
+
+{ 苗语: "angt hfud", 中文: "头起包(比喻愚蠢)", 音频: "audio/angt hfud.mp3" },
+
+{ 苗语: "angt hfud angt naix", 中文: "头肿脑胀", 音频: "audio/angt hfud angt naix.mp3" },
+
+{ 苗语: "angt khob", 中文: "头起包(比喻愚蠢)", 音频: "audio/angt khob.mp3" },
+
+{ 苗语: "angt lob angt bil", 中文: "脚肿手胀", 音频: "audio/angt lob angt bil.mp3" },
+
+{ 苗语: "angt mangl angt mais", 中文: "皮泡脸肿", 音频: "audio/angt mangl angt mais.mp3" },
+
+{ 苗语: "angt mangl dles mais", 中文: "鼻青脸肿", 音频: "audio/angt mangl dles mais.mp3" },
+
+{ 苗语: "angt niangl", 中文: "发怒,生气", 音频: "audio/angt niangl.mp3" },
+
+{ 苗语: "angt niangl angt cend", 中文: "气鼓鼓的", 音频: "audio/angt niangl angt cend.mp3" },
+
+{ 苗语: "angt niangl angt dat", 中文: "气鼓鼓的", 音频: "audio/angt niangl angt dat.mp3" },
+
+{ 苗语: "angt niangl angt ghaik", 中文: "气鼓鼓的", 音频: "audio/angt niangl angt ghaik.mp3" },
+
+{ 苗语: "angt niangl angt les", 中文: "气鼓鼓的", 音频: "audio/angt niangl angt les.mp3" },
+
+{ 苗语: "angt niangl angt qit", 中文: "气鼓鼓的", 音频: "audio/angt niangl angt qit.mp3" },
+
+{ 苗语: "angt niux", 中文: "鼓嘴巴(生气)", 音频: "audio/angt niux.mp3" },
+
+{ 苗语: "angt niux angt lot", 中文: "嘴巴肿涨|噘着嘴", 音频: "audio/angt niux angt lot.mp3" },
+
+{ 苗语: "angt qit", 中文: "生气", 音频: "audio/angt qit.mp3" },
+
+{ 苗语: "at", 中文: "爱,喜爱,偏爱", 音频: "audio/at.mp3" },
+
+{ 苗语: "at hot", 中文: "爱好", 音频: "audio/at hot.mp3" },
+
+{ 苗语: "at hvib", 中文: "喜爱,爱好", 音频: "audio/at hvib.mp3" },
+
+{ 苗语: "ax", 中文: "不,没", 音频: "audio/ax.mp3" },
+
+{ 苗语: "ax ait dul pid fangb,nongt ait eb hfek dul", 中文: "不纵火烧山,要浇水灭火", 音频: "audio/ax ait dul pid fangb,nongt ait eb hfek dul.mp3" },
+
+{ 苗语: "ax ait gib lid tiab mongl gux,nongt ait dad bil qab lol niangs", 中文: "莫做羊角向外叉,要做手指往里抓", 音频: "audio/ax ait gib lid tiab mongl gux,nongt ait dad bil qab lol niangs.mp3" },
+
+{ 苗语: "ax ait wangb niel ced gux,nongf ait wangb hxab ghuk hsab", 中文: "不做簸箕扬稻糠,要做筛子聚谷粒", 音频: "audio/ax ait wangb niel ced gux,nongf ait wangb hxab ghuk hsab.mp3" },
+
+{ 苗语: "ax ait xid", 中文: "没关系", 音频: "audio/ax ait xid.mp3" },
+
+{ 苗语: "ax ax", 中文: "不…不…|既不…也不…", 音频: "audio/ax ax.mp3" },
+
+{ 苗语: "ax baib", 中文: "不准,不许,不让,不给", 音频: "audio/ax baib.mp3" },
+
+{ 苗语: "ax baib leib ved zend,ax baib hxab ved nail", 中文: "莫让猴子守果园,莫让水獭看鱼塘", 音频: "audio/ax baib leib ved zend,ax baib hxab ved nail.mp3" },
+
+{ 苗语: "ax bet lot", 中文: "不作声,不吭声", 音频: "audio/ax bet lot.mp3" },
+
+{ 苗语: "ax bil", 中文: "还没有,尚未,未曾", 音频: "audio/ax bil.mp3" },
+
+{ 苗语: "ax bil ait", 中文: "动辄,动不动", 音频: "audio/ax bil ait.mp3" },
+
+{ 苗语: "ax bil ait deis", 中文: "动不动", 音频: "audio/ax bil ait deis.mp3" },
+
+{ 苗语: "ax bil deis", 中文: "动不动", 音频: "audio/ax bil deis.mp3" },
+
+{ 苗语: "ax bil hangb dins hlib zuk,ax bil deis dak hlib yangt", 中文: "脚未站稳就想跑,翅未长实就想飞", 音频: "audio/ax bil hangb dins hlib zuk,ax bil deis dak hlib yangt.mp3" },
+
+{ 苗语: "ax bongf daib hlieb,seix bongf ud laid", 中文: "未见孩子长大,只见衣裳变短", 音频: "audio/ax bongf daib hlieb,seix bongf ud laid.mp3" },
+
+{ 苗语: "ax bongf jit bil hxid,ax bub nais dol bad", 中文: "不见就爬高山看,不懂就找老人问", 音频: "audio/ax bongf jit bil hxid,ax bub nais dol bad.mp3" },
+
+{ 苗语: "ax bongf qet dliangb,seix bongf xuk wil", 中文: "未见敬鬼,也见提锅", 音频: "audio/ax bongf qet dliangb,seix bongf xuk wil.mp3" },
+
+{ 苗语: "ax bub das ves", 中文: "不知死活", 音频: "audio/ax bub das ves.mp3" },
+
+{ 苗语: "ax bub ghangb nangl jes", 中文: "不明事理", 音频: "audio/ax bub ghangb nangl jes.mp3" },
+
+{ 苗语: "ax bub gid das ves", 中文: "不知死活", 音频: "audio/ax bub gid das ves.mp3" },
+
+{ 苗语: "ax bub hangd hxat neis,ax bub gid ait dlas", 中文: "不知道苦处,不晓得致富", 音频: "audio/ax bub hangd hxat neis,ax bub gid ait dlas.mp3" },
+
+{ 苗语: "ax bub gid xit sas", 中文: "不知羞耻", 音频: "audio/ax bub gid xit sas.mp3" },
+
+{ 苗语: "ax bub hfangb", 中文: "不懂事", 音频: "audio/ax bub hfangb.mp3" },
+
+{ 苗语: "ax bub hfud bub ghangb", 中文: "不懂人情世故", 音频: "audio/ax bub hfud bub ghangb.mp3" },
+
+{ 苗语: "ax bub hfud dangl", 中文: "不懂事,不明事理", 音频: "audio/ax bub hfud dangl.mp3" },
+
+{ 苗语: "ax bub khangd das ves", 中文: "不知死活", 音频: "audio/ax bub khangd das ves.mp3" },
+
+{ 苗语: "ax bub khangd hxat neis,ax bub gid ait dlas", 中文: "不知道苦处,不晓得致富", 音频: "audio/ax bub khangd hxat neis,ax bub gid ait dlas.mp3" },
+
+{ 苗语: "ax bub khangd xit sas", 中文: "不知羞耻", 音频: "audio/ax bub khangd xit sas.mp3" },
+
+{ 苗语: "ax bub xit sas", 中文: "不知羞耻", 音频: "audio/ax bub xit sas.mp3" },
+
+{ 苗语: "ax dad vib jangf hfud,ax des niangs ait bul", 中文: "不拿石头做枕头,不跟强盗交朋友", 音频: "audio/ax dad vib jangf hfud,ax des niangs ait bul.mp3" },
+
+{ 苗语: "ax das ghongd", 中文: "不止渴,不解渴", 音频: "audio/ax das ghongd.mp3" },
+
+{ 苗语: "ax das ghongd eb niux", 中文: "不止渴,不解渴", 音频: "audio/ax das ghongd eb niux.mp3" },
+
+{ 苗语: "ax das qat gangb daid", 中文: "不止虱痒,不痛不痒", 音频: "audio/ax das qat gangb daid.mp3" },
+
+{ 苗语: "ax des dail dlub niangl,ax des dail niangs diek", 中文: "不跟好人斗气,不与盗贼欢笑", 音频: "audio/ax des dail dlub niangl,ax des dail niangs diek.mp3" },
+
+{ 苗语: "ax des gongl", 中文: "不顺沟(不按套路说话、做事)", 音频: "audio/ax des gongl.mp3" },
+
+{ 苗语: "ax des jib daib ait diangs,ax des naix lul ait niangl", 中文: "不跟小孩结冤,不跟老人斗气", 音频: "audio/ax des jib daib ait diangs,ax des naix lul ait niangl.mp3" },
+
+{ 苗语: "ax des jib daib ait diangs,ax des naix lul ait yangk", 中文: "不跟小孩闹纠纷,不与老人争高下", 音频: "audio/ax des jib daib ait diangs,ax des naix lul ait yangk.mp3" },
+
+{ 苗语: "ax des jib daib xit vil,ax des naix lul xit jangt", 中文: "不跟小孩吵架,不与老人犟嘴", 音频: "audio/ax des jib daib xit vil,ax des naix lul xit jangt.mp3" },
+
+{ 苗语: "ax diangl", 中文: "不太|不敢", 音频: "audio/ax diangl.mp3" },
+
+{ 苗语: "ax dib ax xit jet", 中文: "不打不相识", 音频: "audio/ax dib ax xit jet.mp3" },
+
+{ 苗语: "ax dib ax xit xangk", 中文: "不打不相识", 音频: "audio/ax dib ax xit xangk.mp3" },
+
+{ 苗语: "ax dios", 中文: "不对,不合理|不只是,不单是", 音频: "audio/ax dios.mp3" },
+
+{ 苗语: "ax dios diel", 中文: "不正确,不对", 音频: "audio/ax dios diel.mp3" },
+
+{ 苗语: "ax dios gid", 中文: "不适合", 音频: "audio/ax dios gid.mp3" },
+
+{ 苗语: "ax dios hot,dail haib", 中文: "不仅…而且…", 音频: "audio/ax dios hot,dail haib.mp3" },
+
+{ 苗语: "ax dios hut", 中文: "不像话", 音频: "audio/ax dios hut.mp3" },
+
+{ 苗语: "ax dios jus seix dail dios", 中文: "不仅是…而且也是…", 音频: "audio/ax dios jus seix dail dios.mp3" },
+
+{ 苗语: "ax dios mais", 中文: "不顺眼", 音频: "audio/ax dios mais.mp3" },
+
+{ 苗语: "ax dios yangs", 中文: "不像样,不像话", 音频: "audio/ax dios yangs.mp3" },
+
+{ 苗语: "ax dlox dail hniub niangl,ax des dail niangs diek", 中文: "不与傻子斗气,不同强盗欢笑", 音频: "audio/ax dlox dail hniub niangl,ax des dail niangs diek.mp3" },
+
+{ 苗语: "ax dliut khat", 中文: "待客不热情,招待不周", 音频: "audio/ax dliut khat.mp3" },
+
+{ 苗语: "ax dliut jud", 中文: "酒不醇(比喻家庭情况不妙)", 音频: "audio/ax dliut jud.mp3" },
+
+{ 苗语: "ax dongf", 中文: "没有说的(没有可以指责的缺点)|甭提了", 音频: "audio/ax dongf.mp3" },
+
+{ 苗语: "ax dos bul", 中文: "不合群,合不来", 音频: "audio/ax dos bul.mp3" },
+
+{ 苗语: "ax dos hvib", 中文: "不合心|不喜欢,不乐意", 音频: "audio/ax dos hvib.mp3" },
+
+{ 苗语: "ax dot", 中文: "要不,不然,否则|要么|不得,不可以,不能够", 音频: "audio/ax dot.mp3" },
+
+{ 苗语: "ax ed dail vas ghangt,seix ed dail vas hsent", 中文: "不选能挑担子人,更择善于盘算者", 音频: "audio/ax ed dail vas ghangt,seix ed dail vas hsent.mp3" },
+
+{ 苗语: "ax ed dail vut nios,seix ed dail gangt ngas", 中文: "不光选美人,更择勤劳者", 音频: "audio/ax ed dail vut nios,seix ed dail gangt ngas.mp3" },
+
+{ 苗语: "ax ed ghab mais", 中文: "不要脸|不客气", 音频: "audio/ax ed ghab mais.mp3" },
+
+{ 苗语: "ax ed nend ait xid", 中文: "满不在乎", 音频: "audio/ax ed nend ait xid.mp3" },
+
+{ 苗语: "ax fend", 中文: "不管,不论", 音频: "audio/ax fend.mp3" },
+
+{ 苗语: "ax ghab leib ved zend,ax gol hxab ved nail", 中文: "莫叫猴子看守果子,莫叫水獭看守河鱼", 音频: "audio/ax ghab leib ved zend,ax gol hxab ved nail.mp3" },
+
+{ 苗语: "ax ghangb jud", 中文: "酒不醇(比喻家庭情况不妙)", 音频: "audio/ax ghangb jud.mp3" },
+
+{ 苗语: "ax ghend", 中文: "不管,不论", 音频: "audio/ax ghend.mp3" },
+
+{ 苗语: "ax ghod", 中文: "无奈(无能,没有办法)", 音频: "audio/ax ghod.mp3" },
+
+{ 苗语: "ax ghongb", 中文: "连续不断的样子", 音频: "audio/ax ghongb.mp3" },
+
+{ 苗语: "ax ghot", 中文: "不够", 音频: "audio/ax ghot.mp3" },
+
+{ 苗语: "ax ghot zat eb sob", 中文: "不够蘸辣椒(比喻不是对手)", 音频: "audio/ax ghot zat eb sob.mp3" },
+
+{ 苗语: "ax gid", 中文: "不要", 音频: "audio/ax gid.mp3" },
+
+{ 苗语: "ax hangd", 中文: "不愿|不同意,不允许|不饶,不原谅,不谅解|不服气", 音频: "audio/ax hangd.mp3" },
+
+{ 苗语: "ax hlib dail xongs bat,seix hlib dail ngas ait", 中文: "不奢求七百挑田者,只追求勤快干活人", 音频: "audio/ax hlib dail xongs bat,seix hlib dail ngas ait.mp3" },
+
+{ 苗语: "ax hlib dangx dol hent,seix hlib dangx dol hsent", 中文: "不奢望众人称赞,也期盼大家信任", 音频: "audio/ax hlib dangx dol hent,seix hlib dangx dol hsent.mp3" },
+
+{ 苗语: "ax hlib mais hangd niul,seix hlib mais hangd yangl", 中文: "不思母亲生身情,也念母亲养育恩", 音频: "audio/ax hlib mais hangd niul,seix hlib mais hangd yangl.mp3" },
+
+{ 苗语: "ax hlib niangb lul,seix hlib das vut", 中文: "不奢望长寿,也期盼善终", 音频: "audio/ax hlib niangb lul,seix hlib das vut.mp3" },
+
+{ 苗语: "ax hof", 中文: "不合,不符合", 音频: "audio/ax hof.mp3" },
+
+{ 苗语: "ax hongb", 中文: "不可能,不再,不会", 音频: "audio/ax hongb.mp3" },
+
+{ 苗语: "ax hnangd bil", 中文: "不在话下", 音频: "audio/ax hnangd bil.mp3" },
+
+{ 苗语: "ax hxek", 中文: "经不起,经不住,不耐用", 音频: "audio/ax hxek.mp3" },
+
+{ 苗语: "ax hxent ghab guf ves", 中文: "不遗余力", 音频: "audio/ax hxent ghab guf ves.mp3" },
+
+{ 苗语: "ax hxib dail pid zaid,dad hxib dail muf jent", 中文: "不怕烧房人,反怕煽风者", 音频: "audio/ax hxib dail pid zaid,dad hxib dail muf jent.mp3" },
+
+{ 苗语: "ax hxib gid gux ib hsangb laix,seix hxib gid niangs ghab dliax naix", 中文: "不怕外部千敌人,也怕内部一坏蛋", 音频: "audio/ax hxib gid gux ib hsangb laix,seix hxib gid niangs ghab dliax naix.mp3" },
+
+{ 苗语: "ax hxib gongb gid dol,ghax hxib lob dot longl", 中文: "不怕路途远,就怕不起步", 音频: "audio/ax hxib gongb gid dol,ghax hxib lob dot longl.mp3" },
+
+{ 苗语: "ax hxib gid guf wat,hxib laib dliud diuf wat", 中文: "不怕背脊脏,就怕灵魂脏", 音频: "audio/ax hxib gid guf wat,hxib laib dliud diuf wat.mp3" },
+
+{ 苗语: "ax hxid dail daib,seix hxid dail lul", 中文: "不看小孩,也看大人", 音频: "audio/ax hxid dail daib,seix hxid dail lul.mp3" },
+
+{ 苗语: "ax jangx daib", 中文: "不成人,不成器", 音频: "audio/ax jangx daib.mp3" },
+
+{ 苗语: "ax jangx dail", 中文: "不成器", 音频: "audio/ax jangx dail.mp3" },
+
+{ 苗语: "ax jangx hut", 中文: "不成器,不像样", 音频: "audio/ax jangx hut.mp3" },
+
+{ 苗语: "ax jangx hveb", 中文: "不成话,不像话", 音频: "audio/ax jangx hveb.mp3" },
+
+{ 苗语: "ax jangx jens", 中文: "无用,没用处", 音频: "audio/ax jangx jens.mp3" },
+
+{ 苗语: "ax jangx liex", 中文: "不成体统", 音频: "audio/ax jangx liex.mp3" },
+
+{ 苗语: "ax jangx naix", 中文: "不是人,不成器,不像话", 音频: "audio/ax jangx naix.mp3" },
+
+{ 苗语: "ax jangx ves", 中文: "不成活|不成功,失败", 音频: "audio/ax jangx ves.mp3" },
+
+{ 苗语: "ax jangx xongd", 中文: "不成器", 音频: "audio/ax jangx xongd.mp3" },
+
+{ 苗语: "ax jangx yangs", 中文: "不像样", 音频: "audio/ax jangx yangs.mp3" },
+
+{ 苗语: "ax jas dol hangd hxat,ax bub dol hangd vut", 中文: "不经受苦难,不知道甜头", 音频: "audio/ax jas dol hangd hxat,ax bub dol hangd vut.mp3" },
+
+{ 苗语: "ax jet gux jet niangs", 中文: "六亲不认", 音频: "audio/ax jet gux jet niangs.mp3" },
+
+{ 苗语: "ax jet hfud dangl", 中文: "不懂事,不明事理", 音频: "audio/ax jet hfud dangl.mp3" },
+
+{ 苗语: "ax jet hut", 中文: "不识货|不识相", 音频: "audio/ax jet hut.mp3" },
+
+{ 苗语: "ax jit ax sos bil,ax duf ax bas eb", 中文: "不爬就到不了山顶,不渡就到不了河岸", 音频: "audio/ax jit ax sos bil,ax duf ax bas eb.mp3" },
+
+{ 苗语: "ax job ax jangx naix", 中文: "不教不成人", 音频: "audio/ax job ax jangx naix.mp3" },
+
+{ 苗语: "ax kib ax hxangd gad,ax seil ax das gangb", 中文: "天气不热稻谷不熟,天气不冷细菌不灭", 音频: "audio/ax kib ax hxangd gad,ax seil ax das gangb.mp3" },
+
+{ 苗语: "ax lieb", 中文: "动作连续的样子", 音频: "audio/ax lieb.mp3" },
+
+{ 苗语: "ax maix", 中文: "没有", 音频: "audio/ax maix.mp3" },
+
+{ 苗语: "ax maix ghab nangl", 中文: "没意思,无意义", 音频: "audio/ax maix ghab nangl.mp3" },
+
+{ 苗语: "ax maix ghad les", 中文: "没意思,无意义,无价值", 音频: "audio/ax maix ghad les.mp3" },
+
+{ 苗语: "ax maix ghangb ghed", 中文: "没意思,无意义,无价值", 音频: "audio/ax maix ghangb ghed.mp3" },
+
+{ 苗语: "ax maix hveb hmat", 中文: "没有二话可说", 音频: "audio/ax maix hveb hmat.mp3" },
+
+{ 苗语: "ax maix jab diot", 中文: "不可救药", 音频: "audio/ax maix jab diot.mp3" },
+
+{ 苗语: "ax maix zangt", 中文: "没有生意|没有搞头", 音频: "audio/ax maix zangt.mp3" },
+
+{ 苗语: "ax mongl lil", 中文: "道理不通", 音频: "audio/ax mongl lil.mp3" },
+
+{ 苗语: "ax naf ax jend", 中文: "不慌不忙", 音频: "audio/ax naf ax jend.mp3" },
+
+{ 苗语: "ax neib", 中文: "沉静的", 音频: "audio/ax neib.mp3" },
+
+{ 苗语: "ax ngeb", 中文: "呆傻的样子", 音频: "audio/ax ngeb.mp3" },
+
+{ 苗语: "ax niangb", 中文: "没有", 音频: "audio/ax niangb.mp3" },
+
+{ 苗语: "ax niangb bat diub ngex,ax niangb gad diub nongl", 中文: "无猪在圈舍,无谷进粮仓", 音频: "audio/ax niangb bat diub ngex,ax niangb gad diub nongl.mp3" },
+
+{ 苗语: "ax niangb dlad hxib niangs,jus niangb nangl hxib baif", 中文: "没有狗怕贼,只有鼠怕猫", 音频: "audio/ax niangb dlad hxib niangs,jus niangb nangl hxib baif.mp3" },
+
+{ 苗语: "ax niangb jent nangl ax hxed,ax maix jent jes ax seil", 中文: "没有东风不暖,没有北风不凉", 音频: "audio/ax niangb jent nangl ax hxed,ax maix jent jes ax seil.mp3" },
+
+{ 苗语: "ax niongt", 中文: "不肯,不愿,不愿意", 音频: "audio/ax niongt.mp3" },
+
+{ 苗语: "ax niox", 中文: "离不开,不抛弃,不放弃,不离不弃", 音频: "audio/ax niox.mp3" },
+
+{ 苗语: "ax niul", 中文: "不中用,不顶事", 音频: "audio/ax niul.mp3" },
+
+{ 苗语: "ax niul dul", 中文: "情况不妙", 音频: "audio/ax niul dul.mp3" },
+
+{ 苗语: "ax niul zas", 中文: "情况不妙", 音频: "audio/ax niul zas.mp3" },
+
+{ 苗语: "ax nongx", 中文: "干不了|没有搞头", 音频: "audio/ax nongx.mp3" },
+
+{ 苗语: "ax qub", 中文: "干不了", 音频: "audio/ax qub.mp3" },
+
+{ 苗语: "ax vas dat xed lol dat baif", 中文: "杀不了虎来杀猫", 音频: "audio/ax vas dat xed lol dat baif.mp3" },
+
+{ 苗语: "ax vas seix gik ib had", 中文: "斗不过也要咬一口", 音频: "audio/ax vas seix gik ib had.mp3" },
+
+{ 苗语: "ax vongs", 中文: "即将", 音频: "audio/ax vongs.mp3" },
+
+{ 苗语: "ax vut ghab mais", 中文: "不好意思", 音频: "audio/ax vut ghab mais.mp3" },
+
+{ 苗语: "ax vut lix vut nax,ax fangd zaid fangd hvib", 中文: "田不好稻谷好,房不宽人心宽", 音频: "audio/ax vut lix vut nax,ax fangd zaid fangd hvib.mp3" },
+
+{ 苗语: "ax vut seix naix diub fangb,ax deix seix det ghangb vangl", 中文: "不好也是地方人,不直也是寨脚树", 音频: "audio/ax vut seix naix diub fangb,ax deix seix det ghangb vangl.mp3" },
+
+{ 苗语: "ax vut set", 中文: "不妙", 音频: "audio/ax vut set.mp3" },
+
+{ 苗语: "ax wenl", 中文: "持续不断地", 音频: "audio/ax wenl.mp3" },
+
+{ 苗语: "ax wib", 中文: "深邃、寂静、悠远的", 音频: "audio/ax wib.mp3" },
+
+{ 苗语: "ax wol", 中文: "某种形状或情况极为明显而难看的样子", 音频: "audio/ax wol.mp3" },
+
+{ 苗语: "ax wongd", 中文: "(动作)发出响声,哄哄作响", 音频: "audio/ax wongd.mp3" },
+
+{ 苗语: "ax xangk", 中文: "不识,不认识", 音频: "audio/ax xangk.mp3" },
+
+{ 苗语: "ax xangk gad kib", 中文: "不识烫饭(不知厉害关系)", 音频: "audio/ax xangk gad kib.mp3" },
+
+{ 苗语: "ax xangk ghab nangl", 中文: "不知情况,不懂行情|不懂事,不明事理", 音频: "audio/ax xangk ghab nangl.mp3" },
+
+{ 苗语: "ax xangk gux xangk niangs", 中文: "六亲不认", 音频: "audio/ax xangk gux xangk niangs.mp3" },
+
+{ 苗语: "ax xangk hut", 中文: "不识货|不识相", 音频: "audio/ax xangk hut.mp3" },
+
+{ 苗语: "ax xenb", 中文: "不兴,不流行,不盛行", 音频: "audio/ax xenb.mp3" },
+
+{ 苗语: "ax xenf", 中文: "不值,不值钱", 音频: "audio/ax xenf.mp3" },
+
+{ 苗语: "ax xenf ghat", 中文: "不值钱,贬值", 音频: "audio/ax xenf ghat.mp3" },
+
+{ 苗语: "ax xenf seix", 中文: "不值钱,贬值", 音频: "audio/ax xenf seix.mp3" },
+
+{ 苗语: "ax yangl", 中文: "悠闲的样子", 音频: "audio/ax yangl.mp3" },
+
+{ 苗语: "ax yib", 中文: "不依,不听从", 音频: "audio/ax yib.mp3" },
+
+{ 苗语: "ax yib dol lul hseid,ghax des dol lul khed", 中文: "不依老人言,将跟老人穷", 音频: "audio/ax yib dol lul hseid,ghax des dol lul khed.mp3" },
+
+{ 苗语: "ax yongs", 中文: "不必,甭,用不着", 音频: "audio/ax yongs.mp3" },
+
+{ 苗语: "ax yongx", 中文: "不服气", 音频: "audio/ax yongx.mp3" },
+
+{ 苗语: "ax yuf", 中文: "1.由不得2.不如,比不上", 音频: "audio/ax yuf.mp3" },
+
+{ 苗语: "ax zongb", 中文: "不睬,不理睬", 音频: "audio/ax zongb.mp3" },
+
+{ 苗语: "ax zongb naix", 中文: "不听话,不理睬", 音频: "audio/ax zongb naix.mp3" },
+
+{ 苗语: "ax zongb naix zongb yangk", 中文: "不理不睬", 音频: "audio/ax zongb naix zongb yangk.mp3" },
+
+//词库ak, al, angd, angk,angl, angt, at,  ax结束
+
+//词库bab至baix开头
+
+{ 苗语: "bab", 中文: "1.大腿2.把,捆|抓3.带,佩带,别4.巴结5.都", 音频: "audio/bab.mp3" },
+
+{ 苗语: "bab bab bet bet", 中文: "反复盘弄,反复抚弄", 音频: "audio/bab bab bet bet.mp3" },
+
+{ 苗语: "bab bab hlat hlat", 中文: "又盘弄又抚摸", 音频: "audio/bab bab hlat hlat.mp3" },
+
+{ 苗语: "bab bet", 中文: "盘弄,抚弄", 音频: "audio/bab bet.mp3" },
+
+{ 苗语: "bab dieb", 中文: "扫帚", 音频: "audio/bab dieb.mp3" },
+
+{ 苗语: "bab ghangd", 中文: "分赃", 音频: "audio/bab ghangd.mp3" },
+
+{ 苗语: "bab hlab bus dlus", 中文: "乱七八糟,凌乱不堪", 音频: "audio/bab hlab bus dlus.mp3" },
+
+{ 苗语: "bab hlat", 中文: "盘弄|抚摸", 音频: "audio/bab hlat.mp3" },
+
+{ 苗语: "bab jab", 中文: "抓了又抓|纠缠", 音频: "audio/bab jab.mp3" },
+
+{ 苗语: "bab jab bab jet", 中文: "纠缠不休", 音频: "audio/bab jab bab jet.mp3" },
+
+{ 苗语: "bab liol", 中文: "半干,蔫", 音频: "audio/bab liol.mp3" },
+
+{ 苗语: "bab mangl", 中文: "脸上起疤子", 音频: "audio/bab mangl.mp3" },
+
+{ 苗语: "bab mangl bab mais", 中文: "满脸疤子", 音频: "audio/bab mangl bab mais.mp3" },
+
+{ 苗语: "bab niab", 中文: "盘弄,抚摸", 音频: "audio/bab niab.mp3" },
+
+{ 苗语: "bab niab ait jus ghenl", 中文: "扭作一团", 音频: "audio/bab niab ait jus ghenl.mp3" },
+
+{ 苗语: "bab niab bab dat", 中文: "盘弄抚摸", 音频: "audio/bab niab bab dat.mp3" },
+
+{ 苗语: "bab niab bab ghaik", 中文: "盘弄抚摸", 音频: "audio/bab niab bab ghaik.mp3" },
+
+{ 苗语: "bab niab bab les", 中文: "盘弄抚摸", 音频: "audio/bab niab bab les.mp3" },
+
+{ 苗语: "bab niab bet niet", 中文: "盘弄抚摸", 音频: "audio/bab niab bet niet.mp3" },
+
+{ 苗语: "bab niab gut gat", 中文: "乱抓乱挠,盘弄抓挠", 音频: "audio/bab niab gut gat.mp3" },
+
+{ 苗语: "bad", 中文: "1.公,雄性|父亲,爸爸,爹|叔叔|伯伯,叔叔2.绑,绑扎", 音频: "audio/bad.mp3" },
+
+{ 苗语: "bad ait deis daib ait id", 中文: "有其父必有其子", 音频: "audio/bad ait deis daib ait id.mp3" },
+
+{ 苗语: "bad bad daib daib", 中文: "父子", 音频: "audio/bad bad daib daib.mp3" },
+
+{ 苗语: "bad dad", 中文: "1.长笙2.滴答", 音频: "audio/bad dad.mp3" },
+
+{ 苗语: "bad daib", 中文: "父子", 音频: "audio/bad daib.mp3" },
+
+{ 苗语: "bad daib bed ut", 中文: "爷崽兄弟,(男性)父老乡亲", 音频: "audio/bad daib bed ut.mp3" },
+
+{ 苗语: "bad dangd mal", 中文: "马镫", 音频: "audio/bad dangd mal.mp3" },
+
+{ 苗语: "bad dangl ghangb", 中文: "", 音频: "audio/bad dangl ghangb.mp3" },
+
+{ 苗语: "bad deix daib ax jangl,mais sux daib ax hneb", 中文: "父亲正派儿子不邪,母亲灵巧女儿不笨", 音频: "audio/bad deix daib ax jangl,mais sux daib ax hneb.mp3" },
+
+{ 苗语: "bad dial", 中文: "男子汉", 音频: "audio/bad dial.mp3" },
+
+{ 苗语: "bad dial naix jub", 中文: "男子汉,大丈夫", 音频: "audio/bad dial naix jub.mp3" },
+
+{ 苗语: "bad diob", 中文: "啄木鸟扮演者", 音频: "audio/bad diob.mp3" },
+
+{ 苗语: "bad dlent", 中文: "好汉,棒小子", 音频: "audio/bad dlent.mp3" },
+
+{ 苗语: "bad dlob ghent", 中文: "未婚小伙子", 音频: "audio/bad dlob ghent.mp3" },
+
+{ 苗语: "bad dud bad nias", 中文: "一知半解,所会不多", 音频: "audio/bad dud bad nias.mp3" },
+
+{ 苗语: "bad gek", 中文: "硬汉", 音频: "audio/bad gek.mp3" },
+
+{ 苗语: "bad gek bad hliod", 中文: "硬汉,英雄好汉", 音频: "audio/bad gek bad hliod.mp3" },
+
+{ 苗语: "bad genb", 中文: "庚爹(父亲的结拜兄弟)", 音频: "audio/bad genb.mp3" },
+
+{ 苗语: "bad ghab dongs fangb", 中文: "地方头人", 音频: "audio/bad ghab dongs fangb.mp3" },
+
+{ 苗语: "bad gheib ax nas git,bod vib ax pud bangx", 中文: "公鸡不下蛋,石头不开花", 音频: "audio/bad gheib ax nas git,bod vib ax pud bangx.mp3" },
+
+{ 苗语: "Bad Ghet Yangx", 中文: "巴够炀(神名)", 音频: "audio/Bad Ghet Yangx.mp3" },
+
+{ 苗语: "bad guf", 中文: "碰牯(善于碰撞的水牯牛)", 音频: "audio/bad guf.mp3" },
+
+{ 苗语: "bad hlangb", 中文: "巴榔(榔头)", 音频: "audio/bad hlangb.mp3" },
+
+{ 苗语: "bad hlieb", 中文: "伯父,伯伯|大姨父|表伯|伯伯", 音频: "audio/bad hlieb.mp3" },
+
+{ 苗语: "bad hlieb bad yut", 中文: "叔伯弟兄|叔叔伯伯", 音频: "audio/bad hlieb bad yut.mp3" },
+
+{ 苗语: "bad hliod", 中文: "好汉,英雄,英雄好汉|(男性)聪明人,智者|说理者,辩护人", 音频: "audio/bad hliod.mp3" },
+
+{ 苗语: "bad hliod bad gek", 中文: "英雄好汉", 音频: "audio/bad hliod bad gek.mp3" },
+
+{ 苗语: "bad hliod bad vof", 中文: "英雄好汉", 音频: "audio/bad hliod bad vof.mp3" },
+
+{ 苗语: "bad hliod nios vof", 中文: "英雄好汉", 音频: "audio/bad hliod nios vof.mp3" },
+
+{ 苗语: "bad hliod yus gek", 中文: "英雄好汉", 音频: "audio/bad hliod yus gek.mp3" },
+
+{ 苗语: "bad hsud", 中文: "锁,锁链", 音频: "audio/bad hsud.mp3" },
+
+{ 苗语: "bad hvit", 中文: "庚爹(父亲的结拜兄弟)", 音频: "audio/bad hvit.mp3" },
+
+{ 苗语: "bad jad", 中文: "松鼠", 音频: "audio/bad jad.mp3" },
+
+{ 苗语: "bad jangl", 中文: "角尺", 音频: "audio/bad jangl.mp3" },
+
+{ 苗语: "bad jid", 中文: "(小伙子)身材苗条", 音频: "audio/bad jid.mp3" },
+
+{ 苗语: "bad jongb", 中文: "弹棉弓", 音频: "audio/bad jongb.mp3" },
+
+{ 苗语: "Bad Jongb", 中文: "八弓(地名)", 音频: "audio/Bad Jongb.mp3" },
+
+{ 苗语: "bad langl", 中文: "水牯牛", 音频: "audio/bad langl.mp3" },
+
+{ 苗语: "bad lind", 中文: "燕子", 音频: "audio/bad lind.mp3" },
+
+{ 苗语: "bad lind ax hniongb vil", 中文: "燕子不忘窝", 音频: "audio/bad lind ax hniongb vil.mp3" },
+
+{ 苗语: "bad lind ghaif", 中文: "燕子", 音频: "audio/bad lind ghaif.mp3" },
+
+{ 苗语: "bad lind jit ghaif", 中文: "燕子", 音频: "audio/bad lind jit ghaif.mp3" },
+
+{ 苗语: "bad lul", 中文: "伯父,伯伯|大姨父|表伯(称母亲的表哥)|表伯(称父亲的表姐夫)|伯伯|成年人|好汉", 音频: "audio/bad lul.mp3" },
+
+{ 苗语: "bad lul bad yus", 中文: "男子汉,大丈夫", 音频: "audio/bad lul bad yus.mp3" },
+
+{ 苗语: "bad lul naix", 中文: "男子汉", 音频: "audio/bad lul naix.mp3" },
+
+{ 苗语: "bad lul naix jub", 中文: "男子汉,大丈夫", 音频: "audio/bad lul naix jub.mp3" },
+
+{ 苗语: "bad lul naix mif lul yus", 中文: "男子汉,大丈夫", 音频: "audio/bad lul naix mif lul yus.mp3" },
+
+{ 苗语: "bad lul yus", 中文: "男子汉,大丈夫", 音频: "audio/bad lul yus.mp3" },
+
+{ 苗语: "bad lul yus naix jub", 中文: "男子汉大丈夫", 音频: "audio/bad lul yus naix jub.mp3" },
+
+{ 苗语: "bad ninx hek nes", 中文: "鼓藏牛", 音频: "audio/bad ninx hek nes.mp3" },
+
+{ 苗语: "bad ninx tiab", 中文: "角弧大的水牯牛", 音频: "audio/bad ninx tiab.mp3" },
+
+{ 苗语: "bad nios", 中文: "小伙子,后生", 音频: "audio/bad nios.mp3" },
+
+{ 苗语: "bad nios dlent", 中文: "棒小子,美男子", 音频: "audio/bad nios dlent.mp3" },
+
+{ 苗语: "bad nios dlub ghent", 中文: "小伙子,青年后生", 音频: "audio/bad nios dlub ghent.mp3" },
+
+{ 苗语: "bad nios naix jub", 中文: "小伙子,青年,后生", 音频: "audio/bad nios naix jub.mp3" },
+
+{ 苗语: "bad nios vof", 中文: "凶汉,硬汉,猛汉,英雄汉", 音频: "audio/bad nios vof.mp3" },
+
+{ 苗语: "bad niul", 中文: "继父", 音频: "audio/bad niul.mp3" },
+
+{ 苗语: "bad niux bad lul", 中文: "这么大个儿", 音频: "audio/bad niux bad lul.mp3" },
+
+{ 苗语: "bad ot yil", 中文: "年轻人,小伙子", 音频: "audio/bad ot yil.mp3" },
+
+{ 苗语: "bad qad", 中文: "表叔", 音频: "audio/bad qad.mp3" },
+
+{ 苗语: "bad teik", 中文: "碰牯(善于碰撞的水牯牛)", 音频: "audio/bad teik.mp3" },
+
+{ 苗语: "bad tiab", 中文: "角弧宽的水牯牛", 音频: "audio/bad tiab.mp3" },
+
+{ 苗语: "bad vangl", 中文: "村中男性长者", 音频: "audio/bad vangl.mp3" },
+
+{ 苗语: "bad vangl mais hxib", 中文: "村夫寨妇", 音频: "audio/bad vangl mais hxib.mp3" },
+
+{ 苗语: "bad vib", 中文: "岩石保爹", 音频: "audio/bad vib.mp3" },
+
+{ 苗语: "bad wex", 中文: "角弧小的水牯牛", 音频: "audio/bad wex.mp3" },
+
+{ 苗语: "bad xab", 中文: "保爹", 音频: "audio/bad xab.mp3" },
+
+{ 苗语: "bad xed", 中文: "亡命徒,刺客", 音频: "audio/bad xed.mp3" },
+
+{ 苗语: "bad yil", 中文: "叔父,叔叔", 音频: "audio/bad yil.mp3" },
+
+{ 苗语: "bad yus", 中文: "男子", 音频: "audio/bad yus.mp3" },
+
+{ 苗语: "bad yus dlent", 中文: "棒小子", 音频: "audio/bad yus dlent.mp3" },
+
+{ 苗语: "bad yus gek", 中文: "硬汉,强人", 音频: "audio/bad yus gek.mp3" },
+
+{ 苗语: "bad yus naix jub", 中文: "男子汉大丈夫", 音频: "audio/bad yus naix jub.mp3" },
+
+{ 苗语: "bad yut", 中文: "叔父,叔叔|叔叔|表叔", 音频: "audio/bad yut.mp3" },
+
+{ 苗语: "Baf", 中文: "八(男性名)", 音频: "audio/Baf.mp3" },
+
+{ 苗语: "baf", 中文: "1.几2.刮耙,宽叶锄|划(船)|拦截,阻拦,拦住", 音频: "audio/baf.mp3" },
+
+{ 苗语: "baf daf", 中文: "吧嗒(滴水声,脚步声)", 音频: "audio/baf daf.mp3" },
+
+{ 苗语: "baf diaf", 中文: "步态不稳的样子", 音频: "audio/baf diaf.mp3" },
+
+{ 苗语: "baf dliaf", 中文: "散落的样子", 音频: "audio/baf dliaf.mp3" },
+
+{ 苗语: "baf dliaf bus dlius", 中文: "散乱不堪的样子", 音频: "audio/baf dliaf bus dlius.mp3" },
+
+{ 苗语: "baib", 中文: "送,赠,奉送,赠送,捐赠,给予|准,许,准许,允许|派,打发", 音频: "audio/baib.mp3" },
+
+{ 苗语: "baib dangl", 中文: "对半", 音频: "audio/baib dangl.mp3" },
+
+{ 苗语: "baib ghat", 中文: "还价", 音频: "audio/baib ghat.mp3" },
+
+{ 苗语: "baib gheib gas", 中文: "送鸡鸭", 音频: "audio/baib gheib gas.mp3" },
+
+{ 苗语: "baib hveb", 中文: "赠言|留下遗言", 音频: "audio/baib hveb.mp3" },
+
+{ 苗语: "baib khat", 中文: "允婚", 音频: "audio/baib khat.mp3" },
+
+{ 苗语: "baib lil", 中文: "送礼", 音频: "audio/baib lil.mp3" },
+
+{ 苗语: "baid", 中文: "1.陈述,诉说2.来往3.满", 音频: "audio/baid.mp3" },
+
+{ 苗语: "baid bongt", 中文: "生气|憋气|气短", 音频: "audio/baid bongt.mp3" },
+
+{ 苗语: "baid diongl baid gif", 中文: "满冲满沟,满山满谷,沟满壕平", 音频: "audio/baid diongl baid gif.mp3" },
+
+{ 苗语: "baid diux baid zaid", 中文: "充满房屋", 音频: "audio/baid diux baid zaid.mp3" },
+
+{ 苗语: "baid fangb baid vangl", 中文: "充满村寨", 音频: "audio/baid fangb baid vangl.mp3" },
+
+{ 苗语: "baid ghongd", 中文: "厌烦", 音频: "audio/baid ghongd.mp3" },
+
+{ 苗语: "baid hfud", 中文: "罪有应得", 音频: "audio/baid hfud.mp3" },
+
+{ 苗语: "baid hlat", 中文: "满月", 音频: "audio/baid hlat.mp3" },
+
+{ 苗语: "baid khangd baid qut", 中文: "充满场地", 音频: "audio/baid khangd baid qut.mp3" },
+
+{ 苗语: "baid lil niak", 中文: "吃满月酒", 音频: "audio/baid lil niak.mp3" },
+
+{ 苗语: "baid nangl baid jes", 中文: "堆积如山", 音频: "audio/baid nangl baid jes.mp3" },
+
+{ 苗语: "baid nongl baid laf", 中文: "吃饱喝足,酒足饭饱", 音频: "audio/baid nongl baid laf.mp3" },
+
+{ 苗语: "baid qit", 中文: "生气,愤怒", 音频: "audio/baid qit.mp3" },
+
+{ 苗语: "baid vangx baid diongl", 中文: "满山满谷", 音频: "audio/baid vangx baid diongl.mp3" },
+
+{ 苗语: "baid ves", 中文: "困难|难为情|无奈,无可奈何", 音频: "audio/baid ves.mp3" },
+
+{ 苗语: "baid ves baid dat", 中文: "无可奈何", 音频: "audio/baid ves baid dat.mp3" },
+
+{ 苗语: "baid ves baid ghaik", 中文: "无可奈何", 音频: "audio/baid ves baid ghaik.mp3" },
+
+{ 苗语: "baid ves baid les", 中文: "无可奈何", 音频: "audio/baid ves baid les.mp3" },
+
+{ 苗语: "baif", 中文: "1.猫2.换工,以劳力互相帮工", 音频: "audio/baif.mp3" },
+
+{ 苗语: "baif ax niox gik nangl", 中文: "猫不放弃捉老鼠", 音频: "audio/baif ax niox gik nangl.mp3" },
+
+{ 苗语: "baif bex ghad", 中文: "猫盖屎(敷衍了事,马马虎虎)", 音频: "audio/baif bex ghad.mp3" },
+
+{ 苗语: "baif hsent", 中文: "百姓", 音频: "audio/baif hsent.mp3" },
+
+{ 苗语: "baif genx nangl", 中文: "猫哭老鼠", 音频: "audio/baif genx nangl.mp3" },
+
+{ 苗语: "baif gheb", 中文: "换工", 音频: "audio/baif gheb.mp3" },
+
+{ 苗语: "baif hxent", 中文: "老百姓", 音频: "audio/baif hxent.mp3" },
+
+{ 苗语: "baif nongx ax jul gad nangl", 中文: "猫吃不完老鼠的饭", 音频: "audio/baif nongx ax jul gad nangl.mp3" },
+
+{ 苗语: "baif nongx ghangf", 中文: "猫吃酸腌菜", 音频: "audio/baif nongx ghangf.mp3" },
+
+{ 苗语: "baif vut ghend bib vangl,dlad vut ghend bib zaid", 中文: "好猫能管护三寨,好狗能看护三家", 音频: "audio/baif vut ghend bib vangl,dlad vut ghend bib zaid.mp3" },
+
+{ 苗语: "bail", 中文: "拦,堵", 音频: "audio/bail.mp3" },
+
+{ 苗语: "bail lail bail lail", 中文: "支支吾吾", 音频: "audio/bail lail bail lail.mp3" },
+
+{ 苗语: "bais", 中文: "醪糟,糟酒,醅", 音频: "audio/bais.mp3" },
+
+{ 苗语: "bais Gud", 中文: "固氏族醪糟", 音频: "audio/bais Gud.mp3" },
+
+{ 苗语: "bais jud", 中文: "酒糟", 音频: "audio/bais jud.mp3" },
+
+{ 苗语: "bait", 中文: "1.雪2.分|让开", 音频: "audio/bait.mp3" },
+
+{ 苗语: "bait bait dliek dliek", 中文: "冰雪交加", 音频: "audio/bait bait dliek dliek.mp3" },
+
+{ 苗语: "bait daib", 中文: "分蘖", 音频: "audio/bait daib.mp3" },
+
+{ 苗语: "bait diux bait zaid", 中文: "分房分屋,分家", 音频: "audio/bait diux bait zaid.mp3" },
+
+{ 苗语: "bait dlait", 中文: "1.吧嗒(滴水声,脚步声)2.飞快的样子", 音频: "audio/bait dlait.mp3" },
+
+{ 苗语: "bait dlait bait dlait", 中文: "噼里啪啦|快而发出响声的样子", 音频: "audio/bait dlait bait dlait.mp3" },
+
+{ 苗语: "bait dliek", 中文: "冰雪", 音频: "audio/bait dliek.mp3" },
+
+{ 苗语: "bait ghab daib", 中文: "分蘖", 音频: "audio/bait ghab daib.mp3" },
+
+{ 苗语: "bait ghab gangx", 中文: "阵雪", 音频: "audio/bait ghab gangx.mp3" },
+
+{ 苗语: "bait pet", 中文: "雪", 音频: "audio/bait pet.mp3" },
+
+{ 苗语: "bait qangb", 中文: "发芽", 音频: "audio/bait qangb.mp3" },
+
+{ 苗语: "baix", 中文: "1.摆|摆谈2.掉下,落下,滴下3.测算,推算", 音频: "audio/baix.mp3" },
+
+{ 苗语: "baix bid", 中文: "比喻,打比方,形容", 音频: "audio/baix bid.mp3" },
+
+{ 苗语: "baix dliud baix diuf", 中文: "神魂颠倒|丧魂落魄", 音频: "audio/baix dliud baix diuf.mp3" },
+
+{ 苗语: "baix dliud dal diuf", 中文: "丧魂落魄", 音频: "audio/baix dliud dal diuf.mp3" },
+
+{ 苗语: "baix dliux", 中文: "落魂", 音频: "audio/baix dliux.mp3" },
+
+{ 苗语: "baix dliux gangb khob,dal nangs gangb vas", 中文: "魂落化为瓢虫,魄失化为蜘蛛", 音频: "audio/baix dliux gangb khob,dal nangs gangb vas.mp3" },
+
+{ 苗语: "baix dliux lol vas", 中文: "魂魄失落化为蜘蛛", 音频: "audio/baix dliux lol vas.mp3" },
+
+{ 苗语: "baix eb lol hxangd", 中文: "受伤流血", 音频: "audio/baix eb lol hxangd.mp3" },
+
+{ 苗语: "baix ghad", 中文: "失落感", 音频: "audio/baix ghad.mp3" },
+
+{ 苗语: "baix hnaib hsent hmangt", 中文: "测算日辰,测日算时", 音频: "audio/baix hnaib hsent hmangt.mp3" },
+
+{ 苗语: "baix hveb", 中文: "摆谈", 音频: "audio/baix hveb.mp3" },
+
+{ 苗语: "baix hveb dal hseid", 中文: "留下遗嘱", 音频: "audio/baix hveb dal hseid.mp3" },
+
+{ 苗语: "baix hvib", 中文: "灰心,失意", 音频: "audio/baix hvib.mp3" },
+
+{ 苗语: "baix hvib baix ghad", 中文: "灰心失意", 音频: "audio/baix hvib baix ghad.mp3" },
+
+{ 苗语: "baix hvib dal ghad", 中文: "灰心失意", 音频: "audio/baix hvib dal ghad.mp3" },
+
+{ 苗语: "baix hvib dal hnid", 中文: "灰心失意,心里若有所失", 音频: "audio/baix hvib dal hnid.mp3" },
+
+{ 苗语: "baix hxak", 中文: "唱歌", 音频: "audio/baix hxak.mp3" },
+
+//词库bab至baix结束
+
+//词库bak_bat开头
+
+{ 苗语: "bak", 中文: "父亲,爸爸,爹|叔父,叔叔|伯伯,叔叔", 音频: "audio/bak.mp3" },
+
+{ 苗语: "bak bed", 中文: "伯父,伯伯", 音频: "audio/bak bed.mp3" },
+
+{ 苗语: "bak genb", 中文: "庚爹(父亲的结拜兄弟)", 音频: "audio/bak genb.mp3" },
+
+{ 苗语: "bak hlieb", 中文: "伯父,伯伯|大姨父|表伯", 音频: "audio/bak hlieb.mp3" },
+
+{ 苗语: "bak hvit", 中文: "庚爹(父亲的结拜兄弟)", 音频: "audio/bak hvit.mp3" },
+
+{ 苗语: "bak niul", 中文: "继父", 音频: "audio/bak niul.mp3" },
+
+{ 苗语: "bak yut", 中文: "叔父,叔叔|小姨父|表叔", 音频: "audio/bak yut.mp3" },
+
+{ 苗语: "bal", 中文: "1.网2.坏,破烂|损坏|伤害", 音频: "audio/bal.mp3" },
+
+{ 苗语: "bal bal neis neis", 中文: "破破烂烂,破烂不堪", 音频: "audio/bal bal neis neis.mp3" },
+
+{ 苗语: "bal bens", 中文: "敬祭", 音频: "audio/bal bens.mp3" },
+
+{ 苗语: "bal bit", 中文: "毁誉,毁名", 音频: "audio/bal bit.mp3" },
+
+{ 苗语: "bal bit nangx fangb", 中文: "毁誉,毁名", 音频: "audio/bal bit nangx fangb.mp3" },
+
+{ 苗语: "bal bul", 中文: "毁坏朋友关系", 音频: "audio/bal bul.mp3" },
+
+{ 苗语: "bal daif", 中文: "吊脚网", 音频: "audio/bal daif.mp3" },
+
+{ 苗语: "bal dial", 中文: "架子", 音频: "audio/bal dial.mp3" },
+
+{ 苗语: "bal diangs", 中文: "战败|战乱|败诉", 音频: "audio/bal diangs.mp3" },
+
+{ 苗语: "bal diel", 中文: "兵荒,兵燹,战乱", 音频: "audio/bal diel.mp3" },
+
+{ 苗语: "bal diel bal yat", 中文: "兵荒马乱,兵燹战乱", 音频: "audio/bal diel bal yat.mp3" },
+
+{ 苗语: "bal diel yat", 中文: "兵荒马乱", 音频: "audio/bal diel yat.mp3" },
+
+{ 苗语: "bal diub bal jid", 中文: "伤身伤背,伤筋动骨", 音频: "audio/bal diub bal jid.mp3" },
+
+{ 苗语: "bal diux bal zaid", 中文: "房毁屋破", 音频: "audio/bal diux bal zaid.mp3" },
+
+{ 苗语: "bal dliangb", 中文: "损毁祭神规矩|得罪鬼神", 音频: "audio/bal dliangb.mp3" },
+
+{ 苗语: "bal dul", 中文: "发生火灾|遭受旱灾|糟,砸锅,事情办坏", 音频: "audio/bal dul.mp3" },
+
+{ 苗语: "bal eb", 中文: "遭受水灾,遭受涝灾", 音频: "audio/bal eb.mp3" },
+
+{ 苗语: "bal eb bal las", 中文: "河水泛滥田土毁坏", 音频: "audio/bal eb bal las.mp3" },
+
+{ 苗语: "bal eb dul", 中文: "发生火灾", 音频: "audio/bal eb dul.mp3" },
+
+{ 苗语: "bal fangb", 中文: "地方动乱,地方动荡", 音频: "audio/bal fangb.mp3" },
+
+{ 苗语: "bal fangb bal las", 中文: "田土毁坏|地方动乱", 音频: "audio/bal fangb bal las.mp3" },
+
+{ 苗语: "bal fangb bal vangl", 中文: "村毁寨破", 音频: "audio/bal fangb bal vangl.mp3" },
+
+{ 苗语: "bal gangb", 中文: "1.丝网2.遭虫灾", 音频: "audio/bal gangb.mp3" },
+
+{ 苗语: "bal ghab mais", 中文: "丢脸,丢面子", 音频: "audio/bal ghab mais.mp3" },
+
+{ 苗语: "bal ghaib bal khat", 中文: "破坏家族及亲戚关系", 音频: "audio/bal ghaib bal khat.mp3" },
+
+{ 苗语: "bal ghal", 中文: "1.伤亡|破烂2.编,乱编", 音频: "audio/bal ghal.mp3" },
+
+{ 苗语: "bal ghal bal neis", 中文: "破破烂烂", 音频: "audio/bal ghal bal neis.mp3" },
+
+{ 苗语: "bal gheb", 中文: "破坏庄稼", 音频: "audio/bal gheb.mp3" },
+
+{ 苗语: "bal git", 中文: "蛋套", 音频: "audio/bal git.mp3" },
+
+{ 苗语: "bal guk", 中文: "罩网", 音频: "audio/bal guk.mp3" },
+
+{ 苗语: "bal hfek", 中文: "撒网", 音频: "audio/bal hfek.mp3" },
+
+{ 苗语: "bal hniut", 中文: "年成不好", 音频: "audio/bal hniut.mp3" },
+
+{ 苗语: "bal hsangd", 中文: "拦河网", 音频: "audio/bal hsangd.mp3" },
+
+{ 苗语: "bal hvak", 中文: "拦河网", 音频: "audio/bal hvak.mp3" },
+
+{ 苗语: "bal hvib", 中文: "伤心,悲伤", 音频: "audio/bal hvib.mp3" },
+
+{ 苗语: "bal hvib bal ghad", 中文: "伤心失意", 音频: "audio/bal hvib bal ghad.mp3" },
+
+{ 苗语: "bal hvib bal hnid", 中文: "伤心失意", 音频: "audio/bal hvib bal hnid.mp3" },
+
+{ 苗语: "bal hxik", 中文: "网状饭盒套", 音频: "audio/bal hxik.mp3" },
+
+{ 苗语: "bal hxub bal khat", 中文: "伤亲败友|触犯婚姻礼俗|破坏姻亲关系", 音频: "audio/bal hxub bal khat.mp3" },
+
+{ 苗语: "bal jid", 中文: "伤身", 音频: "audio/bal jid.mp3" },
+
+{ 苗语: "bal kak", 中文: "刮网", 音频: "audio/bal kak.mp3" },
+
+{ 苗语: "bal khat", 中文: "破坏亲戚关系", 音频: "audio/bal khat.mp3" },
+
+{ 苗语: "bal lial", 中文: "1.急躁2.诧异和失望的眼神", 音频: "audio/bal lial.mp3" },
+
+{ 苗语: "bal lial bal dat", 中文: "轻浮急躁", 音频: "audio/bal lial bal dat.mp3" },
+
+{ 苗语: "bal lil", 中文: "破坏规矩,失礼", 音频: "audio/bal lil.mp3" },
+
+{ 苗语: "bal lil bal jax", 中文: "悖理违规", 音频: "audio/bal lil bal jax.mp3" },
+
+{ 苗语: "bal lix bal las", 中文: "毁坏田土", 音频: "audio/bal lix bal las.mp3" },
+
+{ 苗语: "bal lix bal ongd", 中文: "塘毁田崩", 音频: "audio/bal lix bal ongd.mp3" },
+
+{ 苗语: "bal lot", 中文: "费口舌,费唇舌", 音频: "audio/bal lot.mp3" },
+
+{ 苗语: "bal lot niox hsab", 中文: "白费口舌,枉费唇舌", 音频: "audio/bal lot niox hsab.mp3" },
+
+{ 苗语: "bal lul", 中文: "1.粗网2.伤残", 音频: "audio/bal lul.mp3" },
+
+{ 苗语: "bal mais", 中文: "丢脸,失面子|害羞,害臊", 音频: "audio/bal mais.mp3" },
+
+{ 苗语: "bal mangl bal mais", 中文: "丢脸出丑,丢人现眼", 音频: "audio/bal mangl bal mais.mp3" },
+
+{ 苗语: "bal nail", 中文: "渔网", 音频: "audio/bal nail.mp3" },
+
+{ 苗语: "bal naix", 中文: "人员伤亡", 音频: "audio/bal naix.mp3" },
+
+{ 苗语: "bal nangx bal bit", 中文: "名声扫地", 音频: "audio/bal nangx bal bit.mp3" },
+
+{ 苗语: "bal nangx xens bit", 中文: "失去名声", 音频: "audio/bal nangx xens bit.mp3" },
+
+{ 苗语: "bal neis", 中文: "破烂", 音频: "audio/bal neis.mp3" },
+
+{ 苗语: "bal nial", 中文: "1.姑娘2.窝囊,邋遢3.紧贴的样子", 音频: "audio/bal nial.mp3" },
+
+{ 苗语: "bal nial bal dliul", 中文: "1.窝囊邋遢2.密密麻麻而凌乱不堪的样子", 音频: "audio/bal nial bal dliul.mp3" },
+
+{ 苗语: "bal nial bal ghaik", 中文: "窝囊邋遢", 音频: "audio/bal nial bal ghaik.mp3" },
+
+{ 苗语: "bal nial bal hxit", 中文: "昏沉沉的", 音频: "audio/bal nial bal hxit.mp3" },
+
+{ 苗语: "bal nial bal xal", 中文: "神情紧张的样子", 音频: "audio/bal nial bal xal.mp3" },
+
+{ 苗语: "bal niangx", 中文: "荒年,灾荒年景", 音频: "audio/bal niangx.mp3" },
+
+{ 苗语: "bal niangx bal hniut", 中文: "灾荒年景,灾荒岁月", 音频: "audio/bal niangx bal hniut.mp3" },
+
+{ 苗语: "bal nios", 中文: "破相", 音频: "audio/bal nios.mp3" },
+
+{ 苗语: "bal niux", 中文: "破相", 音频: "audio/bal niux.mp3" },
+
+{ 苗语: "bal niux bal nios", 中文: "破相,容貌毁坏", 音频: "audio/bal niux bal nios.mp3" },
+
+{ 苗语: "bal set", 中文: "事情办砸", 音频: "audio/bal set.mp3" },
+
+{ 苗语: "bal taib", 中文: "刮网", 音频: "audio/bal taib.mp3" },
+
+{ 苗语: "bal ves", 中文: "疲劳,伤神", 音频: "audio/bal ves.mp3" },
+
+{ 苗语: "bal waix", 中文: "变天", 音频: "audio/bal waix.mp3" },
+
+{ 苗语: "bal wongs", 中文: "威风扫地|伤元气", 音频: "audio/bal wongs.mp3" },
+
+{ 苗语: "bal yis lix", 中文: "(戴在头上的)薅秧面网", 音频: "audio/bal yis lix.mp3" },
+
+{ 苗语: "bal zongt", 中文: "黄尾鱼网", 音频: "audio/bal zongt.mp3" },
+
+{ 苗语: "bangb", 中文: "1.垮,崩,塌|流产2.帮,帮助", 音频: "audio/bangb.mp3" },
+
+{ 苗语: "bangb bangb los los", 中文: "崩崩垮垮", 音频: "audio/bangb bangb los los.mp3" },
+
+{ 苗语: "bangb bas", 中文: "去世", 音频: "audio/bangb bas.mp3" },
+
+{ 苗语: "bangb bil los zat", 中文: "山崩崖垮", 音频: "audio/bangb bil los zat.mp3" },
+
+{ 苗语: "bangb bud", 中文: "帮补", 音频: "audio/bangb bud.mp3" },
+
+{ 苗语: "bangb gheb", 中文: "帮工", 音频: "audio/bangb gheb.mp3" },
+
+{ 苗语: "bangb hveb", 中文: "帮腔,帮别人说话", 音频: "audio/bangb hveb.mp3" },
+
+{ 苗语: "bangb lix bal ongd", 中文: "田垮塘毁", 音频: "audio/bangb lix bal ongd.mp3" },
+
+{ 苗语: "bangb lix bangb ongd", 中文: "田崩塘垮", 音频: "audio/bangb lix bangb ongd.mp3" },
+
+{ 苗语: "bangb naix bangb sos dab,ait gheb ait sos waix", 中文: "帮人帮到底,干活干到头", 音频: "audio/bangb naix bangb sos dab,ait gheb ait sos waix.mp3" },
+
+{ 苗语: "bangb vangx bangb bil", 中文: "山崩坡塌", 音频: "audio/bangb vangx bangb bil.mp3" },
+
+{ 苗语: "bangb vangx hluk bil", 中文: "山崩坡滑", 音频: "audio/bangb vangx hluk bil.mp3" },
+
+{ 苗语: "bangb vangx los bil", 中文: "山崩坡垮", 音频: "audio/bangb vangx los bil.mp3" },
+
+{ 苗语: "bangd", 中文: "发射,放射,枪击|蜇|放|跃,跳跃|排泄", 音频: "audio/bangd.mp3" },
+
+{ 苗语: "bangd denb", 中文: "飞也似的", 音频: "audio/bangd denb.mp3" },
+
+{ 苗语: "bangd dliangd", 中文: "细致反复做某事", 音频: "audio/bangd dliangd.mp3" },
+
+{ 苗语: "bangd hnaid", 中文: "射箭", 音频: "audio/bangd hnaid.mp3" },
+
+{ 苗语: "bangd hxongt", 中文: "开枪", 音频: "audio/bangd hxongt.mp3" },
+
+{ 苗语: "bangd pab", 中文: "打靶", 音频: "audio/bangd pab.mp3" },
+
+{ 苗语: "bangd pot", 中文: "放鞭炮|发射炮弹,放大炮", 音频: "audio/bangd pot.mp3" },
+
+{ 苗语: "bangd pot vib", 中文: "放岩炮,放炮开山", 音频: "audio/bangd pot vib.mp3" },
+
+{ 苗语: "bangd pot xit", 中文: "燃放鞭炮", 音频: "audio/bangd pot xit.mp3" },
+
+{ 苗语: "bangf", 中文: "1.大百合2.萝卜3.的(表领属)|“的”字结构", 音频: "audio/bangf.mp3" },
+
+{ 苗语: "bangl", 中文: "傍,靠,倚靠,依靠|婚配", 音频: "audio/bangl.mp3" },
+
+{ 苗语: "bangl dongd", 中文: "打单身", 音频: "audio/bangl dongd.mp3" },
+
+{ 苗语: "bangl gangl", 中文: "唰地爬上去的样子", 音频: "audio/bangl gangl.mp3" },
+
+{ 苗语: "bangl ghangb", 中文: "伴随,跟随", 音频: "audio/bangl ghangb.mp3" },
+
+{ 苗语: "bangl hxak", 中文: "伴唱", 音频: "audio/bangl hxak.mp3" },
+
+{ 苗语: "bangl langl", 中文: "很杂乱的样子", 音频: "audio/bangl langl.mp3" },
+
+{ 苗语: "bangl ot", 中文: "打单身", 音频: "audio/bangl ot.mp3" },
+
+{ 苗语: "bangl yangl", 中文: "东西溶化的样子", 音频: "audio/bangl yangl.mp3" },
+
+{ 苗语: "bangl yel", 中文: "打单身", 音频: "audio/bangl yel.mp3" },
+
+{ 苗语: "bangs", 中文: "1.山坡|山腰2.霜3.灰(色)4.靠,倚|因为", 音频: "audio/bangs.mp3" },
+
+{ 苗语: "bangs bil", 中文: "肩头", 音频: "audio/bangs bil.mp3" },
+
+{ 苗语: "bangs jil", 中文: "肩头", 音频: "audio/bangs jil.mp3" },
+
+{ 苗语: "bangt", 中文: "扎,刺,锥|绣", 音频: "audio/bangt.mp3" },
+
+{ 苗语: "bangt tiut", 中文: "挑拨", 音频: "audio/bangt tiut.mp3" },
+
+{ 苗语: "bangx", 中文: "1.花,花朵|蝴蝶|粮食产量2.榜(女性名)", 音频: "audio/bangx.mp3" },
+
+{ 苗语: "bangx bel", 中文: "蔷薇|姑娘,阿妹", 音频: "audio/bangx bel.mp3" },
+
+{ 苗语: "bangx bel ghof", 中文: "刺梨花", 音频: "audio/bangx bel ghof.mp3" },
+
+{ 苗语: "bangx bel liangx", 中文: "月季花", 音频: "audio/bangx bel liangx.mp3" },
+
+{ 苗语: "bangx bel liul", 中文: "刺莓花", 音频: "audio/bangx bel liul.mp3" },
+
+{ 苗语: "bangx bongl", 中文: "一对姑娘", 音频: "audio/bangx bongl.mp3" },
+
+{ 苗语: "bangx daib mongs", 中文: "兰花", 音频: "audio/bangx daib mongs.mp3" },
+
+{ 苗语: "bangx denb", 中文: "灯花(灯芯燃烧时结成的花状物)|灯花(龙灯上的花)", 音频: "audio/bangx denb.mp3" },
+
+{ 苗语: "bangx denb diel", 中文: "兰花", 音频: "audio/bangx denb diel.mp3" },
+
+{ 苗语: "bangx det", 中文: "树花", 音频: "audio/bangx det.mp3" },
+
+{ 苗语: "bangx det yux", 中文: "桐花", 音频: "audio/bangx det yux.mp3" },
+
+{ 苗语: "bangx dlenx", 中文: "桃花", 音频: "audio/bangx dlenx.mp3" },
+
+{ 苗语: "bangx dliud gheib", 中文: "百合花", 音频: "audio/bangx dliud gheib.mp3" },
+
+{ 苗语: "bangx dul", 中文: "火花", 音频: "audio/bangx dul.mp3" },
+
+{ 苗语: "bangx fangx", 中文: "胭脂花", 音频: "audio/bangx fangx.mp3" },
+
+{ 苗语: "bangx gad tid", 中文: "百合花", 音频: "audio/bangx gad tid.mp3" },
+
+{ 苗语: "bangx gangb", 中文: "姑娘,阿妹", 音频: "audio/bangx gangb.mp3" },
+
+{ 苗语: "bangx geb", 中文: "银花", 音频: "audio/bangx geb.mp3" },
+
+{ 苗语: "bangx gent bil", 中文: "凤仙花", 音频: "audio/bangx gent bil.mp3" },
+
+{ 苗语: "bangx ghad dlad", 中文: "金银花", 音频: "audio/bangx ghad dlad.mp3" },
+
+{ 苗语: "bangx gheb", 中文: "农事", 音频: "audio/bangx gheb.mp3" },
+
+{ 苗语: "Bangx Ghed", 中文: "榜构(神名)", 音频: "audio/Bangx Ghed.mp3" },
+
+{ 苗语: "bangx hangt ghad", 中文: "金银花", 音频: "audio/bangx hangt ghad.mp3" },
+
+{ 苗语: "bangx hnib gheib", 中文: "鸡冠花", 音频: "audio/bangx hnib gheib.mp3" },
+
+{ 苗语: "bangx hsenb", 中文: "棉花", 音频: "audio/bangx hsenb.mp3" },
+
+{ 苗语: "bangx hxak", 中文: "歌花(与歌骨相对,对唱时表示谦虚、称赞、挑战的内容)", 音频: "audio/bangx hxak.mp3" },
+
+{ 苗语: "bangx jab hxangd", 中文: "金银花", 音频: "audio/bangx jab hxangd.mp3" },
+
+{ 苗语: "bangx jab hxangt", 中文: "金银花", 音频: "audio/bangx jab hxangt.mp3" },
+
+{ 苗语: "bangx jangl", 中文: "木姜花", 音频: "audio/bangx jangl.mp3" },
+
+{ 苗语: "bangx jenb bangx nix", 中文: "金花银花", 音频: "audio/bangx jenb bangx nix.mp3" },
+
+{ 苗语: "Bangx Jenb Hob", 中文: "榜金蒿(人名)", 音频: "audio/Bangx Jenb Hob.mp3" },
+
+{ 苗语: "bangx jenl", 中文: "茶花", 音频: "audio/bangx jenl.mp3" },
+
+{ 苗语: "bangx jub", 中文: "花蕾", 音频: "audio/bangx jub.mp3" },
+
+{ 苗语: "bangx khad qangb", 中文: "野凤仙花", 音频: "audio/bangx khad qangb.mp3" },
+
+{ 苗语: "bangx kid", 中文: "姜花", 音频: "audio/bangx kid.mp3" },
+
+{ 苗语: "bangx liangx", 中文: "坟陵,坟墓", 音频: "audio/bangx liangx.mp3" },
+
+{ 苗语: "bangx liangx diel", 中文: "坟墓,坟陵", 音频: "audio/bangx liangx diel.mp3" },
+
+{ 苗语: "bangx liangx lil", 中文: "杜鹃花,映山红", 音频: "audio/bangx liangx lil.mp3" },
+
+{ 苗语: "bangx liangx wangx", 中文: "王陵", 音频: "audio/bangx liangx wangx.mp3" },
+
+{ 苗语: "bangx liangx xib", 中文: "兰花", 音频: "audio/bangx liangx xib.mp3" },
+
+{ 苗语: "bangx liangx xob", 中文: "杜鹃花", 音频: "audio/bangx liangx xob.mp3" },
+
+{ 苗语: "bangx lief fab", 中文: "兰花", 音频: "audio/bangx lief fab.mp3" },
+
+{ 苗语: "bangx mais hfud", 中文: "银花", 音频: "audio/bangx mais hfud.mp3" },
+
+{ 苗语: "bangx mais hnaib", 中文: "向日葵", 音频: "audio/bangx mais hnaib.mp3" },
+
+{ 苗语: "bangx mais xit", 中文: "兰花", 音频: "audio/bangx mais xit.mp3" },
+
+{ 苗语: "bangx mangb", 中文: "杏花", 音频: "audio/bangx mangb.mp3" },
+
+{ 苗语: "bangx nangl", 中文: "芙蓉花", 音频: "audio/bangx nangl.mp3" },
+
+{ 苗语: "bangx nax", 中文: "稻花|稻谷产量", 音频: "audio/bangx nax.mp3" },
+
+{ 苗语: "bangx niaf xit", 中文: "兰花", 音频: "audio/bangx niaf xit.mp3" },
+
+{ 苗语: "bangx niangb", 中文: "未同居的媳妇|新娘", 音频: "audio/bangx niangb.mp3" },
+
+{ 苗语: "bangx nix", 中文: "银花", 音频: "audio/bangx nix.mp3" },
+
+{ 苗语: "bangx pud lul", 中文: "兰花", 音频: "audio/bangx pud lul.mp3" },
+
+{ 苗语: "bangx qangb", 中文: "凤仙花", 音频: "audio/bangx qangb.mp3" },
+
+{ 苗语: "bangx vob ghad mal", 中文: "金银花", 音频: "audio/bangx vob ghad mal.mp3" },
+
+{ 苗语: "bangx vob hvid", 中文: "野菊花", 音频: "audio/bangx vob hvid.mp3" },
+
+{ 苗语: "bangx vob qangd niel", 中文: "续断花", 音频: "audio/bangx vob qangd niel.mp3" },
+
+{ 苗语: "bangx vut niangb gid gux,naix vut niangb khangd niangs", 中文: "花美在于表面,人好在于内心", 音频: "audio/bangx vut niangb gid gux,naix vut niangb khangd niangs.mp3" },
+
+{ 苗语: "bangx wab gheib", 中文: "鸡冠花", 音频: "audio/bangx wab gheib.mp3" },
+
+{ 苗语: "Bangx Xangb", 中文: "榜香", 音频: "audio/Bangx Xangb.mp3" },
+
+{ 苗语: "Bangx Xangb Ghed", 中文: "榜香构", 音频: "audio/Bangx Xangb Ghed.mp3" },
+
+{ 苗语: "Bangx Xangb Yul", 中文: "榜香尤", 音频: "audio/Bangx Xangb Yul.mp3" },
+
+{ 苗语: "Bangx Yangx", 中文: "榜炀(苗族神话中的冷神)", 音频: "audio/Bangx Yangx.mp3" },
+
+{ 苗语: "bas", 中文: "1.藤子2.首(量词)|个|套(量词)|群3.掩衽4.停泊,靠岸|暂停|遍及|败", 音频: "audio/bas.mp3" },
+
+{ 苗语: "bas baif", 中文: "猕猴桃藤", 音频: "audio/bas baif.mp3" },
+
+{ 苗语: "bas bil", 中文: "人人得到,人手一份|靠岸", 音频: "audio/bas bil.mp3" },
+
+{ 苗语: "Bas bil", 中文: "袖手", 音频: "audio/Bas bil.mp3" },
+
+{ 苗语: "bas bil dlius det nias", 中文: "上岸扔拐杖", 音频: "audio/bas bil dlius det nias.mp3" },
+
+{ 苗语: "bas del", 中文: "突然起哄而散开的样子", 音频: "audio/bas del.mp3" },
+
+{ 苗语: "bas diangs", 中文: "停战,结束战争|战败,吃败仗", 音频: "audio/bas diangs.mp3" },
+
+{ 苗语: "bas diangs ghad dlad", 中文: "战败,吃败仗", 音频: "audio/bas diangs ghad dlad.mp3" },
+
+{ 苗语: "bas dias", 中文: "叉脚叉胯而不稳的样子", 音频: "audio/bas dias.mp3" },
+
+{ 苗语: "bas diel bas jens", 中文: "物品齐备", 音频: "audio/bas diel bas jens.mp3" },
+
+{ 苗语: "bas dlias", 中文: "急巴巴,急匆匆", 音频: "audio/bas dlias.mp3" },
+
+{ 苗语: "bas dongs", 中文: "忽然,轰然", 音频: "audio/bas dongs.mp3" },
+
+{ 苗语: "bas dongs zuk", 中文: "轰然逃窜", 音频: "audio/bas dongs zuk.mp3" },
+
+{ 苗语: "bas eb bas bil dlius det nias", 中文: "上岸扔拐杖", 音频: "audio/bas eb bas bil dlius det nias.mp3" },
+
+{ 苗语: "bas eb bas las", 中文: "遍及各地", 音频: "audio/bas eb bas las.mp3" },
+
+{ 苗语: "bas fangb bas las", 中文: "遍及各地", 音频: "audio/bas fangb bas las.mp3" },
+
+{ 苗语: "bas fangb bas vangl", 中文: "遍及村村寨寨", 音频: "audio/bas fangb bas vangl.mp3" },
+
+{ 苗语: "bas ghad dlad", 中文: "金银花藤", 音频: "audio/bas ghad dlad.mp3" },
+
+{ 苗语: "bas hlat", 中文: "藤条|蛇", 音频: "audio/bas hlat.mp3" },
+
+{ 苗语: "bas hlat dlaib", 中文: "黑骨藤", 音频: "audio/bas hlat dlaib.mp3" },
+
+{ 苗语: "bas hlat ghad hlet", 中文: "岩豆藤", 音频: "audio/bas hlat ghad hlet.mp3" },
+
+{ 苗语: "bas hlat hfib", 中文: "葛藤", 音频: "audio/bas hlat hfib.mp3" },
+
+{ 苗语: "bas hlat hsongd hab", 中文: "红藤", 音频: "audio/bas hlat hsongd hab.mp3" },
+
+{ 苗语: "bas hlat zangx", 中文: "葛藤", 音频: "audio/bas hlat zangx.mp3" },
+
+{ 苗语: "bas hxak", 中文: "换歌", 音频: "audio/bas hxak.mp3" },
+
+{ 苗语: "bas niangx", 中文: "停船,船靠岸", 音频: "audio/bas niangx.mp3" },
+
+{ 苗语: "bas nias", 中文: "赤脚|蠕动,匍匐", 音频: "audio/bas nias.mp3" },
+
+{ 苗语: "bas vas", 中文: "快速散开的样子", 音频: "audio/bas vas.mp3" },
+
+{ 苗语: "bas vax vib", 中文: "地梨藤", 音频: "audio/bas vax vib.mp3" },
+
+{ 苗语: "bas zend vax vib", 中文: "地瓜藤", 音频: "audio/bas zend vax vib.mp3" },
+
+{ 苗语: "bat", 中文: "1.猪2.百", 音频: "audio/bat.mp3" },
+
+{ 苗语: "bat bat", 中文: "特意", 音频: "audio/bat bat.mp3" },
+
+{ 苗语: "bat bongl", 中文: "仔猪", 音频: "audio/bat bongl.mp3" },
+
+{ 苗语: "bat das ax hxib eb kib", 中文: "死猪不怕开水烫", 音频: "audio/bat das ax hxib eb kib.mp3" },
+
+{ 苗语: "bat des mif", 中文: "配种的小公猪", 音频: "audio/bat des mif.mp3" },
+
+{ 苗语: "bat diangs ax nongx ghongd", 中文: "肥猪不吃潲", 音频: "audio/bat diangs ax nongx ghongd.mp3" },
+
+{ 苗语: "bat dliat", 中文: "迅速的样子", 音频: "audio/bat dliat.mp3" },
+
+{ 苗语: "bat dliat bat dat", 中文: "求快而马虎的样子", 音频: "audio/bat dliat bat dat.mp3" },
+
+{ 苗语: "bat dliat bat ghaik", 中文: "求快而马虎的样子", 音频: "audio/bat dliat bat ghaik.mp3" },
+
+{ 苗语: "bat dliat bat hniangt", 中文: "求快而马虎的样子", 音频: "audio/bat dliat bat hniangt.mp3" },
+
+{ 苗语: "bat dliat bat les", 中文: "求快而马虎的样子", 音频: "audio/bat dliat bat les.mp3" },
+
+{ 苗语: "bat eb jus jox nangl", 中文: "百川归海", 音频: "audio/bat eb jus jox nangl.mp3" },
+
+{ 苗语: "bat gangl", 中文: "老猪", 音频: "audio/bat gangl.mp3" },
+
+{ 苗语: "bat ghab bangf", 中文: "萝卜猪", 音频: "audio/bat ghab bangf.mp3" },
+
+{ 苗语: "bat hniub", 中文: "郎猪,种猪", 音频: "audio/bat hniub.mp3" },
+
+{ 苗语: "bat hsent", 中文: "阉猪", 音频: "audio/bat hsent.mp3" },
+
+{ 苗语: "bat hsongd", 中文: "架子猪", 音频: "audio/bat hsongd.mp3" },
+
+{ 苗语: "bat hvangb bat jil", 中文: "袒胸露臂", 音频: "audio/bat hvangb bat jil.mp3" },
+
+{ 苗语: "bat jak", 中文: "架子猪", 音频: "audio/bat jak.mp3" },
+
+{ 苗语: "bat jens", 中文: "百物", 音频: "audio/bat jens.mp3" },
+
+{ 苗语: "bat laib hveb ax dangf ib zas hxak", 中文: "百句话不如一句歌", 音频: "audio/bat laib hveb ax dangf ib zas hxak.mp3" },
+
+{ 苗语: "bat laib lot seix hfaid ax gos", 中文: "百口难驳", 音频: "audio/bat laib lot seix hfaid ax gos.mp3" },
+
+{ 苗语: "bat langx", 中文: "郎猪,种猪", 音频: "audio/bat langx.mp3" },
+
+{ 苗语: "bat lot dongf ax xend", 中文: "百口莫辩", 音频: "audio/bat lot dongf ax xend.mp3" },
+
+{ 苗语: "bat nongx ghongd dlad ak det", 中文: "猪吃潲,狗挨棒", 音频: "audio/bat nongx ghongd dlad ak det.mp3" },
+
+{ 苗语: "bat ob juf jox gid,ait gheb jef nongx dad", 中文: "一百二十行,劳动久久长", 音频: "audio/bat ob juf jox gid,ait gheb jef nongx dad.mp3" },
+
+{ 苗语: "bat ob juf jox gid,ait gheb jef nongx hxed", 中文: "一百二十行,劳动才享福", 音频: "audio/bat ob juf jox gid,ait gheb jef nongx hxed.mp3" },
+
+{ 苗语: "bat ob juf jox gongl,ait gheb jef nongx lul", 中文: "一百二十行,劳动才终老", 音频: "audio/bat ob juf jox gongl,ait gheb jef nongx lul.mp3" },
+
+{ 苗语: "bat paib dab longl hfud,gheib qab gangb tak ghangb", 中文: "猪拱地朝前,鸡刨虫朝后", 音频: "audio/bat paib dab longl hfud,gheib qab gangb tak ghangb.mp3" },
+
+{ 苗语: "bat sangs", 中文: "百世", 音频: "audio/bat sangs.mp3" },
+
+{ 苗语: "bat sangs ax hniongb dal", 中文: "永世不忘", 音频: "audio/bat sangs ax hniongb dal.mp3" },
+
+{ 苗语: "bat xib langx", 中文: "配种公猪", 音频: "audio/bat xib langx.mp3" },
+
+{ 苗语: "bat xongx mif", 中文: "自己养的母猪所生而留作种的母猪崽", 音频: "audio/bat xongx mif.mp3" },
+
+//词库bak_bat结束
+
+        ];
+
+        // 播放音频功能
+        function playAudio(audioSrc) {
+            const audio = new Audio(audioSrc);
+            audio.play();
+        }
+
+        // 渲染词典列表
+        function renderDictionary(list) {
+            const resultList = document.getElementById('resultList');
+            resultList.innerHTML = '';
+            
+            if (list.length === 0) {
+                const noResultsElement = document.createElement('div');
+                noResultsElement.className = 'no-results';
+                noResultsElement.textContent = '没有找到相关结果，请重新输入';
+                resultList.appendChild(noResultsElement);
+                return;
+            }
+            
+            list.forEach(item => {
+                const itemElement = document.createElement('div');
+                itemElement.className = 'result-item';
+                itemElement.innerHTML = `
+                    <div class="苗语">${item.苗语}</div>
+                    <div>
+                        <span class="中文">${item.中文}</span>
+                        <button class="audio-btn" onclick="playAudio('${item.音频}')">🔊</button>
+                        <span class="arrow">›</span>
+                    </div>
+                `;
+                resultList.appendChild(itemElement);
+            });
+        }
+
+        // 搜索功能
+        document.getElementById('searchBtn').addEventListener('click', function() {
+            const searchTerm = document.getElementById('searchInput').value.trim();
+            if (searchTerm === '') {
+                const emptySearchElement = document.createElement('div');
+                emptySearchElement.className = 'no-results';
+                emptySearchElement.textContent = '请输入搜索词以查看结果';
+                document.getElementById('resultList').innerHTML = '';
+                document.getElementById('resultList').appendChild(emptySearchElement);
+                return;
+            }
+            
+            const filteredResults = dictionary.filter(item => 
+                item.苗语.toLowerCase().includes(searchTerm.toLowerCase()) || 
+                item.中文.toLowerCase().includes(searchTerm.toLowerCase())
+            );
+            
+            renderDictionary(filteredResults);
+        });
+
+        // 监听搜索框输入变化
+        document.getElementById('searchInput').addEventListener('input', function() {
+            const searchTerm = this.value.trim();
+            if (searchTerm === '') {
+                const emptySearchElement = document.createElement('div');
+                emptySearchElement.className = 'no-results';
+                emptySearchElement.textContent = '请输入搜索词以查看结果';
+                document.getElementById('resultList').innerHTML = '';
+                document.getElementById('resultList').appendChild(emptySearchElement);
+            }
+        });
+
+        // 初始化页面时不显示词条
+        window.onload = function() {
+            const emptySearchElement = document.createElement('div');
+            emptySearchElement.className = 'no-results';
+            emptySearchElement.textContent = '请输入搜索词以查看结果';
+            document.getElementById('resultList').appendChild(emptySearchElement);
+        };
+
+        // 更多按钮功能
+        document.getElementById('moreBtn').addEventListener('click', function() {
+            document.getElementById('searchContainer').style.display = 'none';
+            document.getElementById('resultList').style.display = 'none';
+            document.getElementById('aboutPage').style.display = 'block';
+        });
+
+        // 返回按钮功能
+        document.getElementById('backBtn').addEventListener('click', function() {
+            document.getElementById('searchContainer').style.display = 'flex';
+            document.getElementById('resultList').style.display = 'block';
+            document.getElementById('aboutPage').style.display = 'none';
+            document.getElementById('featurePage').style.display = 'none';
+            document.getElementById('updateLogPage').style.display = 'none';
+            document.getElementById('appTeamPage').style.display = 'none';
+            document.getElementById('privacyPolicyPage').style.display = 'none';
+            document.getElementById('phoneticsPage').style.display = 'none';
+        });
+
+        // 功能介绍按钮功能
+        document.getElementById('featureBtn').addEventListener('click', function() {
+            document.getElementById('aboutPage').style.display = 'none';
+            document.getElementById('featurePage').style.display = 'block';
+        });
+
+        // 更新日志按钮功能
+        document.getElementById('updateLogBtn').addEventListener('click', function() {
+            document.getElementById('aboutPage').style.display = 'none';
+            document.getElementById('updateLogPage').style.display = 'block';
+        });
+
+        // APP团队按钮功能
+        document.getElementById('appTeamBtn').addEventListener('click', function() {
+            document.getElementById('aboutPage').style.display = 'none';
+            document.getElementById('appTeamPage').style.display = 'block';
+        });
+
+        // 隐私政策与用户协议按钮功能
+        document.getElementById('privacyPolicyBtn').addEventListener('click', function() {
+            document.getElementById('aboutPage').style.display = 'none';
+            document.getElementById('privacyPolicyPage').style.display = 'block';
+        });
+
+        // 声韵调按钮功能
+        document.getElementById('phoneticsBtn').addEventListener('click', function() {
+            document.getElementById('aboutPage').style.display = 'none';
+            document.getElementById('phoneticsPage').style.display = 'block';
+        });
+
+        // 交流Q群按钮功能
+        document.getElementById('qqGroupBtn').addEventListener('click', function() {
+            alert('QQ群号：1009892635');
+        });
+
+        // 添加更多模拟词典数据的函数
+        function addDictionaryEntry(hmongPhrase, chinesePhrase, audioPath) {
+            dictionary.push({ 苗语: hmongPhrase, 中文: chinesePhrase, 音频: audioPath });
+        }
+    </script>
+</body>
+</html>
