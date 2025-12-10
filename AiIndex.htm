@@ -463,6 +463,13 @@
             cursor: pointer;
             font-size: 20px;
         }
+
+        .first-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
     </style>
 </head>
 <body>
@@ -488,7 +495,7 @@
     <div class="about-page" id="aboutPage">
         <h1>关于平台</h1>
         <div class="logo">
-            <img src="images/logo.png" alt="Logo">
+            <img src="images/logo.png" alt="Logo" class="first-image">
         </div>
         <h1>苗语中部方言有声词典</h1>
         <div class="version">Version 1.0</div>
@@ -18568,7 +18575,8 @@
 
 //等待补充…
 
-            // 可以继续添加更多词条...
+// 可以继续添加更多词条...
+
         ];
 
         // 播放音频功能
@@ -18605,9 +18613,10 @@
             });
         }
 
-        // 搜索功能
+        // 搜索页面实时更新搜索结果
         function search() {
             const searchTerm = document.getElementById('searchInput').value.trim();
+            
             if (searchTerm === '') {
                 const emptySearchElement = document.createElement('div');
                 emptySearchElement.className = 'no-results';
@@ -18621,6 +18630,21 @@
                 item.苗语.toLowerCase().includes(searchTerm.toLowerCase()) || 
                 item.中文.toLowerCase().includes(searchTerm.toLowerCase())
             );
+            
+            // 排序：首字母或首个汉字匹配优先
+            filteredResults.sort((a, b) => {
+                const aMiaoFirst = a.苗语.toLowerCase().startsWith(searchTerm.toLowerCase());
+                const aChineseFirst = a.中文.toLowerCase().startsWith(searchTerm.toLowerCase());
+                const bMiaoFirst = b.苗语.toLowerCase().startsWith(searchTerm.toLowerCase());
+                const bChineseFirst = b.中文.toLowerCase().startsWith(searchTerm.toLowerCase());
+                
+                // 如果a的首字母或首个汉字匹配，而b不匹配，则a排在前面
+                if ((aMiaoFirst || aChineseFirst) && !(bMiaoFirst || bChineseFirst)) return -1;
+                if (!(aMiaoFirst || aChineseFirst) && (bMiaoFirst || bChineseFirst)) return 1;
+                
+                // 如果都匹配或都不匹配，保持原顺序
+                return 0;
+            });
             
             renderDictionary(filteredResults);
         }
