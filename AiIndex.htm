@@ -1,965 +1,907 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hmub有声词典</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
-        
-        body {
-            background-color: #f5f5f5;
-        }
-        
-        header {
-            background-color: #03a9f4;
-            color: white;
-            padding: 10px 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .back-btn {
-            display: flex;
-            align-items: center;
-            cursor: pointer;
-        }
-        
-        .back-btn i {
-            margin-right: 5px;
-        }
-        
-        .title {
-            font-size: 18px;
-            font-weight: bold;
-        }
-        
-        .more-btn {
-            font-size: 14px;
-            cursor: pointer;
-        }
-        
-        .search-container {
-            padding: 15px;
-            background-color: white;
-            display: flex;
-        }
-        
-        .search-input {
-            flex: 1;
-            padding: 10px 15px;
-            border: 1px solid #00c853;
-            border-radius: 4px;
-            font-size: 16px;
-        }
-        
-        .search-btn {
-            background-color: #00c853;
-            color: white;
-            border: none;
-            padding: 0 20px;
-            border-radius: 4px;
-            margin-left: 10px;
-            cursor: pointer;
-        }
-        
-        .result-list {
-            background-color: white;
-        }
-        
-        .result-item {
-            padding: 15px;
-            border-bottom: 1px solid #eee;
-            display: flex;
-            justify-content: space-between;
-        }
-        
-        .苗语 {
-            font-size: 16px;
-            color: #333;
-        }
-        
-        .中文 {
-            font-size: 16px;
-            color: #00c853;
-        }
-        
-        .audio-btn {
-            background: none;
-            border: none;
-            color: #03a9f4;
-            cursor: pointer;
-            font-size: 16px;
-            margin-left: 10px;
-        }
-        
-        .arrow {
-            color: #ccc;
-        }
-        
-        .no-results {
-            padding: 15px;
-            color: #666;
-            text-align: center;
-        }
-        
-        .about-page {
-            display: none;
-            padding: 20px;
-            text-align: center;
-        }
-        
-        .about-page .logo {
-            width: 80px;
-            height: 80px;
-            margin: 20px auto;
-            background-color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border-radius: 10px;
-        }
-        
-        .about-page .logo img {
-            width: 50px;
-            height: 50px;
-        }
-        
-        .about-page h1 {
-            font-size: 24px;
-            margin-bottom: 10px;
-        }
-        
-        .about-page .version {
-            font-size: 16px;
-            color: #666;
-            margin-bottom: 40px;
-        }
-        
-        .about-page .info-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 15px;
-            border-bottom: 1px solid #eee;
-            text-align: left;
-            cursor: pointer;
-        }
-        
-        .about-page .footer {
-            margin-top: 60px;
-            color: #999;
-            font-size: 14px;
-        }
-        
-        .feature-page {
-            display: none;
-            padding: 20px;
-            text-align: center;
-        }
-        
-        .feature-page h1 {
-            font-size: 24px;
-            margin-bottom: 20px;
-        }
-        
-        .feature-page .content {
-            text-align: left;
-            line-height: 1.6;
-        }
-        
-        .feature-page .section {
-            background-color: #f9f9f9;
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 20px;
-        }
-        
-        .feature-page .section h2 {
-            font-size: 20px;
-            margin-bottom: 10px;
-        }
-        
-        .feature-page .section p {
-            font-size: 16px;
-            color: #333;
-        }
-        
-        .feature-page .footer {
-            margin-top: 40px;
-            color: #999;
-            font-size: 14px;
-        }
-        
-        .update-log-page {
-            display: none;
-            padding: 20px;
-            text-align: center;
-        }
-        
-        .update-log-page h1 {
-            font-size: 24px;
-            margin-bottom: 20px;
-        }
-        
-        .update-log-page .content {
-            text-align: left;
-            line-height: 1.6;
-        }
-        
-        .update-log-page .log-entry {
-            background-color: #f9f9f9;
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 20px;
-        }
-        
-        .update-log-page .log-entry h2 {
-            font-size: 20px;
-            margin-bottom: 10px;
-            color: #03a9f4;
-        }
-        
-        .update-log-page .log-entry p {
-            font-size: 16px;
-            color: #333;
-            margin-bottom: 10px;
-        }
-        
-        .update-log-page .log-entry ul {
-            padding-left: 20px;
-        }
-        
-        .update-log-page .log-entry li {
-            margin-bottom: 5px;
-        }
-        
-        .update-log-page .footer {
-            margin-top: 40px;
-            color: #999;
-            font-size: 14px;
-        }
-        
-        .app-team-page {
-            display: none;
-            padding: 20px;
-            text-align: center;
-            background-color: #fff8e1;
-        }
-        
-        .app-team-page h1 {
-            font-size: 24px;
-            margin-bottom: 20px;
-            color: #8d6e63;
-        }
-        
-        .app-team-page .app-info {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 30px;
-        }
-        
-        .app-team-page .app-logo {
-            width: 80px;
-            height: 80px;
-            background-color: white;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-right: 20px;
-        }
-        
-        .app-team-page .app-logo img {
-            width: 50px;
-            height: 50px;
-        }
-        
-        .app-team-page .app-details h2 {
-            font-size: 20px;
-            margin-bottom: 5px;
-            color: #8d6e63;
-        }
-        
-        .app-team-page .app-details p {
-            font-size: 16px;
-            color: #8d6e63;
-        }
-        
-        .app-team-page .team-members {
-            background-color: white;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 30px;
-        }
-        
-        .app-team-page .team-members h2 {
-            font-size: 20px;
-            margin-bottom: 20px;
-            color: #8d6e63;
-        }
-        
-        .app-team-page .member-cards {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-        
-        .app-team-page .member-card {
-            width: 200px;
-            margin: 10px;
-            padding: 20px;
-            background-color: #f5f5f5;
-            border-radius: 10px;
-            text-align: center;
-        }
-        
-        .app-team-page .member-card .name {
-            font-size: 18px;
-            margin-bottom: 5px;
-        }
-        
-        .app-team-page .member-card .role {
-            font-size: 16px;
-            color: #666;
-        }
-        
-        .app-team-page .contact-section {
-            background-color: white;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 30px;
-        }
-        
-        .app-team-page .contact-section p {
-            font-size: 16px;
-            color: #8d6e63;
-            margin-bottom: 20px;
-        }
-        
-        .app-team-page .contact-btn {
-            background-color: #ffab91;
-            color: white;
-            border: none;
-            padding: 10px 30px;
-            border-radius: 25px;
-            font-size: 16px;
-            cursor: pointer;
-            margin-bottom: 20px;
-        }
-        
-        .app-team-page .copyright {
-            font-size: 14px;
-            color: #8d6e63;
-            margin-top: 40px;
-        }
-        
-        .privacy-policy-page {
-            display: none;
-            padding: 20px;
-            text-align: center;
-        }
-        
-        .privacy-policy-page h1 {
-            font-size: 24px;
-            margin-bottom: 20px;
-        }
-        
-        .privacy-policy-page .content {
-            text-align: left;
-            line-height: 1.6;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
-        .privacy-policy-page .section {
-            background-color: #f9f9f9;
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 20px;
-        }
-        
-        .privacy-policy-page .section h2 {
-            font-size: 20px;
-            margin-bottom: 10px;
-        }
-        
-        .privacy-policy-page .section p {
-            font-size: 16px;
-            color: #333;
-            margin-bottom: 10px;
-        }
-        
-        .privacy-policy-page .section ul {
-            padding-left: 20px;
-            margin-bottom: 10px;
-        }
-        
-        .privacy-policy-page .section li {
-            margin-bottom: 5px;
-        }
-        
-        .privacy-policy-page .footer {
-            margin-top: 40px;
-            color: #999;
-            font-size: 14px;
-        }
-        
-        .phonetics-page {
-            display: none;
-            padding: 20px;
-            text-align: center;
-        }
-        
-        .phonetics-page h1 {
-            font-size: 24px;
-            margin-bottom: 20px;
-        }
-        
-        .phonetics-section {
-            margin-bottom: 30px;
-        }
-        
-        .phonetics-section h2 {
-            font-size: 20px;
-            margin-bottom: 15px;
-        }
-        
-        .cards-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-        
-        .phonetics-card {
-            width: calc(33.33% - 20px);
-            max-height: 50vh;
-            margin: 10px;
-            padding: 15px;
-            background-color: #f9f9f9;
-            border-radius: 8px;
-            text-align: center;
-            position: relative;
-        }
-        
-        .phonetics-card .title {
-            font-size: 18px;
-            margin-bottom: 10px;
-        }
-        
-        .phonetics-card .audio-btn {
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-            background: none;
-            border: none;
-            color: #03a9f4;
-            cursor: pointer;
-            font-size: 20px;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hmub有声词典</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
 
-        .first-image {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-    </style>
+    body {
+      background-color: #f5f5f5;
+      /* 防止页面整体滚动时头部/搜索栏抖动 */
+      overflow-y: auto;
+    }
+
+    header {
+      background-color: #03a9f4;
+      color: white;
+      padding: 10px 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      /* 头部固定 */
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .back-btn {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .back-btn i {
+      margin-right: 5px;
+    }
+
+    .title {
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .more-btn {
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    /* 搜索容器固定 — 不随滚动移动 */
+    .search-container {
+      padding: 15px;
+      background-color: white;
+      display: flex;
+      /* 固定定位方案：使用 sticky 使其在滚动时保持原位 */
+      position: sticky;
+      top: 56px; /* header 高度大约 56px（10+10+36? 实际大约 56），微调保证不重叠 */
+      z-index: 99;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+
+    .search-input {
+      flex: 1;
+      padding: 10px 15px;
+      border: 1px solid #00c853;
+      border-radius: 4px;
+      font-size: 16px;
+    }
+
+    .search-btn {
+      background-color: #00c853;
+      color: white;
+      border: none;
+      padding: 0 20px;
+      border-radius: 4px;
+      margin-left: 10px;
+      cursor: pointer;
+    }
+
+    /* 结果列表 — 不固定，随页面滚动 */
+    .result-list {
+      background-color: white;
+      /* 保证没有多余定位 */
+    }
+
+    .result-item {
+      padding: 15px;
+      border-bottom: 1px solid #eee;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .苗语 {
+      font-size: 16px;
+      color: #333;
+    }
+
+    .中文 {
+      font-size: 16px;
+      color: #00c853;
+    }
+
+    .audio-btn {
+      background: none;
+      border: none;
+      color: #03a9f4;
+      cursor: pointer;
+      font-size: 16px;
+      margin-left: 10px;
+    }
+
+    .arrow {
+      color: #ccc;
+    }
+
+    .no-results {
+      padding: 15px;
+      color: #666;
+      text-align: center;
+    }
+
+    /* 以下原有页面样式保持不变 */
+    .about-page {
+      display: none;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .about-page .logo {
+      width: 80px;
+      height: 80px;
+      margin: 20px auto;
+      background-color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 10px;
+    }
+
+    .about-page .logo img {
+      width: 50px;
+      height: 50px;
+    }
+
+    .about-page h1 {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    .about-page .version {
+      font-size: 16px;
+      color: #666;
+      margin-bottom: 40px;
+    }
+
+    .about-page .info-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 15px;
+      border-bottom: 1px solid #eee;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .about-page .footer {
+      margin-top: 60px;
+      color: #999;
+      font-size: 14px;
+    }
+
+    .feature-page {
+      display: none;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .feature-page h1 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    .feature-page .content {
+      text-align: left;
+      line-height: 1.6;
+    }
+
+    .feature-page .section {
+      background-color: #f9f9f9;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .feature-page .section h2 {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+
+    .feature-page .section p {
+      font-size: 16px;
+      color: #333;
+    }
+
+    .feature-page .footer {
+      margin-top: 40px;
+      color: #999;
+      font-size: 14px;
+    }
+
+    .update-log-page {
+      display: none;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .update-log-page h1 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    .update-log-page .content {
+      text-align: left;
+      line-height: 1.6;
+    }
+
+    .update-log-page .log-entry {
+      background-color: #f9f9f9;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .update-log-page .log-entry h2 {
+      font-size: 20px;
+      margin-bottom: 10px;
+      color: #03a9f4;
+    }
+
+    .update-log-page .log-entry p {
+      font-size: 16px;
+      color: #333;
+      margin-bottom: 10px;
+    }
+
+    .update-log-page .log-entry ul {
+      padding-left: 20px;
+    }
+
+    .update-log-page .log-entry li {
+      margin-bottom: 5px;
+    }
+
+    .update-log-page .footer {
+      margin-top: 40px;
+      color: #999;
+      font-size: 14px;
+    }
+
+    .app-team-page {
+      display: none;
+      padding: 20px;
+      text-align: center;
+      background-color: #fff8e1;
+    }
+
+    .app-team-page h1 {
+      font-size: 24px;
+      margin-bottom: 20px;
+      color: #8d6e63;
+    }
+
+    .app-team-page .app-info {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 30px;
+    }
+
+    .app-team-page .app-logo {
+      width: 80px;
+      height: 80px;
+      background-color: white;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-right: 20px;
+    }
+
+    .app-team-page .app-logo img {
+      width: 50px;
+      height: 50px;
+    }
+
+    .app-team-page .app-details h2 {
+      font-size: 20px;
+      margin-bottom: 5px;
+      color: #8d6e63;
+    }
+
+    .app-team-page .app-details p {
+      font-size: 16px;
+      color: #8d6e63;
+    }
+
+    .app-team-page .team-members {
+      background-color: white;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 30px;
+    }
+
+    .app-team-page .team-members h2 {
+      font-size: 20px;
+      margin-bottom: 20px;
+      color: #8d6e63;
+    }
+
+    .app-team-page .member-cards {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .app-team-page .member-card {
+      width: 200px;
+      margin: 10px;
+      padding: 20px;
+      background-color: #f5f5f5;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .app-team-page .member-card .name {
+      font-size: 18px;
+      margin-bottom: 5px;
+    }
+
+    .app-team-page .member-card .role {
+      font-size: 16px;
+      color: #666;
+    }
+
+    .app-team-page .contact-section {
+      background-color: white;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 30px;
+    }
+
+    .app-team-page .contact-section p {
+      font-size: 16px;
+      color: #8d6e63;
+      margin-bottom: 20px;
+    }
+
+    .app-team-page .contact-btn {
+      background-color: #ffab91;
+      color: white;
+      border: none;
+      padding: 10px 30px;
+      border-radius: 25px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-bottom: 20px;
+    }
+
+    .app-team-page .copyright {
+      font-size: 14px;
+      color: #8d6e63;
+      margin-top: 40px;
+    }
+
+    .privacy-policy-page {
+      display: none;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .privacy-policy-page h1 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    .privacy-policy-page .content {
+      text-align: left;
+      line-height: 1.6;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .privacy-policy-page .section {
+      background-color: #f9f9f9;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .privacy-policy-page .section h2 {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+
+    .privacy-policy-page .section p {
+      font-size: 16px;
+      color: #333;
+      margin-bottom: 10px;
+    }
+
+    .privacy-policy-page .section ul {
+      padding-left: 20px;
+      margin-bottom: 10px;
+    }
+
+    .privacy-policy-page .section li {
+      margin-bottom: 5px;
+    }
+
+    .privacy-policy-page .footer {
+      margin-top: 40px;
+      color: #999;
+      font-size: 14px;
+    }
+
+    .phonetics-page {
+      display: none;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .phonetics-page h1 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    .phonetics-section {
+      margin-bottom: 30px;
+    }
+
+    .phonetics-section h2 {
+      font-size: 20px;
+      margin-bottom: 15px;
+    }
+
+    .cards-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .phonetics-card {
+      width: calc(33.33% - 20px);
+      max-height: 50vh;
+      margin: 10px;
+      padding: 15px;
+      background-color: #f9f9f9;
+      border-radius: 8px;
+      text-align: center;
+      position: relative;
+    }
+
+    .phonetics-card .title {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    .phonetics-card .audio-btn {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      background: none;
+      border: none;
+      color: #03a9f4;
+      cursor: pointer;
+      font-size: 20px;
+    }
+
+    .first-image {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <div class="back-btn" id="backBtn">
-            <i></i> 返回
-        </div>
-        <div class="title">Hmub有声词典</div>
-        <div class="more-btn" id="moreBtn">更多</div>
-    </header>
-    
-    <div class="search-container" id="searchContainer">
-        <input type="text" class="search-input" placeholder="查询苗语" id="searchInput">
-        <button class="search-btn" id="searchBtn">
-            <i>🔍</i>
-        </button>
+  <header>
+    <div class="back-btn" id="backBtn">
+      <i></i> 返回
     </div>
-    
-    <div class="result-list" id="resultList">
-        <!-- 结果将通过JavaScript动态生成 -->
+    <div class="title">Hmub有声词典</div>
+    <div class="more-btn" id="moreBtn">更多</div>
+  </header>
+
+  <!-- 搜索框与按钮固定区域（sticky 保持原位） -->
+  <div class="search-container" id="searchContainer">
+    <input type="text" class="search-input" placeholder="查询苗语" id="searchInput">
+    <button class="search-btn" id="searchBtn">
+      <i>🔍</i>
+    </button>
+  </div>
+
+  <div class="result-list" id="resultList">
+    <!-- 结果将通过JavaScript动态生成 -->
+  </div>
+
+  <!-- 关于平台页面 -->
+  <div class="about-page" id="aboutPage">
+    <h1>关于平台</h1>
+    <div class="logo">
+      <img src="images/logo.png" alt="Logo" class="first-image">
     </div>
-    
-    <div class="about-page" id="aboutPage">
-        <h1>关于平台</h1>
-        <div class="logo">
-            <img src="images/logo.png" alt="Logo" class="first-image">
-        </div>
-        <h1>苗语中部方言有声词典</h1>
-        <div class="version">Version 1.0</div>
-        
-        <div class="info-item" id="phoneticsBtn">
-            <div>声韵调</div>
-            <div></div>
-        </div>
-        
-        <div class="info-item" id="featureBtn">
-            <div>功能介绍</div>
-            <div></div>
-        </div>
-        
-        <div class="info-item" id="qqGroupBtn">
-            <div>交流Q群</div>
-            <div></div>
-        </div>
-        
-        <div class="info-item" id="updateLogBtn">
-            <div>更新日志</div>
-            <div></div>
-        </div>
-        
-        <div class="info-item" id="appTeamBtn">
-            <div>APP团队</div>
-            <div></div>
-        </div>
-        
-        <div class="info-item" id="privacyPolicyBtn">
-            <div>隐私政策与用户协议</div>
-            <div></div>
-        </div>
-        
-        <div class="footer">
-            安全体验 © 2025-04-16 宣
-        </div>
+    <h1>苗语中部方言有声词典</h1>
+    <div class="version">Version 2.0</div>
+    <div class="info-item" id="phoneticsBtn">
+      <div>声韵调</div>
+      <div></div>
     </div>
-    
-    <div class="feature-page" id="featurePage">
-        <h1>功能介绍</h1>
-        <div class="content">
-            <div class="section">
-                <h2>平台描述</h2>
-                <p>苗语中部方言有声词典由重庆彭水@苗族阿松所开发的Android应用程序，里面包含了声韵调、字词翻译、点读、词条速览等一系列围绕为主题的苗文掌上学习软件。音频素材和配音作者已在APP团队界面标注说明目前，APP依然在持续优化中，不断完善交互设计，敬请关注！</p>
-            </div>
-            
-            <div class="section">
-                <h2>分享初衷</h2>
-                <p>有声词典作为启蒙教育的出发点，一方面在于丰富日常交流的词汇表达，另一方面，还能将口语发音规范化！此时此刻，希望苗族同胞及苗文爱好者都能够从中获取经验、启发思路，提升自己的苗语表达能力。敬爱的同胞们，行动起来吧，让苗语在世界上熠熠生辉~</p>
-            </div>
-            
-            <div class="section">
-                <h2>资源声明</h2>
-                <p>1.任何单位和个人未经作者许可，不得擅自传播或用于商业用途。如有违反，将依法追究其法律责任。</p>
-                <p>2.明确注明来源的同时，我们将该资源照搬，未做任何修改或加工，以保持苗文字词的完整性和准确性。</p>
-                <p>3.希望广大读者能够尊重原作者的版权和创作设计意图，共同维护良好的网络环境，打造一个有氛围有爱心的学习圈子。如有任何疑问或建议，请随时联系我们。</p>
-            </div>
-        </div>
-        
-        <div class="footer">
-            安全体验 © 2025-04-16 宣
-        </div>
+    <div class="info-item" id="featureBtn">
+      <div>功能介绍</div>
+      <div></div>
     </div>
-    
-    <div class="update-log-page" id="updateLogPage">
-        <h1>更新日志</h1>
-        <div class="content">
-            <div class="log-entry">
-                <h2>Version 1.0 (2025-04-16)</h2>
-                <p>初始版本发布，包含以下功能：</p>
-                <ul>
-                    <li>苗语中部方言有声词典网页端和手机端今后实现同步更新和上线</li>
-                    <li>支持苗语和中文的双向查询</li>
-                    <li>每个词条配有音频发音</li>
-                    <li>支持点读功能</li>
-                    <li>包含常用词汇和短语</li>
-                </ul>
-            </div>
-            
-            <div class="log-entry">
-                <h2>Version 2.0 (计划中)</h2>
-                <p>耐心等待新内容更新：</p>
-                <ul>
-                    <li>经授权的所有词条现已配置完成；</li>
-                    <li>声母、韵母、声调的读音待补充。</li>
-                </ul>
-            </div>
-        </div>
-        
-        <div class="footer">
-            安全体验 © 2025-04-16 宣
-        </div>
+    <div class="info-item" id="qqGroupBtn">
+      <div>交流Q群</div>
+      <div></div>
     </div>
-    
-    <div class="app-team-page" id="appTeamPage">
-        <h1>APP团队</h1>
-        <div class="app-info">
-            <div class="app-logo">
-                <img src="images/logo.png" alt="App Logo">
-            </div>
-            <div class="app-details">
-                <h2>苗语中部方言有声词典</h2>
-                <p>使用有效期：长期且免费</p>
-            </div>
-        </div>
-        
-        <div class="team-members">
-            <h2>项目成员</h2>
-            <div class="member-cards">
-                <div class="member-card">
-                    <div class="name">苗族阿松（彭水）</div>
-                    <div class="role">代码开发、页面设计</div>
-                </div>
-                <div class="member-card">
-                    <div class="name">杨文斌（苗族）</div>
-                    <div class="role">词条发音人</div>
-                </div>
-                <div class="member-card">
-                    <div class="name">耕夫（苗族）</div>
-                    <div class="role">APP项目发起人</div>
-                </div>
-                <div class="member-card">
-                    <div class="name">吴小花（苗族）</div>
-                    <div class="role">声韵调发音人</div>
-                </div>
-                <div class="member-card">
-                    <div class="name">叠贵（苗族）</div>
-                    <div class="role">头衔待定</div>
-                </div>
-                <div class="member-card">
-                    <div class="name">坐席客服</div>
-                    <div class="role">24小时在线</div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="contact-section">
-            <p>遇到困难了，需要帮助？联系客服</p>
-            <button class="contact-btn">+微信号：absongb2099</button>
-            <p>无关要是，勿扰谢谢！</p>
-        </div>
-        
-        <div class="copyright">
-            <h3>版权声明©</h3>
-            <p>1.所有词库&音频数据未经原著许可，严禁盗用二次利用，经查获，必将追究其法律责任；</p>
-            <p>2.严禁通过任何方式&渠道,以此来贩卖和破解APP,经查获,必将追究刑事责任。</p>
-        </div>
+    <div class="info-item" id="updateLogBtn">
+      <div>更新日志</div>
+      <div></div>
     </div>
-    
-    <div class="privacy-policy-page" id="privacyPolicyPage">
-        <h1>隐私政策与用户协议</h1>
-        <div class="content">
-            <div class="section">
-                <h2>隐私政策</h2>
-                <p>我们尊重并保护所有使用本平台的用户的个人隐私。本隐私政策解释了我们如何收集、使用和保护您的个人信息。</p>
-                <p>1. **网络判断**：当用户在网页端或者手机客户端上体验时，我们可能会判断您在使用平台时加载的宽带、wifi和数据流量等网络是否正常，以免体验时因为网络错误或者卡顿为你带来困扰！</p>
-                <p>2. **信息使用**：我们承诺不会将您的个人信息用于任何未经您同意的用途。</p>
-                <p>3. **信息保护**：我们采取合理的安全措施来保护您的个人信息不被未经授权的访问、披露、更改或销毁。</p>
-            </div>
-            
-            <div class="section">
-                <h2>用户协议</h2>
-                <p>使用本平台即表示您同意以下条款：</p>
-                <p>1. **合法使用**：您不得将本平台用于任何非法或未经授权的用途。</p>
-                <p>2. **知识产权**：平台上的所有内容，包括但不限于文字、音频、图像等，均受到版权保护。</p>
-                <p>3. **责任限制**：我们不对因使用本平台而可能造成的任何直接或间接损失承担责任。</p>
-            </div>
-        </div>
-        
-        <div class="footer">
-            安全体验 © 2025-04-16 宣
-        </div>
+    <div class="info-item" id="appTeamBtn">
+      <div>APP团队</div>
+      <div></div>
     </div>
-    
-    <div class="phonetics-page" id="phoneticsPage">
-        <h1>声韵调</h1>
-        
-        <div class="phonetics-section">
-            <h2>声母 (32)</h2>
-            <div class="cards-container">
-                <div class="phonetics-card">
-                    <div class="title">b</div>
-                    <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/smb.mp3')">🔊</button>
-                </div>
-                <div class="phonetics-card">
-                    <div class="title">p</div>
-                    <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/smp.mp3')">🔊</button>
-                </div>
-                <div class="phonetics-card">
-                    <div class="title">m</div>
-                    <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/smm.mp3')">🔊</button>
-                </div>
-                <div class="phonetics-card">
-                    <div class="title">hm</div>
-                    <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/smhm.mp3')">🔊</button>
-                </div>
-                <div class="phonetics-card">
-                    <div class="title">f</div>
-                    <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/smf.mp3')">🔊</button>
-                </div>
-                <div class="phonetics-card">
-                    <div class="title">hf</div>
-                    <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/smhf.mp3')">🔊</button>
-                </div>
-                <div class="phonetics-card">
-                    <div class="title">w</div>
-                    <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/smw.mp3')">🔊</button>
-                </div>
-                <div class="phonetics-card">
-                    <div class="title">d</div>
-                    <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/smd.mp3')">🔊</button>
-                </div>
-                <div class="phonetics-card">
-                    <div class="title">t</div>
-                    <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/smt.mp3')">🔊</button>
-                </div>
-                <div class="phonetics-card">
-                    <div class="title">n</div>
-                    <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/smn.mp3')">🔊</button>
-                </div>
-                <div class="phonetics-card">
-                    <div class="title">hn</div>
-                    <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/smhn.mp3')">🔊</button>
-                </div>
-                <div class="phonetics-card">
-                    <div class="title">dl</div>
-                    <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/smdl.mp3')">🔊</button>
-                </div>
-                <div class="phonetics-card">
-                    <div class="title">hl</div>
-                    <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/smhl.mp3')">🔊</button>
-                </div>
-                <div class="phonetics-card">
-                    <div class="title">l</div>
-                    <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/sml.mp3')">🔊</button>
-                </div>
-                <div class="phonetics-card">
-                    <div class="title">z</div>
-                    <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/smz.mp3')">🔊</button>
-                </div>
-                <div class="phonetics-card">
-                    <div class="title">c</div>
-                    <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/smc.mp3')">🔊</button>
-                </div>
-                <div class="phonetics-card">
-                    <div class="title">s</div>
-                    <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/sms.mp3')">🔊</button>
-                </div>
-                <div class="phonetics-card">
-                    <div class="title">hs</div>
-                    <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/smhs.mp3')">🔊</button>
-                </div>
-                <div class="phonetics-card">
-                    <div class="title">hx</div>
-                    <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/smhx.mp3')">🔊</button>
-                </div>
-                <div class="phonetics-card">
-                    <div class="title">r</div>
-                    <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/smr.mp3')">🔊</button>
-                </div>
-                <div class="phonetics-card">
-                    <div class="title">j</div>
-                    <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/smj.mp3')">🔊</button>
-                </div>
-                <div class="phonetics-card">
-                    <div class="title">q</div>
-                    <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/smq.mp3')">🔊</button>
-                </div>
-                <div class="phonetics-card">
-                    <div class="title">g</div>
-                    <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/smg.mp3')">🔊</button>
-                </div>
-                <div class="phonetics-card">
-                    <div class="title">x</div>
-                    <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/smx.mp3')">🔊</button>
-                </div>
-                <div class="phonetics-card">
-                    <div class="title">y</div>
-                    <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/smy.mp3')">🔊</button>
-                </div>
-                <div class="phonetics-card">
-                    <div class="title">k</div>
-                    <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/smk.mp3')">🔊</button>
-                </div>
-                <div class="phonetics-card">
-                    <div class="title">ng</div>
-                    <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/smng.mp3')">🔊</button>
-                </div>
-                <div class="phonetics-card">
-                    <div class="title">v</div>
-                    <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/smv.mp3')">🔊</button>
-                </div>
-                <div class="phonetics-card">
-                    <div class="title">hv</div>
-                    <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/smhv.mp3')">🔊</button>
-                </div>
-                <div class="phonetics-card">
-                    <div class="title">gh</div>
-                    <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/smgh.mp3')">🔊</button>
-                </div>
-                <div class="phonetics-card">
-                    <div class="title">kh</div>
-                    <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/smkh.mp3')">🔊</button>
-                </div>
-                <div class="phonetics-card">
-                    <div class="title">h</div>
-                    <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/smh.mp3')">🔊</button>
-                </div>
-            </div>
+    <div class="info-item" id="privacyPolicyBtn">
+      <div>隐私政策与用户协议</div>
+      <div></div>
+    </div>
+    <div class="footer">
+      安全体验 © 2026-09-25 宣
+    </div>
+  </div>
+
+  <!-- 功能介绍页面 -->
+  <div class="feature-page" id="featurePage">
+    <h1>功能介绍</h1>
+    <div class="content">
+      <div class="section">
+        <h2>平台描述</h2>
+        <p>苗语中部方言有声词典由重庆市彭水籍@苗族阿松独立开发的应用程序，里面包含了声韵调入门、字词翻译、苗语点读、词条速览为灵感设计的苗文掌上学习软件；音频素材和配音作者已在APP团队界面标注说明。目前，网页和安卓版本已经同步完成开发，欢迎体验！</p>
+      </div>
+      <div class="section">
+        <h2>分享初衷</h2>
+        <p>有声词典作为启蒙教育的出发点，一方面在于丰富日常交流的词汇表达，另一方面，还能将口语发音规范化！此时此刻，希望苗族同胞及苗文爱好者都能够从中获取经验、启发思路，提升自己的苗语表达能力。敬爱的同胞们，行动起来吧，让苗语在世界上永世不忘~</p>
+      </div>
+      <div class="section">
+        <h2>资源声明</h2>
+        <p>1.任何单位和个人未经作者许可，不得擅自传播或用于商业用途。如有违反，将依法追究其法律责任。</p>
+        <p>2.明确注明来源的同时，我们将该资源照搬，未做任何修改或加工，以保持苗文字词的完整性和准确性。</p>
+        <p>3.希望广大读者能够尊重原作者的版权和创作设计意图，共同维护良好的网络环境，打造一个有氛围有爱心的学习圈子。如有任何疑问或建议，请随时联系我们。</p>
+      </div>
+    </div>
+    <div class="footer">
+      安全体验 © 2026-09-25 宣
+    </div>
+  </div>
+
+  <!-- 更新日志页面 -->
+  <div class="update-log-page" id="updateLogPage">
+    <h1>更新日志</h1>
+    <div class="content">
+      <div class="log-entry">
+        <h2>Version 1.0 (2025-04-16)</h2>
+        <p>初始版本发布，包含以下功能：</p>
+        <ul>
+          <li>苗语中部方言有声词典网页端和手机端今后实现同步更新和上线</li>
+          <li>支持苗语和中文的双向查询</li>
+          <li>每个词条配有音频发音</li>
+          <li>支持点读功能</li>
+          <li>包含常用词汇和短语</li>
+        </ul>
+      </div>
+      <div class="log-entry">
+        <h2>Version 2.0 (2026-09-25)</h2>
+        <p>当前已是最新版本：</p>
+        <ul>
+          <li>经授权的所有词条现已配置完成；</li>
+          <li>声母、韵母、声调的读音补充完成。</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer">
+      安全体验 © 2026-09-25 宣
+    </div>
+  </div>
+
+  <!-- APP团队页面 -->
+  <div class="app-team-page" id="appTeamPage">
+    <h1>APP团队</h1>
+    <div class="app-info">
+      <div class="app-logo">
+        <img src="images/logo.png" alt="App Logo">
+      </div>
+      <div class="app-details">
+        <h2>苗语中部方言有声词典</h2>
+        <p>使用有效期：长期且免费</p>
+      </div>
+    </div>
+    <div class="team-members">
+      <h2>项目成员</h2>
+      <div class="member-cards">
+        <div class="member-card">
+          <div class="name">苗族阿松（彭水）</div>
+          <div class="role">代码开发、页面设计</div>
         </div>
-        
-        <div class="phonetics-section">
-            <h2>韵母 (26)</h2>
-            <div class="cards-container">
-                <div class="phonetics-card">
-                    <div class="title">i</div>
-                    <button class="audio-btn" onclick="playAudio('audio/phonetics/finals/ymi.mp3')">🔊</button>
-                </div>
-                <div class="phonetics-card">
-                    <div class="title">e</div>
-                    <button class="audio-btn" onclick="playAudio('audio/phonetics/finals/yme.mp3')">🔊</button>
-                </div>
-                <div class="phonetics-card">
-                    <div class="title">a</div>
-                    <button class="audio-btn" onclick="playAudio('audio/phonetics/finals/yma.mp3')">🔊</button>
-                </div>
-                <div class="phonetics-card">
-                    <div class="title">o</div>
-                    <button class="audio-btn" onclick="playAudio('audio/phonetics/finals/ymo.mp3')">🔊</button>
-                </div>
-                <div class="phonetics-card">
-                    <div class="title">u</div>
-                    <button class="audio-btn" onclick="playAudio('audio/phonetics/finals/ymu.mp3')">🔊</button>
-                </div>
-                <div class="phonetics-card">
-                    <div class="title">ai</div>
-                    <button class="audio-btn" onclick="playAudio('audio/phonetics/finals/ymai.mp3')">🔊</button>
-                </div>
-                <div class="phonetics-card">
-                    <div class="title">ei</div>
-                    <button class="audio-btn" onclick="playAudio('audio/phonetics/finals/ymei.mp3')">🔊</button>
-                </div>
-                <div class="phonetics-card">
-                    <div class="title">ia</div>
-                    <button class="audio-btn" onclick="playAudio('audio/phonetics/finals/ymia.mp3')">🔊</button>
-                </div>
-                <div class="phonetics-card">
-                    <div class="title">io</div>
-                    <button class="audio-btn" onclick="playAudio('audio/phonetics/finals/ymio.mp3')">🔊</button>
-                </div>
-                <div class="phonetics-card">
-                    <div class="title">ie</div>
-                    <button class="audio-btn" onclick="playAudio('audio/phonetics/finals/ymie.mp3')">🔊</button>
-                </div>
-                <div class="phonetics-card">
-                    <div class="title">iu</div>
-                    <button class="audio-btn" onclick="playAudio('audio/phonetics/finals/ymiu.mp3')">🔊</button>
-                </div>
-                <div class="phonetics-card">
-                    <div class="title">ang</div>
-                    <button class="audio-btn" onclick="playAudio('audio/phonetics/finals/ymang.mp3')">🔊</button>
-                </div>
-                <div class="phonetics-card">
-                    <div class="title">en</div>
-                    <button class="audio-btn" onclick="playAudio('audio/phonetics/finals/ymen.mp3')">🔊</button>
-                </div>
-                <div class="phonetics-card">
-                    <div class="title">ong</div>
-                    <button class="audio-btn" onclick="playAudio('audio/phonetics/finals/ymong.mp3')">🔊</button>
-                </div>
-                <div class="phonetics-card">
-                    <div class="title">in</div>
-                    <button class="audio-btn" onclick="playAudio('audio/phonetics/finals/ymin.mp3')">🔊</button>
-                </div>
-                <div class="phonetics-card">
-                    <div class="title">iang</div>
-                    <button class="audio-btn" onclick="playAudio('audio/phonetics/finals/ymiang.mp3')">🔊</button>
-                </div>
-                <div class="phonetics-card">
-                    <div class="title">iong</div>
-                    <button class="audio-btn" onclick="playAudio('audio/phonetics/finals/ymiong.mp3')">🔊</button>
-                </div>
-                <div class="phonetics-card">
-                    <div class="title">ee</div>
-                    <button class="audio-btn" onclick="playAudio('audio/phonetics/finals/ymee.mp3')">🔊</button>
-                </div>
-                <div class="phonetics-card">
-                    <div class="title">ao</div>
-                    <button class="audio-btn" onclick="playAudio('audio/phonetics/finals/ymao.mp3')">🔊</button>
-                </div>
-                <div class="phonetics-card">
-                    <div class="title">iee</div>
-                    <button class="audio-btn" onclick="playAudio('audio/phonetics/finals/ymiee.mp3')">🔊</button>
-                </div>
-                <div class="phonetics-card">
-                    <div class="title">iao</div>
-                    <button class="audio-btn" onclick="playAudio('audio/phonetics/finals/ymiao.mp3')">🔊</button>
-                </div>
-                <div class="phonetics-card">
-                    <div class="title">ui</div>
-                    <button class="audio-btn" onclick="playAudio('audio/phonetics/finals/ymui.mp3')">🔊</button>
-                </div>
-                <div class="phonetics-card">
-                    <div class="title">ua</div>
-                    <button class="audio-btn" onclick="playAudio('audio/phonetics/finals/ymua.mp3')">🔊</button>
-                </div>
-                <div class="phonetics-card">
-                    <div class="title">uai</div>
-                    <button class="audio-btn" onclick="playAudio('audio/phonetics/finals/ymuai.mp3')">🔊</button>
-                </div>
-                <div class="phonetics-card">
-                    <div class="title">uang</div>
-                    <button class="audio-btn" onclick="playAudio('audio/phonetics/finals/ymuang.mp3')">🔊</button>
-                </div>
-                <div class="phonetics-card">
-                    <div class="title">un</div>
-                    <button class="audio-btn" onclick="playAudio('audio/phonetics/finals/ymun.mp3')">🔊</button>
-                </div>
-            </div>
+        <div class="member-card">
+          <div class="name">杨文斌（苗族）</div>
+          <div class="role">词条、声韵调发音人</div>
         </div>
-        
-        <div class="phonetics-section">
-            <h2>声调 (8)</h2>
-            <div class="cards-container">
-                <div class="phonetics-card">
-                    <div class="title">b (33)</div>
-                    <button class="audio-btn" onclick="playAudio('audio/phonetics/tones/sdb.mp3')">🔊</button>
-                </div>
-                <div class="phonetics-card">
-                    <div class="title">x (55)</div>
-                    <button class="audio-btn" onclick="playAudio('audio/phonetics/tones/sdx.mp3')">🔊</button>
-                </div>
-                <div class="phonetics-card">
-                    <div class="title">d (35)</div>
-                    <button class="audio-btn" onclick="playAudio('audio/phonetics/tones/sdd.mp3')">🔊</button>
-                </div>
-                <div class="phonetics-card">
-                    <div class="title">l (22)</div>
-                    <button class="audio-btn" onclick="playAudio('audio/phonetics/tones/sdl.mp3')">🔊</button>
-                </div>
-                <div class="phonetics-card">
-                    <div class="title">t (44)</div>
-                    <button class="audio-btn" onclick="playAudio('audio/phonetics/tones/sdt.mp3')">🔊</button>
-                </div>
-                <div class="phonetics-card">
-                    <div class="title">s (13)</div>
-                    <button class="audio-btn" onclick="playAudio('audio/phonetics/tones/sds.mp3')">🔊</button>
-                </div>
-                <div class="phonetics-card">
-                    <div class="title">k (53)</div>
-                    <button class="audio-btn" onclick="playAudio('audio/phonetics/tones/sdk.mp3')">🔊</button>
-                </div>
-                <div class="phonetics-card">
-                    <div class="title">f (31)</div>
-                    <button class="audio-btn" onclick="playAudio('audio/phonetics/tones/sdf.mp3')">🔊</button>
-                </div>
-            </div>
+        <div class="member-card">
+          <div class="name">词条来源</div>
+          <div class="role">苗文计算机输入法词库</div>
         </div>
+        <div class="member-card">
+          <div class="name">吴小花（苗族）</div>
+          <div class="role">苗文词目审校</div>
+        </div>
+        <div class="member-card">
+          <div class="name">叠贵（苗族）</div>
+          <div class="role">项目总筹</div>
+        </div>
+        <div class="member-card">
+          <div class="name">耕夫（苗族）</div>
+          <div class="role">项目发起人</div>
+        </div>
+      </div>
+    </div>
+    <div class="contact-section">
+      <p>遇到困难了，需要帮助？联系客服</p>
+      <button class="contact-btn">+微信号：absongb2099</button>
+      <p>无关要是，勿扰谢谢！</p>
+    </div>
+    <div class="copyright">
+      <h3>版权声明©</h3>
+      <p>1.所有词库&音频数据未经原著许可，严禁盗用二次利用，经查获，必将追究其法律责任；</p>
+      <p>2.严禁通过任何方式&渠道,以此来贩卖和破解APP,经查获,必将追究刑事责任。</p>
+    </div>
+  </div>
+
+  <!-- 隐私政策与用户协议页面 -->
+  <div class="privacy-policy-page" id="privacyPolicyPage">
+    <h1>隐私政策与用户协议</h1>
+    <div class="content">
+      <div class="section">
+        <h2>隐私政策</h2>
+        <p>我们尊重并保护所有使用本平台的用户的个人隐私。本隐私政策解释了我们如何收集、使用和保护您的个人信息。</p>
+        <p>1. **网络判断**：当用户在网页端或者手机客户端上体验时，我们可能会判断您在使用平台时加载的宽带、wifi和数据流量等网络是否正常，以免体验时因为网络错误或者卡顿为你带来困扰！</p>
+        <p>2. **信息使用**：我们承诺不会将您的个人信息用于任何未经您同意的用途。</p>
+        <p>3. **信息保护**：我们采取合理的安全措施来保护您的个人信息不被未经授权的访问、披露、更改或销毁。</p>
+      </div>
+      <div class="section">
+        <h2>用户协议</h2>
+        <p>使用本平台即表示您同意以下条款：</p>
+        <p>1. **合法使用**：您不得将本平台用于任何非法或未经授权的用途。</p>
+        <p>2. **知识产权**：平台上的所有内容，包括但不限于文字、音频、图像等，均受到版权保护。</p>
+        <p>3. **责任限制**：我们不对因使用本平台而可能造成的任何直接或间接损失承担责任。</p>
+      </div>
+    </div>
+    <div class="footer">
+      安全体验 © 2025-04-16 宣
+    </div>
+  </div>
+
+  <!-- 声韵调页面 -->
+  <div class="phonetics-page" id="phoneticsPage">
+    <h1>声韵调</h1>
+    <div class="phonetics-section">
+      <h2>声母 (32)</h2>
+      <div class="cards-container">
+        <div class="phonetics-card">
+          <div class="title">b</div>
+          <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/b.mp3')">🔊</button>
+        </div>
+        <div class="phonetics-card">
+          <div class="title">p</div>
+          <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/p.mp3')">🔊</button>
+        </div>
+        <div class="phonetics-card">
+          <div class="title">m</div>
+          <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/m.mp3')">🔊</button>
+        </div>
+        <div class="phonetics-card">
+          <div class="title">hm</div>
+          <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/hm.mp3')">🔊</button>
+        </div>
+        <div class="phonetics-card">
+          <div class="title">f</div>
+          <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/f.mp3')">🔊</button>
+        </div>
+        <div class="phonetics-card">
+          <div class="title">hf</div>
+          <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/hf.mp3')">🔊</button>
+        </div>
+        <div class="phonetics-card">
+          <div class="title">w</div>
+          <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/w.mp3')">🔊</button>
+        </div>
+        <div class="phonetics-card">
+          <div class="title">d</div>
+          <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/d.mp3')">🔊</button>
+        </div>
+        <div class="phonetics-card">
+          <div class="title">t</div>
+          <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/t.mp3')">🔊</button>
+        </div>
+        <div class="phonetics-card">
+          <div class="title">n</div>
+          <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/n.mp3')">🔊</button>
+        </div>
+        <div class="phonetics-card">
+          <div class="title">hn</div>
+          <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/hn.mp3')">🔊</button>
+        </div>
+        <div class="phonetics-card">
+          <div class="title">dl</div>
+          <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/dl.mp3')">🔊</button>
+        </div>
+        <div class="phonetics-card">
+          <div class="title">hl</div>
+          <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/hl.mp3')">🔊</button>
+        </div>
+        <div class="phonetics-card">
+          <div class="title">l</div>
+          <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/l.mp3')">🔊</button>
+        </div>
+        <div class="phonetics-card">
+          <div class="title">z</div>
+          <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/z.mp3')">🔊</button>
+        </div>
+        <div class="phonetics-card">
+          <div class="title">c</div>
+          <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/c.mp3')">🔊</button>
+        </div>
+        <div class="phonetics-card">
+          <div class="title">s</div>
+          <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/s.mp3')">🔊</button>
+        </div>
+        <div class="phonetics-card">
+          <div class="title">hs</div>
+          <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/hs.mp3')">🔊</button>
+        </div>
+        <div class="phonetics-card">
+          <div class="title">hx</div>
+          <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/hx.mp3')">🔊</button>
+        </div>
+        <div class="phonetics-card">
+          <div class="title">r</div>
+          <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/r.mp3')">🔊</button>
+        </div>
+        <div class="phonetics-card">
+          <div class="title">j</div>
+          <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/j.mp3')">🔊</button>
+        </div>
+        <div class="phonetics-card">
+          <div class="title">q</div>
+          <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/q.mp3')">🔊</button>
+        </div>
+        <div class="phonetics-card">
+          <div class="title">g</div>
+          <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/g.mp3')">🔊</button>
+        </div>
+        <div class="phonetics-card">
+          <div class="title">x</div>
+          <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/x.mp3')">🔊</button>
+        </div>
+        <div class="phonetics-card">
+          <div class="title">y</div>
+          <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/y.mp3')">🔊</button>
+        </div>
+        <div class="phonetics-card">
+          <div class="title">k</div>
+          <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/k.mp3')">🔊</button>
+        </div>
+        <div class="phonetics-card">
+          <div class="title">ng</div>
+          <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/ng.mp3')">🔊</button>
+        </div>
+        <div class="phonetics-card">
+          <div class="title">v</div>
+          <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/v.mp3')">🔊</button>
+        </div>
+        <div class="phonetics-card">
+          <div class="title">hv</div>
+          <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/hv.mp3')">🔊</button>
+        </div>
+        <div class="phonetics-card">
+          <div class="title">gh</div>
+          <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/gh.mp3')">🔊</button>
+        </div>
+        <div class="phonetics-card">
+          <div class="title">kh</div>
+          <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/kh.mp3')">🔊</button>
+        </div>
+        <div class="phonetics-card">
+          <div class="title">h</div>
+          <button class="audio-btn" onclick="playAudio('audio/phonetics/initials/h.mp3')">🔊</button>
+        </div>
+      </div>
     </div>
 
-    <script>
-// 模拟词典数据
-        const dictionary = [
+    <div class="phonetics-section">
+      <h2>韵母 (26)</h2>
+      <div class="cards-container">
+        <div class="phonetics-card">
+          <div class="title">i</div>
+          <button class="audio-btn" onclick="playAudio('audio/phonetics/finals/i.mp3')">🔊</button>
+        </div>
+        <div class="phonetics-card">
+          <div class="title">e</div>
+          <button class="audio-btn" onclick="playAudio('audio/phonetics/finals/e.mp3')">🔊</button>
+        </div>
+        <div class="phonetics-card">
+          <div class="title">a</div>
+          <button class="audio-btn" onclick="playAudio('audio/phonetics/finals/a.mp3')">🔊</button>
+        </div>
+        <div class="phonetics-card">
+          <div class="title">o</div>
+          <button class="audio-btn" onclick="playAudio('audio/phonetics/finals/o.mp3')">🔊</button>
+        </div>
+        <div class="phonetics-card">
+          <div class="title">u</div>
+          <button class="audio-btn" onclick="playAudio('audio/phonetics/finals/u.mp3')">🔊</button>
+        </div>
+        <div class="phonetics-card">
+          <div class="title">ai</div>
+          <button class="audio-btn" onclick="playAudio('audio/phonetics/finals/ai.mp3')">🔊</button>
+        </div>
+        <div class="phonetics-card">
+          <div class="title">ei</div>
+          <button class="audio-btn" onclick="playAudio('audio/phonetics/finals/ei.mp3')">🔊</button>
+        </div>
+        <div class="phonetics-card">
+          <div class="title">ia</div>
+          <button class="audio-btn" onclick="playAudio('audio/phonetics/finals/ia.mp3')">🔊</button>
+        </div>
+        <div class="phonetics-card">
+          <div class="title">io</div>
+          <button class="audio-btn" onclick="playAudio('audio/phonetics/finals/io.mp3')">🔊</button>
+        </div>
+        <div class="phonetics-card">
+          <div class="title">ie</div>
+          <button class="audio-btn" onclick="playAudio('audio/phonetics/finals/ie.mp3')">🔊</button>
+        </div>
+        <div class="phonetics-card">
+          <div class="title">iu</div>
+          <button class="audio-btn" onclick="playAudio('audio/phonetics/finals/iu.mp3')">🔊</button>
+        </div>
+        <div class="phonetics-card">
+          <div class="title">ang</div>
+          <button class="audio-btn" onclick="playAudio('audio/phonetics/finals/ang.mp3')">🔊</button>
+        </div>
+        <div class="phonetics-card">
+          <div class="title">en</div>
+          <button class="audio-btn" onclick="playAudio('audio/phonetics/finals/en.mp3')">🔊</button>
+        </div>
+        <div class="phonetics-card">
+          <div class="title">ong</div>
+          <button class="audio-btn" onclick="playAudio('audio/phonetics/finals/ong.mp3')">🔊</button>
+        </div>
+        <div class="phonetics-card">
+          <div class="title">in</div>
+          <button class="audio-btn" onclick="playAudio('audio/phonetics/finals/in.mp3')">🔊</button>
+        </div>
+        <div class="phonetics-card">
+          <div class="title">iang</div>
+          <button class="audio-btn" onclick="playAudio('audio/phonetics/finals/iang.mp3')">🔊</button>
+        </div>
+        <div class="phonetics-card">
+          <div class="title">iong</div>
+          <button class="audio-btn" onclick="playAudio('audio/phonetics/finals/iong.mp3')">🔊</button>
+        </div>
+        <div class="phonetics-card">
+          <div class="title">ee</div>
+          <button class="audio-btn" onclick="playAudio('audio/phonetics/finals/ee.mp3')">🔊</button>
+        </div>
+        <div class="phonetics-card">
+          <div class="title">ao</div>
+          <button class="audio-btn" onclick="playAudio('audio/phonetics/finals/ao.mp3')">🔊</button>
+        </div>
+        <div class="phonetics-card">
+          <div class="title">iee</div>
+          <button class="audio-btn" onclick="playAudio('audio/phonetics/finals/iee.mp3')">🔊</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ----- 词典数据 (示例，保持原样) -----
+    let dictionary = [
         
 //词条ab开头
 
@@ -25017,150 +24959,145 @@
 
 // 可以继续添加更多词条...
 
-        ];
+          ];
 
-        // 播放音频功能
-        function playAudio(audioSrc) {
-            const audio = new Audio(audioSrc);
-            audio.play();
-        }
+    // 播放音频功能
+    function playAudio(audioSrc) {
+      const audio = new Audio(audioSrc);
+      audio.play();
+    }
 
-        // 渲染词典列表
-        function renderDictionary(list) {
-            const resultList = document.getElementById('resultList');
-            resultList.innerHTML = '';
-            
-            if (list.length === 0) {
-                const noResultsElement = document.createElement('div');
-                noResultsElement.className = 'no-results';
-                noResultsElement.textContent = '没有找到相关结果，请重新输入';
-                resultList.appendChild(noResultsElement);
-                return;
-            }
-            
-            list.forEach(item => {
-                const itemElement = document.createElement('div');
-                itemElement.className = 'result-item';
-                itemElement.innerHTML = `
-                    <div class="苗语">${item.苗语}</div>
-                    <div>
-                        <span class="中文">${item.中文}</span>
-                        <button class="audio-btn" onclick="playAudio('${item.音频}')">🔊</button>
-                        <span class="arrow">›</span>
-                    </div>
-                `;
-                resultList.appendChild(itemElement);
-            });
-        }
+    // 渲染词典列表
+    function renderDictionary(list) {
+      const resultList = document.getElementById('resultList');
+      resultList.innerHTML = '';
 
-        // 搜索页面实时更新搜索结果
-        function search() {
-            const searchTerm = document.getElementById('searchInput').value.trim();
-            
-            if (searchTerm === '') {
-                const emptySearchElement = document.createElement('div');
-                emptySearchElement.className = 'no-results';
-                emptySearchElement.textContent = '请输入搜索词以查看结果';
-                document.getElementById('resultList').innerHTML = '';
-                document.getElementById('resultList').appendChild(emptySearchElement);
-                return;
-            }
-            
-            const filteredResults = dictionary.filter(item => 
-                item.苗语.toLowerCase().includes(searchTerm.toLowerCase()) || 
-                item.中文.toLowerCase().includes(searchTerm.toLowerCase())
-            );
-            
-            // 排序：首字母或首个汉字匹配优先
-            filteredResults.sort((a, b) => {
-                const aMiaoFirst = a.苗语.toLowerCase().startsWith(searchTerm.toLowerCase());
-                const aChineseFirst = a.中文.toLowerCase().startsWith(searchTerm.toLowerCase());
-                const bMiaoFirst = b.苗语.toLowerCase().startsWith(searchTerm.toLowerCase());
-                const bChineseFirst = b.中文.toLowerCase().startsWith(searchTerm.toLowerCase());
-                
-                // 如果a的首字母或首个汉字匹配，而b不匹配，则a排在前面
-                if ((aMiaoFirst || aChineseFirst) && !(bMiaoFirst || bChineseFirst)) return -1;
-                if (!(aMiaoFirst || aChineseFirst) && (bMiaoFirst || bChineseFirst)) return 1;
-                
-                // 如果都匹配或都不匹配，保持原顺序
-                return 0;
-            });
-            
-            renderDictionary(filteredResults);
-        }
+      if (list.length === 0) {
+        const noResultsElement = document.createElement('div');
+        noResultsElement.className = 'no-results';
+        noResultsElement.textContent = '没有找到相关结果，请重新输入';
+        resultList.appendChild(noResultsElement);
+        return;
+      }
 
-        // 为输入框添加输入事件监听器，实现实时搜索
-        document.getElementById('searchInput').addEventListener('input', search);
+      list.forEach(item => {
+        const itemElement = document.createElement('div');
+        itemElement.className = 'result-item';
+        itemElement.innerHTML = `
+          <div class="苗语">${item.苗语}</div>
+          <div>
+            <span class="中文">${item.中文}</span>
+            <button class="audio-btn" onclick="playAudio('${item.音频}')">🔊</button>
+            <span class="arrow">›</span>
+          </div>
+        `;
+        resultList.appendChild(itemElement);
+      });
+    }
 
-        // 监听搜索按钮点击事件
-        document.getElementById('searchBtn').addEventListener('click', search);
+    // 搜索页面实时更新搜索结果
+    function search() {
+      const searchTerm = document.getElementById('searchInput').value.trim();
+      if (searchTerm === '') {
+        const emptySearchElement = document.createElement('div');
+        emptySearchElement.className = 'no-results';
+        emptySearchElement.textContent = '请输入搜索词以查看结果';
+        document.getElementById('resultList').innerHTML = '';
+        document.getElementById('resultList').appendChild(emptySearchElement);
+        return;
+      }
 
-        // 初始化页面时不显示词条
-        window.onload = function() {
-            const emptySearchElement = document.createElement('div');
-            emptySearchElement.className = 'no-results';
-            emptySearchElement.textContent = '请输入搜索词以查看结果';
-            document.getElementById('resultList').appendChild(emptySearchElement);
-        };
+      const filteredResults = dictionary.filter(item =>
+        item.苗语.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.中文.toLowerCase().includes(searchTerm.toLowerCase())
+      );
 
-        // 更多按钮功能
-        document.getElementById('moreBtn').addEventListener('click', function() {
-            document.getElementById('searchContainer').style.display = 'none';
-            document.getElementById('resultList').style.display = 'none';
-            document.getElementById('aboutPage').style.display = 'block';
-        });
+      // 排序：首字母或首个汉字匹配优先
+      filteredResults.sort((a, b) => {
+        const aMiaoFirst = a.苗语.toLowerCase().startsWith(searchTerm.toLowerCase());
+        const aChineseFirst = a.中文.toLowerCase().startsWith(searchTerm.toLowerCase());
+        const bMiaoFirst = b.苗语.toLowerCase().startsWith(searchTerm.toLowerCase());
+        const bChineseFirst = b.中文.toLowerCase().startsWith(searchTerm.toLowerCase());
 
-        // 返回按钮功能
-        document.getElementById('backBtn').addEventListener('click', function() {
-            document.getElementById('searchContainer').style.display = 'flex';
-            document.getElementById('resultList').style.display = 'block';
-            document.getElementById('aboutPage').style.display = 'none';
-            document.getElementById('featurePage').style.display = 'none';
-            document.getElementById('updateLogPage').style.display = 'none';
-            document.getElementById('appTeamPage').style.display = 'none';
-            document.getElementById('privacyPolicyPage').style.display = 'none';
-            document.getElementById('phoneticsPage').style.display = 'none';
-        });
+        if ((aMiaoFirst || aChineseFirst) && !(bMiaoFirst || bChineseFirst)) return -1;
+        if (!(aMiaoFirst || aChineseFirst) && (bMiaoFirst || bChineseFirst)) return 1;
+        return 0;
+      });
 
-        // 功能介绍按钮功能
-        document.getElementById('featureBtn').addEventListener('click', function() {
-            document.getElementById('aboutPage').style.display = 'none';
-            document.getElementById('featurePage').style.display = 'block';
-        });
+      renderDictionary(filteredResults);
+    }
 
-        // 更新日志按钮功能
-        document.getElementById('updateLogBtn').addEventListener('click', function() {
-            document.getElementById('aboutPage').style.display = 'none';
-            document.getElementById('updateLogPage').style.display = 'block';
-        });
+    // 为输入框添加输入事件监听器
+    document.getElementById('searchInput').addEventListener('input', search);
+    // 监听搜索按钮点击事件
+    document.getElementById('searchBtn').addEventListener('click', search);
 
-        // APP团队按钮功能
-        document.getElementById('appTeamBtn').addEventListener('click', function() {
-            document.getElementById('aboutPage').style.display = 'none';
-            document.getElementById('appTeamPage').style.display = 'block';
-        });
+    // 初始化页面时不显示词条
+    window.onload = function() {
+      const emptySearchElement = document.createElement('div');
+      emptySearchElement.className = 'no-results';
+      emptySearchElement.textContent = '请输入搜索词以查看结果';
+      document.getElementById('resultList').appendChild(emptySearchElement);
+    };
 
-        // 隐私政策与用户协议按钮功能
-        document.getElementById('privacyPolicyBtn').addEventListener('click', function() {
-            document.getElementById('aboutPage').style.display = 'none';
-            document.getElementById('privacyPolicyPage').style.display = 'block';
-        });
+    // 更多按钮功能
+    document.getElementById('moreBtn').addEventListener('click', function() {
+      document.getElementById('searchContainer').style.display = 'none';
+      document.getElementById('resultList').style.display = 'none';
+      document.getElementById('aboutPage').style.display = 'block';
+    });
 
-        // 声韵调按钮功能
-        document.getElementById('phoneticsBtn').addEventListener('click', function() {
-            document.getElementById('aboutPage').style.display = 'none';
-            document.getElementById('phoneticsPage').style.display = 'block';
-        });
+    // 返回按钮功能
+    document.getElementById('backBtn').addEventListener('click', function() {
+      document.getElementById('searchContainer').style.display = 'flex';
+      document.getElementById('resultList').style.display = 'block';
+      document.getElementById('aboutPage').style.display = 'none';
+      document.getElementById('featurePage').style.display = 'none';
+      document.getElementById('updateLogPage').style.display = 'none';
+      document.getElementById('appTeamPage').style.display = 'none';
+      document.getElementById('privacyPolicyPage').style.display = 'none';
+      document.getElementById('phoneticsPage').style.display = 'none';
+    });
 
-        // 交流Q群按钮功能
-        document.getElementById('qqGroupBtn').addEventListener('click', function() {
-            alert('QQ群号：1009892635');
-        });
+    // 功能介绍按钮功能
+    document.getElementById('featureBtn').addEventListener('click', function() {
+      document.getElementById('aboutPage').style.display = 'none';
+      document.getElementById('featurePage').style.display = 'block';
+    });
 
-        // 添加更多模拟词典数据的函数
-        function addDictionaryEntry(hmongPhrase, chinesePhrase, audioPath) {
-            dictionary.push({ 苗语: hmongPhrase, 中文: chinesePhrase, 音频: audioPath });
-        }
-    </script>
+    // 更新日志按钮功能
+    document.getElementById('updateLogBtn').addEventListener('click', function() {
+      document.getElementById('aboutPage').style.display = 'none';
+      document.getElementById('updateLogPage').style.display = 'block';
+    });
+
+    // APP团队按钮功能
+    document.getElementById('appTeamBtn').addEventListener('click', function() {
+      document.getElementById('aboutPage').style.display = 'none';
+      document.getElementById('appTeamPage').style.display = 'block';
+    });
+
+    // 隐私政策与用户协议按钮功能
+    document.getElementById('privacyPolicyBtn').addEventListener('click', function() {
+      document.getElementById('aboutPage').style.display = 'none';
+      document.getElementById('privacyPolicyPage').style.display = 'block';
+    });
+
+    // 声韵调按钮功能
+    document.getElementById('phoneticsBtn').addEventListener('click', function() {
+      document.getElementById('aboutPage').style.display = 'none';
+      document.getElementById('phoneticsPage').style.display = 'block';
+    });
+
+    // 交流Q群按钮功能
+    document.getElementById('qqGroupBtn').addEventListener('click', function() {
+      alert('QQ群号：1009892635');
+    });
+
+    // 添加更多模拟词典数据的函数
+    function addDictionaryEntry(hmongPhrase, chinesePhrase, audioPath) {
+      dictionary.push({ 苗语: hmongPhrase, 中文: chinesePhrase, 音频: audioPath });
+    }
+  </script>
 </body>
 </html>
